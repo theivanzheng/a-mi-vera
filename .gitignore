@@ -1,3 +1,8 @@
+# Variables de entorno — NUNCA subir ficheros con claves reales
+.env
+.env.*
+!.env.example
+
 # Logs
 logs
 *.log

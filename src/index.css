@@ -1,47 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+/* ============================================================
+   ENTRY POINT — Importa todos los ficheros de estilos en orden.
+   Para cambiar el sistema visual, edita src/styles/variables.css.
+   ============================================================ */
 
-:root {
-  --primary: #1A1A1A;
-  --secondary: #F5F5F7;
-  --accent: #E5B299; /* A soft elegant accent color */
-  --text-main: #2D2D2D;
-  --text-light: #6E6E73;
-  --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-  --border-radius: 12px;
-  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-  color: var(--text-main);
-  background: var(--bg-gradient);
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-}
-
-img {
-  max-width: 100%;
-  display: block;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* Base Styles Extracted for easy usage */
-button {
-  font-family: 'Outfit', sans-serif;
-  cursor: pointer;
-  border: none;
-  background: none;
-}
+@import './styles/variables.css';
+@import './styles/base.css';
+@import './styles/layout.css';
+@import './styles/admin.css';
+@import './styles/admin-layout.css';

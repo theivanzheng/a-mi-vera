@@ -1,20 +1,24 @@
-import React from 'react';
+import { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
+import type { Product } from '../types/product';
 
-const ProductCard = ({ product, disabledLink = false }) => {
-  const images = Array.isArray(product.images) ? product.images : [product.image];
-  // Fallback to placeholder if not loaded yet
-  const mainImage = images[0] || product.image1 || 'https://via.placeholder.com/600?text=Sin+Imagen';
+interface ProductCardProps {
+  product: Product;
+  disabledLink?: boolean;
+}
 
-  const handleClick = (e) => {
+const ProductCard = ({ product, disabledLink = false }: ProductCardProps) => {
+  const mainImage = product.images[0] ?? 'https://via.placeholder.com/600?text=Sin+Imagen';
+
+  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
     if (disabledLink) {
       e.preventDefault();
     }
   };
 
   return (
-    <Link 
-      to={disabledLink ? "#" : `/producto/${product.id}`}
+    <Link
+      to={disabledLink ? '#' : `/producto/${product.slug}`}
       onClick={handleClick}
       className="Plattsupply-card"
     >

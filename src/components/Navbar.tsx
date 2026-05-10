@@ -1,30 +1,32 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, FormEvent } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, Search, User, ShoppingBag, X, ArrowLeft } from 'lucide-react';
-import { ProductContext } from '../context/ProductContext';
+import { useProductContext } from '../context/ProductContext';
 import Logotipo from '../../IdentidadVisual/Logo_AmiVera.png';
 
-const Navbar = ({ isProductDetail = false }) => {
-  const { products } = useContext(ProductContext);
+interface NavbarProps {
+  isProductDetail?: boolean;
+}
+
+const Navbar = ({ isProductDetail = false }: NavbarProps) => {
+  const { products } = useProductContext();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  
+
   const navigate = useNavigate();
   const location = useLocation();
-  const searchInputRef = useRef(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
-  // Extract unique categories
   const categories = [...new Set(products.map(p => p.category))].filter(Boolean);
 
-  // Focus search input when opened
   useEffect(() => {
     if (isSearchOpen && searchInputRef.current) {
       searchInputRef.current.focus();
     }
   }, [isSearchOpen]);
 
-  const handleSearchSubmit = (e) => {
+  const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (searchTerm.trim() !== '') {
       setIsSearchOpen(false);
@@ -38,9 +40,8 @@ const Navbar = ({ isProductDetail = false }) => {
     navigate('/');
   };
 
-  const closeMenuAndScrollTo = (category) => {
+  const closeMenuAndScrollTo = (category: string) => {
     setIsMenuOpen(false);
-    // Route to main page with hash
     if (location.pathname !== '/') {
       navigate(`/#cat-${category}`);
     } else {
@@ -54,15 +55,15 @@ const Navbar = ({ isProductDetail = false }) => {
   return (
     <>
       <nav className="navbar plattsupply-nav">
-        
+
         {/* Left Side: Icons or Search Input */}
         <div className="nav-icons-group">
           {isSearchOpen ? (
             <form onSubmit={handleSearchSubmit} className="nav-search-form">
-              <input 
+              <input
                 ref={searchInputRef}
-                type="text" 
-                placeholder="Buscar producto..." 
+                type="text"
+                placeholder="Buscar producto..."
                 className="nav-search-input"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -80,14 +81,14 @@ const Navbar = ({ isProductDetail = false }) => {
             </>
           )}
         </div>
-        
+
         {/* Logo Middle */}
         {!isSearchOpen && (
           <Link to="/" onClick={clearSearch}>
             <img src={Logotipo} alt="A Mi Vera Logo" className="logo nav-logo" />
           </Link>
         )}
-        
+
         {/* Right Side */}
         <div className="nav-icons-group right">
           <User size={24} className="nav-icon" />

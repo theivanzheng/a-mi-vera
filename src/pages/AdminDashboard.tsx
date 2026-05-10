@@ -1,78 +1,72 @@
-import React, { useState, useContext } from 'react';
-import { ProductContext } from '../context/ProductContext';
+import { useState, ChangeEvent, FormEvent } from 'react';
+import { useProductContext } from '../context/ProductContext';
 import { ArrowLeft, Upload, Plus, Package, MessageCircle } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import Logotipo from '../../IdentidadVisual/Logo_AmiVera.png';
+import type { ProductFormData, Product } from '../types/product';
+
+const EMPTY_FORM: ProductFormData = {
+  title: '',
+  price: '',
+  category: '',
+  description: '',
+  image1: '',
+  image2: '',
+  image3: '',
+  image4: '',
+};
+
+const IMAGE_FIELDS = ['image1', 'image2', 'image3', 'image4'] as const;
+type ImageField = typeof IMAGE_FIELDS[number];
 
 const AdminDashboard = () => {
-  const { addProduct } = useContext(ProductContext);
-  const navigate = useNavigate();
-  
-  const [formData, setFormData] = useState({
-    title: '',
-    price: '',
-    category: '',
-    description: '',
-    image1: '',
-    image2: '',
-    image3: '',
-    image4: ''
-  });
-  const [successMsg, setSuccessMsg] = useState('');
-  const [previewMode, setPreviewMode] = useState('main');
+  const { addProduct } = useProductContext();
 
-  const handleChange = (e) => {
+  const [formData, setFormData] = useState<ProductFormData>(EMPTY_FORM);
+  const [successMsg, setSuccessMsg] = useState('');
+  const [previewMode, setPreviewMode] = useState<'main' | 'detail'>('main');
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleFileChange = (e, imageName) => {
-    const file = e.target.files[0];
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>, imageName: ImageField) => {
+    const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setFormData(prev => ({
-          ...prev,
-          [imageName]: reader.result
-        }));
+        setFormData(prev => ({ ...prev, [imageName]: reader.result as string }));
       };
       reader.readAsDataURL(file);
     } else {
-      setFormData(prev => ({
-        ...prev,
-        [imageName]: ''
-      }));
+      setFormData(prev => ({ ...prev, [imageName]: '' }));
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!formData.title || !formData.price || !formData.category || !formData.image1) {
-      alert("Por favor, rellena todos los campos obligatorios (al menos la Imagen 1).");
+      alert('Por favor, rellena todos los campos obligatorios (al menos la Imagen 1).');
       return;
     }
 
     addProduct(formData);
     setSuccessMsg('¡Producto añadido con éxito!');
-    
-    // Reset form
-    setFormData({
-      title: '',
-      price: '',
-      category: '',
-      description: '',
-      image1: '',
-      image2: '',
-      image3: '',
-      image4: ''
-    });
-    e.target.reset(); // Visually clears the file inputs
+    setFormData(EMPTY_FORM);
+    e.currentTarget.reset();
 
     setTimeout(() => setSuccessMsg(''), 3000);
+  };
+
+  const previewProduct: Product = {
+    id: 0,
+    title: formData.title || 'Título del Producto',
+    price: parseFloat(formData.price) || 0,
+    category: formData.category,
+    description: formData.description,
+    images: [formData.image1].filter(Boolean),
   };
 
   return (
@@ -101,42 +95,42 @@ const AdminDashboard = () => {
           <form onSubmit={handleSubmit} className="admin-form">
             <div className="form-group">
               <label htmlFor="title">Nombre del Artículo *</label>
-              <input 
-                type="text" 
-                id="title" 
-                name="title" 
-                value={formData.title} 
-                onChange={handleChange} 
-                placeholder="Ej. Taza Personalizada" 
-                required 
+              <input
+                type="text"
+                id="title"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                placeholder="Ej. Taza Personalizada"
+                required
               />
             </div>
 
             <div className="form-row">
               <div className="form-group">
                 <label htmlFor="price">Precio (€) *</label>
-                <input 
-                  type="number" 
-                  step="0.01" 
-                  id="price" 
-                  name="price" 
-                  value={formData.price} 
-                  onChange={handleChange} 
-                  placeholder="Ej. 25.99" 
-                  required 
+                <input
+                  type="number"
+                  step="0.01"
+                  id="price"
+                  name="price"
+                  value={formData.price}
+                  onChange={handleChange}
+                  placeholder="Ej. 25.99"
+                  required
                 />
               </div>
 
               <div className="form-group">
                 <label htmlFor="category">Categoría *</label>
-                <input 
-                  type="text" 
-                  id="category" 
-                  name="category" 
-                  value={formData.category} 
-                  onChange={handleChange} 
-                  placeholder="Ej. Cerámica, Madera, Textil..." 
-                  required 
+                <input
+                  type="text"
+                  id="category"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                  placeholder="Ej. Cerámica, Madera, Textil..."
+                  required
                   list="categories"
                 />
                 <datalist id="categories">
@@ -157,29 +151,29 @@ const AdminDashboard = () => {
 
             <div className="form-group">
               <label htmlFor="description">Descripción</label>
-              <textarea 
-                id="description" 
-                name="description" 
-                value={formData.description} 
-                onChange={handleChange} 
+              <textarea
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
                 placeholder="Breve descripción del producto..."
-                rows="3"
-              ></textarea>
+                rows={3}
+              />
             </div>
 
             <div className="form-group">
               <label>Sube tus Imágenes desde el Móvil o PC (Hasta 4)</label>
-              {[1, 2, 3, 4].map(num => (
-                <div key={num} className="image-input-container" style={{marginBottom: '0.5rem'}}>
+              {IMAGE_FIELDS.map((imageName, idx) => (
+                <div key={imageName} className="image-input-container" style={{ marginBottom: '0.5rem' }}>
                   <Upload className="input-icon" size={18} />
-                  <input 
-                    type="file" 
+                  <input
+                    type="file"
                     accept="image/*"
-                    id={`image${num}`}
-                    name={`image${num}`} 
-                    onChange={(e) => handleFileChange(e, `image${num}`)} 
-                    required={num === 1} 
-                    style={{padding: '0.6rem 0.6rem 0.6rem 2.8rem'}}
+                    id={imageName}
+                    name={imageName}
+                    onChange={(e) => handleFileChange(e, imageName)}
+                    required={idx === 0}
+                    style={{ padding: '0.6rem 0.6rem 0.6rem 2.8rem' }}
                   />
                 </div>
               ))}
@@ -202,8 +196,8 @@ const AdminDashboard = () => {
                   <div className="mock-screen">
                     {previewMode === 'main' ? (
                       <div className="preview-main" style={{ padding: '20px' }}>
-                        <div style={{display: 'flex', gap: '1rem', overflowX: 'auto'}}>
-                          <ProductCard product={{...formData, images: [formData.image1]}} disabledLink={true} />
+                        <div style={{ display: 'flex', gap: '1rem', overflowX: 'auto' }}>
+                          <ProductCard product={previewProduct} disabledLink={true} />
                         </div>
                       </div>
                     ) : (
@@ -213,7 +207,7 @@ const AdminDashboard = () => {
                         </div>
                         <div className="pdp-details" style={{ padding: '20px' }}>
                           <h1 className="pdp-title" style={{ fontSize: '1.4rem' }}>{formData.title || 'Título del Producto'}</h1>
-                          <p className="pdp-price" style={{ fontSize: '1rem' }}>${Number(formData.price || 0).toFixed(2)}</p>
+                          <p className="pdp-price" style={{ fontSize: '1rem' }}>${(parseFloat(formData.price) || 0).toFixed(2)}</p>
                           <button type="button" className="pdp-whatsapp-btn" style={{ fontSize: '0.85rem' }} disabled>
                             <MessageCircle size={16} /> Llevarte a hacer el pedido en WhatsApp
                           </button>

@@ -1,0 +1,116 @@
+/* ============================================================
+   DESIGN TOKENS — A Mi Vera
+   Cambia aquí para afectar toda la tienda.
+   ============================================================ */
+
+:root {
+
+  /* ----------------------------------------------------------
+     COLORES DE MARCA
+  ---------------------------------------------------------- */
+  --primary:   #1A1A1A; /* negro cálido — texto principal, botones */
+  --secondary: #F5F5F7; /* gris muy claro — superficies secundarias */
+  --accent:    #E5B299; /* beige/melocotón — color de énfasis de marca */
+
+  /* ----------------------------------------------------------
+     COLORES BASE
+  ---------------------------------------------------------- */
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* ----------------------------------------------------------
+     SUPERFICIES (fondos de secciones y contenedores)
+  ---------------------------------------------------------- */
+  --color-surface:     #f3f4f6; /* fondos de imagen, promo text, contenedores neutros */
+  --color-surface-alt: #f8f9fa; /* fondo del panel admin, secciones de preview */
+
+  /* ----------------------------------------------------------
+     BORDES
+  ---------------------------------------------------------- */
+  --color-border:        #e2e8f0; /* inputs, tarjetas admin, separadores visibles */
+  --color-border-subtle: #f1f3f5; /* navbar, drawer — bordes casi invisibles */
+
+  /* ----------------------------------------------------------
+     TEXTO
+  ---------------------------------------------------------- */
+  --text-main:              #2D2D2D; /* cuerpo principal */
+  --text-light:             #6E6E73; /* texto secundario cálido */
+  --color-text-muted:       #6b7280; /* precios de cards, textos de apoyo */
+  --color-text-body:        #374151; /* descripción de producto */
+  --color-text-dark:        #111827; /* cabeceras oscuras, footer promo */
+  --color-text-placeholder: #94a3b8; /* iconos de upload, placeholders */
+
+  /* ----------------------------------------------------------
+     FOOTER
+  ---------------------------------------------------------- */
+  --color-footer-bg:   #111827;
+  --color-footer-text: #9ca3af;
+
+  /* ----------------------------------------------------------
+     ESTADOS — ÉXITO
+  ---------------------------------------------------------- */
+  --color-success-bg:     #dcfce7;
+  --color-success-text:   #166534;
+  --color-success-border: #bbf7d0;
+
+  /* ----------------------------------------------------------
+     HERO
+  ---------------------------------------------------------- */
+  --hero-overlay: rgba(0, 0, 0, 0.5); /* opacidad del overlay sobre el vídeo */
+
+  /* ----------------------------------------------------------
+     FOCO (accesibilidad)
+  ---------------------------------------------------------- */
+  --color-focus-ring: rgba(229, 178, 153, 0.2); /* accent con opacidad para ring de foco */
+
+  /* ----------------------------------------------------------
+     GRADIENTE DE FONDO
+  ---------------------------------------------------------- */
+  --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+
+  /* ----------------------------------------------------------
+     RADIOS DE BORDE
+  ---------------------------------------------------------- */
+  --radius-xs:   4px;  /* badge "DESTACADO" */
+  --radius-sm:   6px;  /* botones CTA, WhatsApp, promo text */
+  --radius-md:   8px;  /* inputs, formularios */
+  --radius-lg:   12px; /* tarjetas de producto, admin card */
+  --radius-pill: 20px; /* hero pill, tabs de preview */
+  --radius-full: 36px; /* mockup de móvil */
+
+  --border-radius: var(--radius-lg); /* alias — mantiene compatibilidad con código existente */
+
+  /* ----------------------------------------------------------
+     SOMBRAS
+  ---------------------------------------------------------- */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);               /* navbar, badges */
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);          /* elementos sutiles */
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);         /* tarjetas */
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.15);        /* modales, drawers */
+  --shadow-xl: 0 10px 25px -5px rgba(0, 0, 0, 0.2);         /* mockup de móvil */
+
+  /* ----------------------------------------------------------
+     TRANSICIONES
+  ---------------------------------------------------------- */
+  --transition:         all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* transición suave general */
+  --transition-quick:   0.2s ease;                                   /* hovers y micro-animaciones */
+  --transition-drawer:  0.3s cubic-bezier(0.4, 0, 0.2, 1);          /* apertura del menú lateral */
+
+  /* ----------------------------------------------------------
+     TIPOGRAFÍA
+  ---------------------------------------------------------- */
+  --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* ----------------------------------------------------------
+     LAYOUT
+  ---------------------------------------------------------- */
+  --navbar-height:   60px;   /* altura de la barra de navegación */
+  --max-width-store: 1400px; /* ancho máximo del catálogo */
+  --max-width-pdp:   800px;  /* ancho máximo de la ficha de producto */
+
+  /* ----------------------------------------------------------
+     Z-INDEX
+  ---------------------------------------------------------- */
+  --z-navbar: 50;
+  --z-drawer: 100;
+}

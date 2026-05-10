@@ -1,0 +1,518 @@
+/* ============================================================
+   LAYOUT — Tienda pública: navbar, hero, catálogo, PDP, footer
+   ============================================================ */
+
+/* ── Contenedor raíz ── */
+.store-container {
+  width: 100%;
+}
+
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+
+.plattsupply-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  z-index: var(--z-navbar);
+  background-color: var(--color-white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border-subtle);
+  box-shadow: var(--shadow-xs);
+}
+
+.nav-icons-group {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.nav-icon {
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.nav-logo {
+  height: 24px;
+  object-fit: contain;
+}
+
+/* ── Drawer ── */
+.nav-drawer {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--color-white);
+  z-index: var(--z-drawer);
+  transition: left var(--transition-drawer);
+  overflow-y: auto;
+}
+
+.nav-drawer.open {
+  left: 0;
+}
+
+.nav-drawer-header {
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.nav-drawer-content {
+  padding: 2rem 1.5rem;
+}
+
+.nav-drawer-title {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.5px;
+}
+
+.nav-category-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-category-list li {
+  margin-bottom: 1.5rem;
+}
+
+.nav-category-list a {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--color-black);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* ── Buscador ── */
+.nav-search-form {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.nav-search-input {
+  border: none;
+  outline: none;
+  font-size: 1.1rem;
+  width: 200px;
+  background: transparent;
+}
+
+
+/* ============================================================
+   HERO
+   ============================================================ */
+
+.plattsupply-hero {
+  position: relative;
+  width: 100%;
+  background: var(--color-black);
+  padding-top: var(--navbar-height);
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-video-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.hero-bg-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--hero-overlay);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  color: var(--color-white);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+}
+
+.hero-pill {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.plattsupply-hero .hero-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  letter-spacing: -0.5px;
+}
+
+.plattsupply-hero .hero-subtitle {
+  font-size: 1rem;
+  font-weight: 400;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+  max-width: 400px;
+}
+
+.cta-button.primary-dark {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  padding: 0.9rem 2rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: transform var(--transition-quick);
+}
+
+.cta-button.primary-dark:hover {
+  transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   CATÁLOGO — Layout y secciones por categoría
+   ============================================================ */
+
+.platsupply-layout {
+  padding: 3rem 1.5rem;
+  background-color: var(--color-white);
+  max-width: var(--max-width-store);
+  margin: 0 auto;
+}
+
+.category-section {
+  margin-bottom: 3.5rem;
+}
+
+.section-header-mobile {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1.5rem;
+}
+
+.section-header-mobile h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-black);
+}
+
+.view-all-btn {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* ── Scroll horizontal ── */
+.horizontal-scroll-container {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* ============================================================
+   PRODUCT CARD
+   ============================================================ */
+
+.Plattsupply-card {
+  flex: 0 0 70%;
+  max-width: 280px;
+  scroll-snap-align: start;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+.Plattsupply-card:hover {
+  transform: none;
+}
+
+.Plattsupply-card .product-image-container {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.Plattsupply-card .product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.Plattsupply-card .product-category-tag {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: var(--color-white);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-xs);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--color-black);
+  text-transform: uppercase;
+  box-shadow: var(--shadow-sm);
+  z-index: 2;
+}
+
+.Plattsupply-card .product-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.Plattsupply-card .product-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+  color: var(--color-black);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.Plattsupply-card .product-price {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+/* ── Grid de resultados de búsqueda ── */
+.search-results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.5rem;
+}
+
+.search-results-grid .Plattsupply-card {
+  max-width: none;
+}
+
+.no-products {
+  color: var(--color-text-muted);
+  padding: 2rem 0;
+}
+
+.store-loading-text {
+  color: var(--color-text-muted);
+  padding: 4rem 0;
+  text-align: center;
+}
+
+
+/* ============================================================
+   PRODUCT DETAIL PAGE (PDP)
+   ============================================================ */
+
+.pdp-page {
+  background-color: var(--color-white);
+  min-height: 100vh;
+  padding-top: var(--navbar-height);
+}
+
+.pdp-main-content {
+  max-width: var(--max-width-pdp);
+  margin: 0 auto;
+  padding-bottom: 4rem;
+}
+
+.pdp-image-container {
+  width: 100%;
+  background-color: var(--color-surface);
+  aspect-ratio: 1/1;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pdp-main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.pdp-details {
+  padding: 2rem 1.5rem;
+}
+
+.pdp-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-black);
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+.pdp-price {
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.pdp-whatsapp-btn {
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  transition: transform var(--transition-quick);
+}
+
+.pdp-whatsapp-btn:hover {
+  transform: translateY(-2px);
+}
+
+.pdp-promo-text {
+  background-color: var(--color-surface);
+  text-align: center;
+  padding: 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  border-radius: var(--radius-sm);
+  margin-bottom: 2rem;
+}
+
+.pdp-description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-text-body);
+}
+
+.pdp-description p {
+  margin-bottom: 1rem;
+}
+
+/* ── Recomendados ── */
+.pdp-recommended {
+  padding: 2rem 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.pdp-recommended h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--color-black);
+}
+
+.recommended-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.recommended-card .product-image-container {
+  padding: 1rem;
+  aspect-ratio: 1/1;
+}
+
+.recommended-card .product-title {
+  font-size: 0.9rem;
+}
+
+.recommended-card .product-price {
+  font-size: 0.85rem;
+}
+
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+.footer {
+  background: var(--color-footer-bg);
+  padding: 4rem 1.5rem;
+  color: var(--color-footer-text);
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-logo {
+  height: 40px;
+  margin: 0 auto 1rem;
+  filter: brightness(0) invert(1);
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .plattsupply-hero .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .nav-links {
+    display: none;
+  }
+}
