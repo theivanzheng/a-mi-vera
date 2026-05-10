@@ -1,0 +1,607 @@
+[
+  {
+    "id": 1000,
+    "title": "Detalles con magia - Artículo Exclusivo 1",
+    "price": 31,
+    "category": "Detalles con magia",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Detalles con magia\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1001,
+    "title": "Detalles con magia - Artículo Exclusivo 2",
+    "price": 45,
+    "category": "Detalles con magia",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Detalles con magia\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1481437156560-3205f6a55735?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1002,
+    "title": "Detalles con magia - Artículo Exclusivo 3",
+    "price": 25,
+    "category": "Detalles con magia",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Detalles con magia\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1481437156560-3205f6a55735?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512418490979-92798cec1380?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1003,
+    "title": "Detalles con magia - Artículo Exclusivo 4",
+    "price": 50,
+    "category": "Detalles con magia",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Detalles con magia\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1512418490979-92798cec1380?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1523380744952-b7e00e6e2ffa?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1004,
+    "title": "Detalles con magia - Artículo Exclusivo 5",
+    "price": 22,
+    "category": "Detalles con magia",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Detalles con magia\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1523380744952-b7e00e6e2ffa?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1601055903647-8f1b61405e3a?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1005,
+    "title": "Regalos con foto - Artículo Exclusivo 1",
+    "price": 41,
+    "category": "Regalos con foto",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Regalos con foto\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1481437156560-3205f6a55735?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1006,
+    "title": "Regalos con foto - Artículo Exclusivo 2",
+    "price": 33,
+    "category": "Regalos con foto",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Regalos con foto\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1481437156560-3205f6a55735?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512418490979-92798cec1380?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1007,
+    "title": "Regalos con foto - Artículo Exclusivo 3",
+    "price": 15,
+    "category": "Regalos con foto",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Regalos con foto\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1512418490979-92798cec1380?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1523380744952-b7e00e6e2ffa?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1008,
+    "title": "Regalos con foto - Artículo Exclusivo 4",
+    "price": 40,
+    "category": "Regalos con foto",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Regalos con foto\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1523380744952-b7e00e6e2ffa?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1601055903647-8f1b61405e3a?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1009,
+    "title": "Regalos con foto - Artículo Exclusivo 5",
+    "price": 18,
+    "category": "Regalos con foto",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Regalos con foto\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1601055903647-8f1b61405e3a?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1582218413233-a38f32ac2dc8?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1010,
+    "title": "Pasión por la madera - Artículo Exclusivo 1",
+    "price": 20,
+    "category": "Pasión por la madera",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Pasión por la madera\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1481437156560-3205f6a55735?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512418490979-92798cec1380?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1011,
+    "title": "Pasión por la madera - Artículo Exclusivo 2",
+    "price": 50,
+    "category": "Pasión por la madera",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Pasión por la madera\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1512418490979-92798cec1380?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1523380744952-b7e00e6e2ffa?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1012,
+    "title": "Pasión por la madera - Artículo Exclusivo 3",
+    "price": 30,
+    "category": "Pasión por la madera",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Pasión por la madera\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1523380744952-b7e00e6e2ffa?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1601055903647-8f1b61405e3a?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1013,
+    "title": "Pasión por la madera - Artículo Exclusivo 4",
+    "price": 43,
+    "category": "Pasión por la madera",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Pasión por la madera\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1601055903647-8f1b61405e3a?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1582218413233-a38f32ac2dc8?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1014,
+    "title": "Pasión por la madera - Artículo Exclusivo 5",
+    "price": 22,
+    "category": "Pasión por la madera",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Pasión por la madera\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1582218413233-a38f32ac2dc8?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1584443181878-1a93e36e7dd7?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1015,
+    "title": "Pasión por el vino - Artículo Exclusivo 1",
+    "price": 50,
+    "category": "Pasión por el vino",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Pasión por el vino\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1512418490979-92798cec1380?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1523380744952-b7e00e6e2ffa?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1016,
+    "title": "Pasión por el vino - Artículo Exclusivo 2",
+    "price": 32,
+    "category": "Pasión por el vino",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Pasión por el vino\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1523380744952-b7e00e6e2ffa?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1601055903647-8f1b61405e3a?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1017,
+    "title": "Pasión por el vino - Artículo Exclusivo 3",
+    "price": 36,
+    "category": "Pasión por el vino",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Pasión por el vino\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1601055903647-8f1b61405e3a?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1582218413233-a38f32ac2dc8?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1018,
+    "title": "Pasión por el vino - Artículo Exclusivo 4",
+    "price": 35,
+    "category": "Pasión por el vino",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Pasión por el vino\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1582218413233-a38f32ac2dc8?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1584443181878-1a93e36e7dd7?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1019,
+    "title": "Pasión por el vino - Artículo Exclusivo 5",
+    "price": 42,
+    "category": "Pasión por el vino",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Pasión por el vino\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1584443181878-1a93e36e7dd7?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1528699633788-424224dc89b5?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1020,
+    "title": "Maestros cerveceros - Artículo Exclusivo 1",
+    "price": 32,
+    "category": "Maestros cerveceros",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Maestros cerveceros\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1523380744952-b7e00e6e2ffa?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1601055903647-8f1b61405e3a?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1021,
+    "title": "Maestros cerveceros - Artículo Exclusivo 2",
+    "price": 17,
+    "category": "Maestros cerveceros",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Maestros cerveceros\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1601055903647-8f1b61405e3a?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1582218413233-a38f32ac2dc8?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1022,
+    "title": "Maestros cerveceros - Artículo Exclusivo 3",
+    "price": 39,
+    "category": "Maestros cerveceros",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Maestros cerveceros\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1582218413233-a38f32ac2dc8?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1584443181878-1a93e36e7dd7?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1023,
+    "title": "Maestros cerveceros - Artículo Exclusivo 4",
+    "price": 20,
+    "category": "Maestros cerveceros",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Maestros cerveceros\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1584443181878-1a93e36e7dd7?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1528699633788-424224dc89b5?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1024,
+    "title": "Maestros cerveceros - Artículo Exclusivo 5",
+    "price": 50,
+    "category": "Maestros cerveceros",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Maestros cerveceros\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1528699633788-424224dc89b5?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1025,
+    "title": "Especial primera comunión - Artículo Exclusivo 1",
+    "price": 48,
+    "category": "Especial primera comunión",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Especial primera comunión\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1601055903647-8f1b61405e3a?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1582218413233-a38f32ac2dc8?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1026,
+    "title": "Especial primera comunión - Artículo Exclusivo 2",
+    "price": 48,
+    "category": "Especial primera comunión",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Especial primera comunión\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1582218413233-a38f32ac2dc8?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1584443181878-1a93e36e7dd7?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1027,
+    "title": "Especial primera comunión - Artículo Exclusivo 3",
+    "price": 43,
+    "category": "Especial primera comunión",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Especial primera comunión\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1584443181878-1a93e36e7dd7?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1528699633788-424224dc89b5?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1028,
+    "title": "Especial primera comunión - Artículo Exclusivo 4",
+    "price": 23,
+    "category": "Especial primera comunión",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Especial primera comunión\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1528699633788-424224dc89b5?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1029,
+    "title": "Especial primera comunión - Artículo Exclusivo 5",
+    "price": 52,
+    "category": "Especial primera comunión",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Especial primera comunión\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1030,
+    "title": "Regalos únicos - Artículo Exclusivo 1",
+    "price": 36,
+    "category": "Regalos únicos",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Regalos únicos\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1582218413233-a38f32ac2dc8?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1584443181878-1a93e36e7dd7?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1031,
+    "title": "Regalos únicos - Artículo Exclusivo 2",
+    "price": 23,
+    "category": "Regalos únicos",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Regalos únicos\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1584443181878-1a93e36e7dd7?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1528699633788-424224dc89b5?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1032,
+    "title": "Regalos únicos - Artículo Exclusivo 3",
+    "price": 43,
+    "category": "Regalos únicos",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Regalos únicos\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1528699633788-424224dc89b5?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1033,
+    "title": "Regalos únicos - Artículo Exclusivo 4",
+    "price": 42,
+    "category": "Regalos únicos",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Regalos únicos\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1034,
+    "title": "Regalos únicos - Artículo Exclusivo 5",
+    "price": 34,
+    "category": "Regalos únicos",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Regalos únicos\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1035,
+    "title": "Novedades - Artículo Exclusivo 1",
+    "price": 54,
+    "category": "Novedades",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Novedades\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1584443181878-1a93e36e7dd7?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1528699633788-424224dc89b5?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1036,
+    "title": "Novedades - Artículo Exclusivo 2",
+    "price": 47,
+    "category": "Novedades",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Novedades\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1528699633788-424224dc89b5?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1037,
+    "title": "Novedades - Artículo Exclusivo 3",
+    "price": 44,
+    "category": "Novedades",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Novedades\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1038,
+    "title": "Novedades - Artículo Exclusivo 4",
+    "price": 28,
+    "category": "Novedades",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Novedades\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1039,
+    "title": "Novedades - Artículo Exclusivo 5",
+    "price": 35,
+    "category": "Novedades",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Novedades\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1481437156560-3205f6a55735?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1040,
+    "title": "Nuestros peques - Artículo Exclusivo 1",
+    "price": 19,
+    "category": "Nuestros peques",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Nuestros peques\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1528699633788-424224dc89b5?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1041,
+    "title": "Nuestros peques - Artículo Exclusivo 2",
+    "price": 33,
+    "category": "Nuestros peques",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Nuestros peques\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1042,
+    "title": "Nuestros peques - Artículo Exclusivo 3",
+    "price": 16,
+    "category": "Nuestros peques",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Nuestros peques\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1043,
+    "title": "Nuestros peques - Artículo Exclusivo 4",
+    "price": 25,
+    "category": "Nuestros peques",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Nuestros peques\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1481437156560-3205f6a55735?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1044,
+    "title": "Nuestros peques - Artículo Exclusivo 5",
+    "price": 16,
+    "category": "Nuestros peques",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Nuestros peques\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1481437156560-3205f6a55735?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512418490979-92798cec1380?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1045,
+    "title": "Somos de cava - Artículo Exclusivo 1",
+    "price": 27,
+    "category": "Somos de cava",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Somos de cava\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1046,
+    "title": "Somos de cava - Artículo Exclusivo 2",
+    "price": 52,
+    "category": "Somos de cava",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Somos de cava\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1047,
+    "title": "Somos de cava - Artículo Exclusivo 3",
+    "price": 46,
+    "category": "Somos de cava",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Somos de cava\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1481437156560-3205f6a55735?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1048,
+    "title": "Somos de cava - Artículo Exclusivo 4",
+    "price": 40,
+    "category": "Somos de cava",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Somos de cava\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1481437156560-3205f6a55735?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512418490979-92798cec1380?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1049,
+    "title": "Somos de cava - Artículo Exclusivo 5",
+    "price": 49,
+    "category": "Somos de cava",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Somos de cava\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1512418490979-92798cec1380?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1523380744952-b7e00e6e2ffa?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1050,
+    "title": "Vivan los novios - Artículo Exclusivo 1",
+    "price": 51,
+    "category": "Vivan los novios",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Vivan los novios\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1051,
+    "title": "Vivan los novios - Artículo Exclusivo 2",
+    "price": 47,
+    "category": "Vivan los novios",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Vivan los novios\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1481437156560-3205f6a55735?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1052,
+    "title": "Vivan los novios - Artículo Exclusivo 3",
+    "price": 50,
+    "category": "Vivan los novios",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Vivan los novios\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1481437156560-3205f6a55735?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512418490979-92798cec1380?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1053,
+    "title": "Vivan los novios - Artículo Exclusivo 4",
+    "price": 45,
+    "category": "Vivan los novios",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Vivan los novios\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1512418490979-92798cec1380?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1523380744952-b7e00e6e2ffa?q=80&w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": 1054,
+    "title": "Vivan los novios - Artículo Exclusivo 5",
+    "price": 39,
+    "category": "Vivan los novios",
+    "description": "Un hermoso detalle personalizado dentro de la categoría \"Vivan los novios\".\n\nEste regalo ha sido diseñado cuidando hasta el más mínimo detalle para que esa fecha tan especial sea inolvidable.\nFabricado a mano con cariño por A Mi Vera.\n\nDimensiones estándar. Consulta para personalizaciones en el nombre o diseño.",
+    "images": [
+      "https://images.unsplash.com/photo-1523380744952-b7e00e6e2ffa?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1601055903647-8f1b61405e3a?q=80&w=800&auto=format&fit=crop"
+    ]
+  }
+]
