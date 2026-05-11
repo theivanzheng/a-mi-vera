@@ -41,20 +41,31 @@ export function useAdminCategories(): UseAdminCategoriesResult {
   }, []);
 
   async function refresh() {
-    const { data, error: err } = await getAdminCategories();
-    if (err) setError(err);
-    else { setSbCategories(data); setError(null); }
+    try {
+      const { data, error: err } = await getAdminCategories();
+      if (err) setError(err);
+      else { setSbCategories(data); setError(null); }
+    } catch {
+      // si el refresh lanza, la lista queda desactualizada pero no bloqueamos
+    }
   }
 
   async function createCategory(nombre: string, orden: number): Promise<string | null> {
     if (!isSupabaseConfigured) return 'Conecta Supabase para gestionar categorías.';
     setSaving(true);
     setError(null);
-    const { error: err } = await apiCreate(nombre, orden);
-    if (!err) await refresh();
-    else setError(err);
-    setSaving(false);
-    return err ?? null;
+    try {
+      const { error: err } = await apiCreate(nombre, orden);
+      if (!err) await refresh();
+      else setError(err);
+      return err ?? null;
+    } catch (ex) {
+      const msg = ex instanceof Error ? ex.message : 'Error inesperado al crear la categoría.';
+      setError(msg);
+      return msg;
+    } finally {
+      setSaving(false);
+    }
   }
 
   async function updateCategory(
@@ -64,22 +75,36 @@ export function useAdminCategories(): UseAdminCategoriesResult {
     if (!isSupabaseConfigured) return 'Conecta Supabase para gestionar categorías.';
     setSaving(true);
     setError(null);
-    const { error: err } = await apiUpdate(id, fields);
-    if (!err) await refresh();
-    else setError(err);
-    setSaving(false);
-    return err ?? null;
+    try {
+      const { error: err } = await apiUpdate(id, fields);
+      if (!err) await refresh();
+      else setError(err);
+      return err ?? null;
+    } catch (ex) {
+      const msg = ex instanceof Error ? ex.message : 'Error inesperado al actualizar la categoría.';
+      setError(msg);
+      return msg;
+    } finally {
+      setSaving(false);
+    }
   }
 
   async function deleteCategory(id: string): Promise<string | null> {
     if (!isSupabaseConfigured) return 'Conecta Supabase para gestionar categorías.';
     setSaving(true);
     setError(null);
-    const { error: err } = await apiDelete(id);
-    if (!err) await refresh();
-    else setError(err);
-    setSaving(false);
-    return err ?? null;
+    try {
+      const { error: err } = await apiDelete(id);
+      if (!err) await refresh();
+      else setError(err);
+      return err ?? null;
+    } catch (ex) {
+      const msg = ex instanceof Error ? ex.message : 'Error inesperado al eliminar la categoría.';
+      setError(msg);
+      return msg;
+    } finally {
+      setSaving(false);
+    }
   }
 
   if (!isSupabaseConfigured) {

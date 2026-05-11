@@ -35,13 +35,17 @@ export default function CategoryList() {
 
   async function handleSaveEdit(id: string) {
     setEditError(null);
-    const err = await updateCategory(id, {
-      nombre: editForm.nombre.trim(),
-      orden: parseInt(editForm.orden) || 0,
-      visible: editForm.visible,
-    });
-    if (err) setEditError(err);
-    else setEditingId(null);
+    try {
+      const err = await updateCategory(id, {
+        nombre: editForm.nombre.trim(),
+        orden: parseInt(editForm.orden) || 0,
+        visible: editForm.visible,
+      });
+      if (err) setEditError(err);
+      else setEditingId(null);
+    } catch {
+      setEditError('Error inesperado al guardar. Inténtalo de nuevo.');
+    }
   }
 
   function startDelete(id: string) {
@@ -53,13 +57,21 @@ export default function CategoryList() {
 
   async function handleDeleteConfirm(id: string) {
     setDeleteError(null);
-    const err = await deleteCategory(id);
-    if (err) setDeleteError(err);
-    else setPendingDelete(null);
+    try {
+      const err = await deleteCategory(id);
+      if (err) setDeleteError(err);
+      else setPendingDelete(null);
+    } catch {
+      setDeleteError('Error inesperado al eliminar. Inténtalo de nuevo.');
+    }
   }
 
   async function handleToggleVisible(cat: Category) {
-    await updateCategory(cat.id, { visible: !cat.visible });
+    try {
+      await updateCategory(cat.id, { visible: !cat.visible });
+    } catch {
+      // toggle no tiene UI de error dedicada; el usuario puede reintentar
+    }
   }
 
   async function handleCreate(e: FormEvent<HTMLFormElement>) {
@@ -68,9 +80,13 @@ export default function CategoryList() {
     const nombre = createForm.nombre.trim();
     if (!nombre) return;
     const orden = parseInt(createForm.orden) || 0;
-    const err = await createCategory(nombre, orden);
-    if (err) setCreateError(err);
-    else setCreateForm({ nombre: '', orden: '' });
+    try {
+      const err = await createCategory(nombre, orden);
+      if (err) setCreateError(err);
+      else setCreateForm({ nombre: '', orden: '' });
+    } catch {
+      setCreateError('Error inesperado al crear la categoría. Inténtalo de nuevo.');
+    }
   }
 
   if (loading) {
@@ -101,7 +117,7 @@ export default function CategoryList() {
           <input
             type="text"
             value={createForm.nombre}
-            onChange={e => setCreateForm(p => ({ ...p, nombre: e.currentTarget.value }))}
+            onChange={e => { const v = e.currentTarget.value; setCreateForm(p => ({ ...p, nombre: v })); }}
             placeholder="Nombre de la categoría"
             required
             disabled={saving}
@@ -109,7 +125,7 @@ export default function CategoryList() {
           <input
             type="number"
             value={createForm.orden}
-            onChange={e => setCreateForm(p => ({ ...p, orden: e.currentTarget.value }))}
+            onChange={e => { const v = e.currentTarget.value; setCreateForm(p => ({ ...p, orden: v })); }}
             placeholder="Orden"
             min="0"
             disabled={saving}
@@ -141,7 +157,7 @@ export default function CategoryList() {
                   <input
                     type="text"
                     value={editForm.nombre}
-                    onChange={e => setEditForm(p => ({ ...p, nombre: e.currentTarget.value }))}
+                    onChange={e => { const v = e.currentTarget.value; setEditForm(p => ({ ...p, nombre: v })); }}
                     className="admin-cat-edit-nombre"
                     disabled={saving}
                     autoFocus
@@ -149,7 +165,7 @@ export default function CategoryList() {
                   <input
                     type="number"
                     value={editForm.orden}
-                    onChange={e => setEditForm(p => ({ ...p, orden: e.currentTarget.value }))}
+                    onChange={e => { const v = e.currentTarget.value; setEditForm(p => ({ ...p, orden: v })); }}
                     className="admin-cat-edit-orden"
                     placeholder="Orden"
                     min="0"
@@ -159,7 +175,7 @@ export default function CategoryList() {
                     <input
                       type="checkbox"
                       checked={editForm.visible}
-                      onChange={e => setEditForm(p => ({ ...p, visible: e.currentTarget.checked }))}
+                      onChange={e => { const v = e.currentTarget.checked; setEditForm(p => ({ ...p, visible: v })); }}
                       disabled={saving}
                     />
                     <span>Visible</span>
