@@ -18,10 +18,21 @@ export interface ProductTextFields {
   description: string;
 }
 
+// Actualización parcial de campos escalares (sin imágenes)
+export type ProductPatch = Partial<{
+  visible: boolean;
+  stock: number;
+  destacado: boolean;
+  nuevo: boolean;
+}>;
+
+// Callback de progreso para operaciones de guardado largas
+export type ProgressFn = (phase: 'uploading' | 'saving') => void;
+
 // ── SELECT compartido ───────────────────────────────────────────────────────
 
 const PRODUCT_SELECT = `
-  id, titulo, slug, descripcion, precio,
+  id, titulo, slug, descripcion, precio, stock, visible, destacado, nuevo, created_at,
   categorias ( nombre ),
   imagenes_producto ( url, path, orden )
 `;
@@ -53,8 +64,13 @@ export function mapProductRow(row: DbProductoRow): Product {
     price: Number(row.precio),
     category: row.categorias?.nombre ?? '',
     description: row.descripcion ?? '',
+    visible: row.visible,
+    stock: row.stock,
+    destacado: row.destacado,
+    nuevo: row.nuevo,
     images: images.length > 0 ? images : ['https://via.placeholder.com/600?text=Sin+Imagen'],
     imagePaths,
+    createdAt: row.created_at,
   };
 }
 
@@ -104,6 +120,7 @@ export async function getAdminProducts(): Promise<{ data: Product[]; error: stri
 export async function createProduct(
   fields: ProductTextFields,
   images: ImageEntry[],
+  onProgress?: ProgressFn,
 ): Promise<{ error: string | null }> {
   // Generar ID de producto en cliente para usarlo en la ruta de Storage
   const productId = crypto.randomUUID();
@@ -112,6 +129,9 @@ export async function createProduct(
   const categoria_id = fields.category ? await resolveCategoriaId(fields.category) : null;
 
   // 1. Subir archivos nuevos ANTES de tocar la DB
+  const hasFiles = images.some(img => img.kind === 'file');
+  if (hasFiles) onProgress?.('uploading');
+
   const uploadedPaths: string[] = [];
   const resolvedImages: Array<{ path?: string; url?: string }> = [];
 
@@ -130,6 +150,8 @@ export async function createProduct(
       resolvedImages.push({ url: entry.url });
     }
   }
+
+  onProgress?.('saving');
 
   // 2. Insertar producto (con ID generado en cliente)
   const { error: prodErr } = await supabase!
@@ -185,12 +207,16 @@ export async function updateProduct(
   fields: ProductTextFields,
   images: ImageEntry[],
   oldStoragePaths: string[],
+  onProgress?: ProgressFn,
 ): Promise<{ error: string | null }> {
   const slug = toSlug(fields.title);
   const precio = parseFloat(fields.price);
   const categoria_id = fields.category ? await resolveCategoriaId(fields.category) : null;
 
   // 1. Subir archivos nuevos ANTES de tocar la DB
+  const hasFiles = images.some(img => img.kind === 'file');
+  if (hasFiles) onProgress?.('uploading');
+
   const newlyUploadedPaths: string[] = [];
   const resolvedImages: Array<{ path?: string; url?: string }> = [];
 
@@ -209,6 +235,8 @@ export async function updateProduct(
       resolvedImages.push({ url: entry.url });
     }
   }
+
+  onProgress?.('saving');
 
   // 2. Actualizar campos de texto del producto
   const { error: prodErr } = await supabase!
@@ -341,4 +369,15 @@ export async function deleteProduct(
     : null;
 
   return { error: null, storageWarning };
+}
+
+export async function patchProductFields(
+  id: string,
+  patch: ProductPatch,
+): Promise<{ error: string | null }> {
+  const { error } = await supabase!
+    .from('productos')
+    .update(patch)
+    .eq('id', id);
+  return { error: error ? translateDbError(error.message) : null };
 }

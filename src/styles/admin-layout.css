@@ -999,6 +999,361 @@
   margin-top: 1.5rem;
 }
 
+/* ── BARRA DE HERRAMIENTAS — búsqueda + filtros ── */
+
+.admin-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.admin-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.admin-search-icon {
+  position: absolute;
+  left: 0.7rem;
+  color: var(--color-text-muted);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.admin-search-input {
+  width: 100%;
+  padding: 0.55rem 0.75rem 0.55rem 2.1rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  background: var(--color-white);
+  color: var(--text-main);
+  appearance: none;
+}
+
+.admin-search-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.admin-filter-row {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding-bottom: 0.15rem;
+  scrollbar-width: none;
+}
+
+.admin-filter-row::-webkit-scrollbar { display: none; }
+
+.admin-chip {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.3rem 0.7rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  font-weight: 500;
+  background: var(--color-white);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  line-height: 1.4;
+  appearance: none;
+  transition: border-color 0.12s, color 0.12s, background 0.12s;
+}
+
+.admin-chip:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.admin-chip--active {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: var(--color-white);
+}
+
+.admin-chip--active:hover {
+  background-color: #2d2d2d;
+  border-color: #2d2d2d;
+  color: var(--color-white);
+}
+
+.admin-chip--select {
+  padding-right: 1.6rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7280'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.55rem center;
+  background-size: 8px;
+}
+
+/* ── Wrapper para select con icono a la izquierda ── */
+
+.admin-chip-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.admin-chip-wrap-icon {
+  position: absolute;
+  left: 0.6rem;
+  color: var(--color-text-muted);
+  pointer-events: none;
+  z-index: 1;
+  transition: color 0.12s;
+}
+
+.admin-chip-wrap .admin-chip--select {
+  padding-left: 1.85rem;
+}
+
+.admin-chip-wrap:hover .admin-chip-wrap-icon {
+  color: var(--primary);
+}
+
+.admin-chip-wrap--active .admin-chip-wrap-icon,
+.admin-chip-wrap--active:hover .admin-chip-wrap-icon {
+  color: var(--color-white);
+}
+
+/* Flecha del select en estado activo → blanca */
+.admin-chip-wrap--active .admin-chip--select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23ffffff'/%3E%3C/svg%3E");
+}
+
+/* ── Separador vertical entre selects y chips ── */
+
+.admin-filter-divider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--color-border);
+  flex-shrink: 0;
+  margin: 0 0.15rem;
+}
+
+.admin-chip--clear {
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  padding: 0.3rem 0.5rem;
+}
+
+.admin-chip--clear:hover {
+  color: var(--text-main);
+  border: none;
+}
+
+.admin-filter-summary {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-align: right;
+  margin-top: 0.5rem;
+}
+
+/* ── Sin resultados ── */
+
+.admin-no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--color-text-muted);
+  gap: 0.4rem;
+}
+
+.admin-no-results strong {
+  font-size: 0.95rem;
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+/* ── Badges de estado en tarjetas ── */
+
+.admin-product-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 0.15rem;
+}
+
+.admin-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.1rem 0.375rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+}
+
+.admin-badge--hidden    { background: var(--color-surface); color: var(--color-text-muted); }
+.admin-badge--destacado { background: #f59e0b; color: #fff; }
+.admin-badge--nuevo     { background: var(--accent); color: #fff; }
+.admin-badge--no-stock  { background: var(--color-surface); color: var(--color-text-muted); border: 1px solid var(--color-border); }
+
+/* Tarjeta de producto oculto — ligera opacidad */
+.admin-product-card--hidden {
+  opacity: 0.65;
+}
+
+/* Botón visibilidad desactivada */
+.admin-icon-btn--muted {
+  color: var(--color-text-muted) !important;
+}
+
+/* ── GESTIÓN DE STOCK ── */
+
+.admin-stock-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.admin-stock-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  background: var(--color-white);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.admin-stock-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--color-surface);
+}
+
+.admin-stock-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-stock-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-stock-cat {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+.admin-stock-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-shrink: 0;
+}
+
+.admin-stock-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-white);
+  color: var(--text-main);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.12s, color 0.12s;
+}
+
+.admin-stock-btn:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.admin-stock-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.admin-stock-input {
+  width: 54px;
+  text-align: center;
+  padding: 0.3rem 0.25rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-main);
+  background: var(--color-white);
+  -moz-appearance: textfield;
+}
+
+.admin-stock-input::-webkit-outer-spin-button,
+.admin-stock-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+.admin-stock-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.admin-stock-input--dirty {
+  border-color: var(--accent);
+  color: var(--text-main);
+}
+
+.admin-stock-status {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.admin-stock-saved {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #16a34a;
+}
+
+.admin-stock-saving {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+}
+
+@keyframes adminSpin {
+  to { transform: rotate(360deg); }
+}
+
+.admin-stock-saving svg {
+  animation: adminSpin 0.75s linear infinite;
+}
+
 /* ── VISTAS PLACEHOLDER ── */
 
 .admin-placeholder {
@@ -1306,9 +1661,29 @@
   text-transform: uppercase;
 }
 
+.admin-upload-compressing {
+  width: 100%;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: var(--bg-muted);
+  border: 1.5px dashed var(--border);
+  animation: adminPulse 1.2s ease-in-out infinite;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+@keyframes adminPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+
 /* Desktop: la grid de imágenes pasa a 4 columnas (ya definido arriba para .admin-images-grid) */
 @media (min-width: 768px) {
-  .admin-upload-dropzone {
+  .admin-upload-dropzone,
+  .admin-upload-compressing {
     height: auto;
     aspect-ratio: 1 / 1;
   }

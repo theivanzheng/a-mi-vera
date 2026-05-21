@@ -7,7 +7,15 @@ import {
   createProduct as apiCreate,
   updateProduct as apiUpdate,
   deleteProduct as apiDelete,
+  patchProductFields,
+  type ImageEntry,
+  type ProductTextFields,
+  type ProductPatch,
+  type ProgressFn,
 } from '../lib/productsApi';
+
+// Re-exportar para que ProductForm pueda importarlos desde el hook
+export type { ImageEntry, ProductTextFields, ProductPatch, ProgressFn };
 
 const MAESTRAS_CATEGORIAS: string[] = [
   'Todos',
@@ -31,15 +39,31 @@ function buildCategories(productList: Product[]): string[] {
   return result;
 }
 
+// Convierte campos + entradas de imagen al formato que espera ProductContext (fallback sin Supabase)
+function toFallbackFormData(fields: ProductTextFields, images: ImageEntry[]): ProductFormData {
+  const getUrl = (e: ImageEntry | undefined) =>
+    e?.kind === 'url' ? e.url : '';
+  return {
+    ...fields,
+    image1: getUrl(images[0]),
+    image2: getUrl(images[1]),
+    image3: getUrl(images[2]),
+    image4: getUrl(images[3]),
+  };
+}
+
 export interface UseAdminProductsResult {
   products: Product[];
   categories: string[];
   loading: boolean;
   saving: boolean;
   error: string | null;
-  addProduct: (formData: ProductFormData) => Promise<string | null>;
-  updateProduct: (id: string, formData: ProductFormData) => Promise<string | null>;
+  // Aviso no fatal: el producto se eliminó pero algunos archivos de Storage no pudieron borrarse
+  storageWarning: string | null;
+  addProduct: (fields: ProductTextFields, images: ImageEntry[], onProgress?: ProgressFn) => Promise<string | null>;
+  updateProduct: (id: string, fields: ProductTextFields, images: ImageEntry[], oldStoragePaths: string[], onProgress?: ProgressFn) => Promise<string | null>;
   deleteProduct: (id: string) => Promise<string | null>;
+  patchProduct: (id: string, patch: ProductPatch) => Promise<string | null>;
 }
 
 export function useAdminProducts(): UseAdminProductsResult {
@@ -51,6 +75,7 @@ export function useAdminProducts(): UseAdminProductsResult {
   const [loading, setLoading] = useState(isSupabaseConfigured);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [storageWarning, setStorageWarning] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isSupabaseConfigured) return;
@@ -67,28 +92,38 @@ export function useAdminProducts(): UseAdminProductsResult {
     else { setSbProducts(data); setError(null); }
   }
 
-  async function addProduct(formData: ProductFormData): Promise<string | null> {
+  async function addProduct(
+    fields: ProductTextFields,
+    images: ImageEntry[],
+    onProgress?: ProgressFn,
+  ): Promise<string | null> {
     if (!isSupabaseConfigured) {
-      ctxRef.current.addProduct(formData);
+      ctxRef.current.addProduct(toFallbackFormData(fields, images));
       return null;
     }
     setSaving(true);
     setError(null);
-    const { error: err } = await apiCreate(formData);
+    const { error: err } = await apiCreate(fields, images, onProgress);
     if (!err) await refresh();
     else setError(err);
     setSaving(false);
     return err ?? null;
   }
 
-  async function updateProduct(id: string, formData: ProductFormData): Promise<string | null> {
+  async function updateProduct(
+    id: string,
+    fields: ProductTextFields,
+    images: ImageEntry[],
+    oldStoragePaths: string[],
+    onProgress?: ProgressFn,
+  ): Promise<string | null> {
     if (!isSupabaseConfigured) {
-      ctxRef.current.updateProduct(id, formData);
+      ctxRef.current.updateProduct(id, toFallbackFormData(fields, images));
       return null;
     }
     setSaving(true);
     setError(null);
-    const { error: err } = await apiUpdate(id, formData);
+    const { error: err } = await apiUpdate(id, fields, images, oldStoragePaths, onProgress);
     if (!err) await refresh();
     else setError(err);
     setSaving(false);
@@ -102,7 +137,29 @@ export function useAdminProducts(): UseAdminProductsResult {
     }
     setSaving(true);
     setError(null);
-    const { error: err } = await apiDelete(id);
+    setStorageWarning(null);
+
+    // Extraer paths de Storage desde los datos ya cargados (mismo origen que usa updateProduct
+    // con oldStoragePaths — evita un SELECT independiente que puede retornar vacío por RLS)
+    const product = sbProducts.find(p => p.id === id);
+    const storagePaths = (product?.imagePaths ?? []).filter((p): p is string => p !== null);
+
+    const { error: err, storageWarning: sw } = await apiDelete(id, storagePaths);
+    if (!err) {
+      await refresh();
+      if (sw) setStorageWarning(sw);
+    } else {
+      setError(err);
+    }
+    setSaving(false);
+    return err ?? null;
+  }
+
+  async function patchProduct(id: string, patch: ProductPatch): Promise<string | null> {
+    if (!isSupabaseConfigured) return null;
+    setSaving(true);
+    setError(null);
+    const { error: err } = await patchProductFields(id, patch);
     if (!err) await refresh();
     else setError(err);
     setSaving(false);
@@ -115,8 +172,10 @@ export function useAdminProducts(): UseAdminProductsResult {
     loading: isSupabaseConfigured ? loading : false,
     saving,
     error,
+    storageWarning,
     addProduct,
     updateProduct,
     deleteProduct,
+    patchProduct,
   };
 }

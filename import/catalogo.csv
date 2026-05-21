@@ -1,0 +1,4 @@
+titulo,precio,categoria,descripcion,stock,visible,destacado,nuevo,imagen_url_1,imagen_url_2,imagen_url_3,imagen_url_4,notas
+"Copa de vino personalizada",18.50,"Pasión por el vino","Copa grabada con láser con el nombre o texto que quieras. Perfecta para regalar.",,true,false,false,https://ejemplo.com/copa-vino.jpg,,,,Revisar precio con IVA
+"Tabla de madera con foto",24.95,"Pasión por la madera","Tabla de cortar de madera maciza con fotografía personalizada grabada.",,true,true,true,https://ejemplo.com/tabla-madera-1.jpg,https://ejemplo.com/tabla-madera-2.jpg,,,Foto lateral pendiente
+"Cerveza artesana personalizada",12.00,"Maestros cerveceros","Pack de 2 botellas de cerveza con etiqueta diseñada a medida para tu ocasión especial.",10,true,false,false,,,,,"Producto con stock limitado"

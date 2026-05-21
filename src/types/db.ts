@@ -18,6 +18,11 @@ export interface DbProductoRow {
   slug: string;
   descripcion: string | null;
   precio: string; // NUMERIC devuelve string en supabase-js
+  stock: number;
+  visible: boolean;
+  destacado: boolean;
+  nuevo: boolean;
+  created_at: string;
   categorias: DbCategoria | null; // nullable porque categoria_id es nullable
   imagenes_producto: DbImagenProducto[];
 }

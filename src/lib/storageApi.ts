@@ -7,6 +7,60 @@ export const DEBUG_STORAGE = false;
 const ALLOWED_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
 const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
 
+const MAX_IMAGE_PX = 1600;
+const JPEG_QUALITY = 0.85;
+
+// Redimensiona una imagen al máximo de MAX_IMAGE_PX en el lado mayor.
+// Devuelve el File original si ya es suficientemente pequeño o si algo falla.
+// Salida: JPEG (compatible en todos los navegadores para canvas.toBlob).
+export function resizeImage(file: File, maxPx = MAX_IMAGE_PX): Promise<File> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    const srcUrl = URL.createObjectURL(file);
+
+    img.onload = () => {
+      URL.revokeObjectURL(srcUrl);
+      const w = img.naturalWidth;
+      const h = img.naturalHeight;
+
+      if (w === 0 || h === 0 || (w <= maxPx && h <= maxPx)) {
+        resolve(file);
+        return;
+      }
+
+      const scale = Math.min(maxPx / w, maxPx / h);
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(w * scale);
+      canvas.height = Math.round(h * scale);
+
+      const ctx = canvas.getContext('2d');
+      if (!ctx) { resolve(file); return; }
+
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+      canvas.toBlob(
+        (blob) => {
+          if (!blob || blob.size >= file.size) {
+            resolve(file);
+            return;
+          }
+          const base = file.name.replace(/\.[^.]+$/, '');
+          resolve(new File([blob], `${base}.jpg`, { type: 'image/jpeg' }));
+        },
+        'image/jpeg',
+        JPEG_QUALITY,
+      );
+    };
+
+    img.onerror = () => {
+      URL.revokeObjectURL(srcUrl);
+      resolve(file);
+    };
+
+    img.src = srcUrl;
+  });
+}
+
 export function validateImageFile(file: File): string | null {
   if (!ALLOWED_TYPES.has(file.type)) {
     return 'Solo se aceptan imágenes JPG, PNG o WEBP.';

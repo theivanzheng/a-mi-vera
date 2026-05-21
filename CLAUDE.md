@@ -255,6 +255,28 @@ No hay tabla `admin_users`. La admin se gestiona en Supabase Auth directamente.
 - `.admin-delete-error` muestra el error inline dentro del diálogo de confirmación de borrado.
 - Riesgo aceptado: no hay transacciones atómicas en el cliente (supabase-js). La secuencia UPDATE productos → DELETE imágenes → INSERT imágenes tiene una ventana de inconsistencia si falla en medio. Solución completa requeriría una Edge Function o RPC. Queda como riesgo documentado para Fase 5F.
 
+### Decisiones tomadas en Fase 6C (optimización automática de imágenes + progreso de guardado)
+
+- **Redimensionado automático en cliente**: `resizeImage()` en `storageApi.ts` usa Canvas nativo (`canvas.toBlob`) sin dependencias externas. Máximo 1600px en el lado mayor, salida JPEG al 85% de calidad. Si el resultado es más grande que el original (ej. PNG pequeño ya optimizado), devuelve el archivo original sin tocar.
+- **JPEG elegido sobre WEBP**: `canvas.toBlob` con `'image/jpeg'` tiene soporte universal en todos los navegadores. WEBP no está soportado en canvas en Safari antiguo.
+- **`handleFileChange` asíncrono**: al seleccionar un archivo, el slot muestra `compressing: true` inmediatamente (sin bloquear la UI). `resizeImage` se llama en paralelo mientras el usuario puede seguir interactuando con otros slots.
+- **Estado `savePhase: 'uploading' | 'saving' | null`**: nuevo estado en `ProductForm`. Se establece via `onProgress` callback antes de subir archivos y antes de tocar la DB. Se resetea a `null` al terminar (con éxito o con error).
+- **`ProgressFn` propagado por capas**: `ProductForm` → `useAdminProducts.addProduct/updateProduct` → `productsApi.createProduct/updateProduct`. El parámetro es opcional en todos los niveles para no romper callers existentes.
+- **Textos del botón submit** (en orden de prioridad): "Producto guardado correctamente" → "Subiendo imágenes…" → "Guardando producto…" → "Guardando…" → "Guardar cambios" / "Publicar producto".
+- **UI slot comprimiendo**: clase `.admin-upload-compressing` con animación `adminPulse` (pulsado suave) muestra "Preparando…" mientras `resizeImage` procesa. Toma las mismas dimensiones que el dropzone (incluido `aspect-ratio: 1/1` en desktop ≥768px).
+
+### Decisiones tomadas en Fase 7A (plantilla CSV + importador base de productos)
+
+- **Catálogo WhatsApp no es scrapeable**: `wa.me/c/` redirige a `whatsapp.com/catalog/` — página sin datos de producto en el DOM. El contenido solo existe dentro de la app. Solución: importar desde CSV rellenado a mano o exportado desde Meta Graph API (si el catálogo es propio).
+- **service_role_key en scripts locales**: los scripts de Node.js usan `SUPABASE_SERVICE_ROLE_KEY` (sin prefijo `VITE_`) para bypassar RLS. Esta variable está en `.env.local` (nunca en Git) y Vite nunca la incluye en el bundle del navegador. Es la única excepción aceptada al uso de service_role en este proyecto.
+- **Dependencias de scripts como devDeps**: `tsx` (ejecutar TS en Node), `csv-parse` (parse RFC 4180 con soporte BOM/UTF-8), `dotenv` (cargar `.env.local`). Solo en devDependencies; sin impacto en el bundle del frontend.
+- **Validación separada de importación**: `import:validate` funciona sin DB ni credenciales. `import:dev` valida primero y aborta si hay errores — importación solo si el CSV está limpio.
+- **Resolución de slugs**: conflictos con la DB se resuelven añadiendo sufijo (`-2`, `-3`). Conflictos dentro del propio CSV son error bloqueante — el usuario debe diferencias los títulos.
+- **Imágenes como URL externa**: el importador inserta `imagenes_producto.url` (sin `path`). Para mover a Storage, editar cada producto desde el formulario admin.
+- **Campos importados**: `titulo`, `precio`, `descripcion`, `categoria_id` (resuelto o creado), `stock`, `visible`, `destacado`, `nuevo`, `orden` (máx. existente +1). La columna `notas` del CSV no se importa a la DB.
+- **Formato CSV**: cabecera fija con 13 columnas. El separador es coma. Los campos con comas o comillas deben ir entre comillas dobles (RFC 4180). Se acepta UTF-8 con y sin BOM (generado por Excel).
+- **tsconfig.scripts.json**: configuración separada para scripts (`NodeNext`, `skipLibCheck`, `DOM` libs para los tipos de supabase-js). El type-check de los scripts se ejecuta automáticamente como parte de `npm run import:validate` y `npm run import:dev`.
+
 ---
 
 ## Estado del proyecto
@@ -279,4 +301,7 @@ No hay tabla `admin_users`. La admin se gestiona en Supabase Auth directamente.
 | Fase 5F | Hardening DEV + preparación PROD | ✅ Completada |
 | Fase 6A | Storage de imágenes — subida real desde admin | ✅ Completada |
 | Fase 6B | UX admin productos + paths legibles en Storage | ✅ Completada |
-| Fase 7 | Importación masiva desde Excel | ⏳ Pendiente |
+| Fase 6C | Optimización automática de imágenes + progreso de guardado | ✅ Completada |
+| Fase 7A | Plantilla CSV + importador base de productos | ✅ Completada |
+| Fase 6D.1 | Panel admin: búsqueda/filtros en productos, stock real, placeholder portada | ✅ Completada |
+| Fase 7B | Importación masiva con imágenes (subida a Storage desde CSV) | ⏳ Pendiente |

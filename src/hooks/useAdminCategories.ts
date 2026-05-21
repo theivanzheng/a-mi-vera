@@ -16,9 +16,14 @@ export interface UseAdminCategoriesResult {
   loading: boolean;
   saving: boolean;
   error: string | null;
-  createCategory: (nombre: string, orden: number) => Promise<string | null>;
+  createCategory: (nombre: string) => Promise<string | null>;
   updateCategory: (id: string, fields: Partial<Pick<Category, 'nombre' | 'visible' | 'orden'>>) => Promise<string | null>;
   deleteCategory: (id: string) => Promise<string | null>;
+}
+
+function getNextCategoryOrder(categories: Category[]): number {
+  if (categories.length === 0) return 0;
+  return Math.max(...categories.map(category => category.orden)) + 10;
 }
 
 export function useAdminCategories(): UseAdminCategoriesResult {
@@ -50,11 +55,12 @@ export function useAdminCategories(): UseAdminCategoriesResult {
     }
   }
 
-  async function createCategory(nombre: string, orden: number): Promise<string | null> {
+  async function createCategory(nombre: string): Promise<string | null> {
     if (!isSupabaseConfigured) return 'Conecta Supabase para gestionar categorías.';
     setSaving(true);
     setError(null);
     try {
+      const orden = getNextCategoryOrder(sbCategories);
       const { error: err } = await apiCreate(nombre, orden);
       if (!err) await refresh();
       else setError(err);

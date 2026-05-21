@@ -66,6 +66,17 @@ export async function updateCategory(
     .eq('id', id);
 
   if (error) return { error: translateCatError(error.message) };
+
+  // Cascada: sincronizar visibilidad de productos cuando cambia la de la categoría
+  if (fields.visible !== undefined) {
+    const { error: prodErr } = await supabase!
+      .from('productos')
+      .update({ visible: fields.visible })
+      .eq('categoria_id', id);
+
+    if (prodErr) return { error: translateCatError(prodErr.message) };
+  }
+
   return { error: null };
 }
 

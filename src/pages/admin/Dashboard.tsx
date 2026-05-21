@@ -1,10 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { Package, Tag, Plus, Eye } from 'lucide-react';
-import { useProductContext } from '../../context/ProductContext';
+import { useAdminProducts } from '../../hooks/useAdminProducts';
+import { useAdminCategories } from '../../hooks/useAdminCategories';
 
 export default function Dashboard() {
-  const { products, categories } = useProductContext();
+  const { products, loading: productsLoading, error: productsError } = useAdminProducts();
+  const { categories, loading: categoriesLoading, error: categoriesError } = useAdminCategories();
   const navigate = useNavigate();
+  const loading = productsLoading || categoriesLoading;
+  const error = productsError ?? categoriesError;
 
   const stats = [
     { label: 'Productos',   value: products.length,   icon: Package },
@@ -13,6 +17,14 @@ export default function Dashboard() {
 
   return (
     <div className="admin-dashboard">
+      {loading && (
+        <p className="admin-loading-text">Cargando resumen del panel…</p>
+      )}
+
+      {!loading && error && (
+        <p className="admin-form-error">{error}</p>
+      )}
+
       <div className="admin-stats-grid">
         {stats.map(({ label, value, icon: Icon }) => (
           <div key={label} className="admin-stat-card">
@@ -20,7 +32,7 @@ export default function Dashboard() {
               <Icon size={22} />
             </div>
             <div className="admin-stat-info">
-              <span className="admin-stat-value">{value}</span>
+              <span className="admin-stat-value">{loading ? '…' : value}</span>
               <span className="admin-stat-label">{label}</span>
             </div>
           </div>

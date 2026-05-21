@@ -6,6 +6,14 @@ export interface Product {
   category: string;
   description: string;
   images: string[];
+  // Rutas de Storage alineadas con images[] (null = URL externa). Opcional: ausente en el fallback local.
+  imagePaths?: (string | null)[];
+  // Campos opcionales: presentes cuando se carga desde Supabase, ausentes en el fallback localStorage.
+  visible?: boolean;
+  stock?: number;
+  destacado?: boolean;
+  nuevo?: boolean;
+  createdAt?: string; // ISO 8601 — usado para ordenar por más reciente
 }
 
 export interface Category {

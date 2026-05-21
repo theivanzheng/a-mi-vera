@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "import:validate": "tsc --noEmit -p scripts/tsconfig.json && tsx scripts/validate-products-import.ts",
+    "import:dev": "tsc --noEmit -p scripts/tsconfig.json && tsx scripts/import-products-dev.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.105.4",
@@ -21,10 +23,13 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
+    "csv-parse": "^6.2.1",
+    "dotenv": "^17.4.2",
     "eslint": "^9.39.4",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
+    "tsx": "^4.22.3",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.2",
     "vite": "^8.0.4"

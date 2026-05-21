@@ -9,12 +9,13 @@ export default function HomeEditor() {
 
       <div className="admin-placeholder">
         <div className="admin-placeholder-icon"><Home size={40} /></div>
-        <h2>Editor de portada en Fase 5</h2>
+        <h2>Gestión de portada pendiente</h2>
         <p>
-          Personaliza el héroe, banners y secciones destacadas
-          de la tienda. Disponible al conectar Supabase.
+          El editor de portada (héroe, banners, secciones destacadas) se implementará
+          en una fase futura. Por ahora, el contenido de la portada se gestiona
+          directamente en el código.
         </p>
-        <span className="admin-placeholder-badge">Próximamente — Fase 5</span>
+        <span className="admin-placeholder-badge">Próximamente</span>
       </div>
     </div>
   );
