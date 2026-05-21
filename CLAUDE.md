@@ -213,6 +213,39 @@ No hay tabla `admin_users`. La admin se gestiona en Supabase Auth directamente.
 - **Riesgo crítico detectado**: todo el código TypeScript (Fases 2–5E) nunca se ha committado a Git. El repo solo tiene la versión JSX de Fase 1. El primer paso obligatorio antes de PROD es `git add` + `git commit` de todo el código actual.
 - Checklist de paso a PROD añadida al README.
 
+### Decisiones tomadas en Fase 6A (Storage de imágenes)
+
+- Bucket: `imagenes-productos` (ya existía con policies de lectura pública y escritura solo admin).
+- Ruta de Storage: `productos/{producto_id}/{uuid8}_{nombre_seguro}.{ext}`.
+- El `producto_id` se genera en el cliente (`crypto.randomUUID()`) antes de cualquier INSERT, para poder usarlo en la ruta de Storage sin depender de la DB.
+- `storageApi.ts` centraliza: `uploadImage`, `getPublicImageUrl`, `deleteStorageImages`, `validateImageFile`.
+- Validación en cliente: solo JPG, PNG, WEBP y máximo 5 MB. La validación ocurre en `handleFileChange`, antes de cualquier llamada de red.
+- `mapProductRow` convierte `img.path` → URL pública con `getPublicImageUrl(path)` (síncrono, sin red). Las filas con `img.url` (datos anteriores) se usan como URL externa directamente.
+- `Product.imagePaths?: (string | null)[]` — campo opcional añadido para que `ProductForm` sepa qué rutas de Storage borrar al editar. `null` = imagen con URL externa, string = ruta de Storage.
+- `productsApi.ts`: `createProduct` y `updateProduct` reciben `ImageEntry[]` en lugar de leer de `formData.image1..4`. `deleteProduct` borra archivos de Storage antes de retornar.
+- `useAdminProducts.ts`: nueva interfaz `addProduct(fields, images)` / `updateProduct(id, fields, images, oldPaths)`. El fallback sin Supabase sigue funcionando (convierte `ImageEntry[url]` a `ProductFormData.image1..4`).
+- `ProductForm` muestra file inputs (modo Supabase) o URL inputs (modo fallback). Preview local instantáneo con `URL.createObjectURL()`. Los blob URLs se liberan con `URL.revokeObjectURL()` al desmontar o al sustituir imagen.
+- Seguridad en `deleteStorageImages`: best-effort (no bloquea al usuario si el borrado de Storage falla — los archivos quedan huérfanos como caso límite aceptado).
+- El borrado de archivos de Storage al editar se hace DESPUÉS de confirmar que el INSERT de nuevas filas fue exitoso.
+
+### Decisiones tomadas en Fase 6B (UX admin + paths legibles + limpieza debug)
+
+- **Paths de Storage ahora legibles** (solo uploads nuevos; archivos existentes no migrados):
+  - Formato anterior: `productos/{uuid}/{uuid8}_{nombre}.{ext}`
+  - Formato nuevo:    `productos/{slug}-{shortId}/{uuid8}_{nombre}.{ext}`
+  - Ejemplo real:     `productos/copa-vino-grabada-a1b2c3d4/ab12cd34_copa.jpg`
+  - `shortId` = primeros 8 chars del UUID del producto (garantiza unicidad de carpeta si el slug cambia o colisiona).
+  - `uploadImage()` ahora recibe `productSlug: string` como segundo parámetro. Los callers (`createProduct`, `updateProduct`) ya tenían el slug computado con `toSlug(fields.title)`.
+  - `deleteStorageImages()` no cambió: recibe el path exacto almacenado en DB, funciona con ambos formatos.
+  - Carpetas virtuales vacías en Storage son cosmética: no queda ningún archivo físico tras borrar. Documentado en README.
+- **UX tarjetas de productos admin** (`/admin/productos`):
+  - `.admin-product-name` ya no trunca con ellipsis — permite wrapping completo (`word-break: break-word`).
+  - `.admin-product-card` pasa a `align-items: flex-start` para alinearse con el nombre de varias líneas.
+  - Nueva clase `.admin-product-foot`: fila inferior con precio (izquierda) y botones editar/borrar (derecha).
+  - La estructura de la tarjeta queda: [imagen] [nombre | categoría | [precio — editar — borrar]].
+  - Diseño desktop no afectado: sigue siendo una fila horizontal con flexbox.
+- **Limpieza debug**: `DEBUG_STORAGE = false`. Los logs numerados permanecen en el código pero silenciados; reactivar con `true` si vuelve a necesitarse diagnóstico de Storage.
+
 ### Decisiones tomadas en Fase 5E.3 (validación CRUD)
 
 - `productsApi.ts` añade `translateDbError()`: convierte errores Postgres/RLS/JWT a mensajes en español.
@@ -244,5 +277,6 @@ No hay tabla `admin_users`. La admin se gestiona en Supabase Auth directamente.
 | Fase 5E.3 | Validación y hardening CRUD en DEV | ✅ Completada |
 | Fase 5E.2B | CRUD admin categorías desde Supabase | ✅ Completada |
 | Fase 5F | Hardening DEV + preparación PROD | ✅ Completada |
-| Fase 6 | Storage de imágenes | ⏳ Pendiente |
+| Fase 6A | Storage de imágenes — subida real desde admin | ✅ Completada |
+| Fase 6B | UX admin productos + paths legibles en Storage | ✅ Completada |
 | Fase 7 | Importación masiva desde Excel | ⏳ Pendiente |

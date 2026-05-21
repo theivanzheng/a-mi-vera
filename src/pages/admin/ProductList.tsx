@@ -4,7 +4,7 @@ import { Plus, Pencil, Trash2, Package } from 'lucide-react';
 import { useAdminProducts } from '../../hooks/useAdminProducts';
 
 export default function ProductList() {
-  const { products, deleteProduct, loading, saving } = useAdminProducts();
+  const { products, deleteProduct, loading, saving, storageWarning } = useAdminProducts();
   const navigate = useNavigate();
   const [pendingDelete, setPendingDelete] = useState<string | null>(null);
   const [deleteError, setDeleteError] = useState<string | null>(null);
@@ -62,6 +62,10 @@ export default function ProductList() {
         </Link>
       </div>
 
+      {storageWarning && (
+        <div className="admin-storage-warning">{storageWarning}</div>
+      )}
+
       <div className="admin-product-cards">
         {products.map(product => (
           <div
@@ -100,33 +104,33 @@ export default function ProductList() {
                 </button>
               </div>
             ) : (
-              <>
-                <div className="admin-product-info">
-                  <div className="admin-product-name">{product.title}</div>
-                  <div className="admin-product-meta">{product.category}</div>
+              <div className="admin-product-info">
+                <div className="admin-product-name">{product.title}</div>
+                <div className="admin-product-meta">{product.category}</div>
+                <div className="admin-product-foot">
+                  <span className="admin-product-price">
+                    {product.price.toFixed(2)} €
+                  </span>
+                  <div className="admin-product-actions">
+                    <button
+                      className="admin-icon-btn"
+                      onClick={() => navigate(`/admin/productos/${product.id}/editar`)}
+                      aria-label={`Editar ${product.title}`}
+                      disabled={saving}
+                    >
+                      <Pencil size={16} />
+                    </button>
+                    <button
+                      className="admin-icon-btn admin-icon-btn--danger"
+                      onClick={() => setPendingDelete(product.id)}
+                      aria-label={`Eliminar ${product.title}`}
+                      disabled={saving}
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
                 </div>
-                <span className="admin-product-price">
-                  {product.price.toFixed(2)} €
-                </span>
-                <div className="admin-product-actions">
-                  <button
-                    className="admin-icon-btn"
-                    onClick={() => navigate(`/admin/productos/${product.id}/editar`)}
-                    aria-label={`Editar ${product.title}`}
-                    disabled={saving}
-                  >
-                    <Pencil size={16} />
-                  </button>
-                  <button
-                    className="admin-icon-btn admin-icon-btn--danger"
-                    onClick={() => setPendingDelete(product.id)}
-                    aria-label={`Eliminar ${product.title}`}
-                    disabled={saving}
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
-              </>
+              </div>
             )}
           </div>
         ))}

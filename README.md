@@ -19,7 +19,8 @@ Aplicación web de comercio electrónico para **A Mi Vera**, una tienda de regal
 | Fase 5E.2A | CRUD admin productos en Supabase | ✅ Completada |
 | Fase 5E.2B | CRUD admin categorías en Supabase | ✅ Completada |
 | Fase 5F | Hardening DEV + preparación PROD | ✅ Completada |
-| Fase 6 | Storage de imágenes | ⏳ Pendiente |
+| Fase 6A | Storage de imágenes — subida real desde admin | ✅ Completada |
+| Fase 6B | UX admin productos + paths legibles en Storage | ✅ Completada |
 | Fase 7 | Importación masiva desde Excel | ⏳ Pendiente |
 
 ---
@@ -181,8 +182,8 @@ Sin estas variables el frontend funciona en modo local (localStorage). En Vercel
 /admin/categorias → CategoryList → useAdminCategories()
   ├── Supabase configurado:
   │     Lee:    getAdminCategories() → SELECT categorias ORDER BY orden
-  │     Crea:   createCategory()     → INSERT categorias (genera slug desde nombre)
-  │     Edita:  updateCategory()     → UPDATE nombre/visible/orden (regenera slug si cambia nombre)
+  │     Crea:   createCategory()     → INSERT categorias (genera slug desde nombre y asigna orden automático al final)
+  │     Edita:  updateCategory()     → UPDATE nombre/visible (regenera slug si cambia nombre)
   │     Oculta: updateCategory(id, { visible: false }) → visible toggle sin borrar
   │     Borra:  deleteCategory()     → verifica COUNT productos, luego DELETE
   └── Sin Supabase:
@@ -191,6 +192,13 @@ Sin estas variables el frontend funciona en modo local (localStorage). En Vercel
 
 /admin/productos/nuevo → ProductForm → useAdminCategories().categoryNames
   → El selector de categoría usa la lista real de Supabase (no la derivada de productos)
+
+### Decisión UX: campo `orden` oculto en admin
+
+- `categorias.orden` sigue existiendo en Supabase y se sigue usando para leer las categorías ordenadas.
+- El panel de la clienta ya no muestra ni permite editar ese campo en `/admin/categorias`.
+- Al crear una categoría nueva, el frontend calcula automáticamente el siguiente `orden` para colocarla al final de la lista.
+- Motivo: evitar confusión en la UI del cliente y mantener la ordenación como detalle interno.
 ```
 
 ### Relación producto → categoría
@@ -200,6 +208,7 @@ Sin estas variables el frontend funciona en modo local (localStorage). En Vercel
 - El frontend lo impide antes de llegar a la DB: `deleteCategory()` verifica con COUNT si la categoría tiene productos y devuelve un error en español si es así
 - Motivo: un producto sin categoría queda "huérfano" — no aparece en ningún filtro del escaparate
 - Para eliminar una categoría con productos: reasignar los productos a otra categoría primero, luego eliminarla
+- Mejora futura prevista: antes de borrar una categoría, ofrecer en el panel admin una acción de "reasignar productos" que permita mover de una sola vez todos los productos de esa categoría a otra categoría ya existente, evitando tener que editarlos uno a uno manualmente
 
 ### Gestión de errores en el CRUD admin
 
@@ -211,6 +220,48 @@ Sin estas variables el frontend funciona en modo local (localStorage). En Vercel
 | `violates row-level security` | "Sin permisos… Tu sesión puede haber expirado" |
 | `jwt expired` | "Tu sesión ha expirado. Vuelve a iniciar sesión." |
 | `chk_imagen_origen` | "Cada imagen necesita una URL válida." |
+
+### Flujo de imágenes (Fase 6A / 6B)
+
+```
+Admin abre ProductForm
+  └── Selecciona archivo (JPG/PNG/WEBP, máx 5 MB)
+        │
+        ▼
+  validateImageFile()     ← validación en cliente antes de cualquier llamada de red
+        │
+        ▼ handleSubmit
+  uploadImage(productId, productSlug, file) → Storage bucket "imagenes-productos"
+        │   ruta (Fase 6B): productos/{slug}-{shortId}/{uuid}_{nombre}.{ext}
+        │   Ejemplo:        productos/copa-vino-grabada-a1b2c3d4/ab12cd34_copa.jpg
+        ▼
+  INSERT imagenes_producto (path = ruta Storage, url = NULL)
+        │
+        ▼
+  mapProductRow() → getPublicImageUrl(path) → URL pública para la tienda
+```
+
+**Compatibilidad con datos anteriores a Fase 6:**
+- Filas con `url` (no nulo) y `path` (nulo) → se usan como URL externa directamente.
+- Filas con `path` (no nulo) → se convierten a URL pública con `getPublicUrl()`.
+- `mapProductRow` siempre produce `Product.images: string[]` con URLs públicas.
+- Paths con el formato antiguo (`productos/{uuid}/...`) siguen funcionando sin cambios.
+
+**`Product.imagePaths`** — campo opcional añadido en Fase 6A:
+- Array alineado con `Product.images` que contiene la ruta de Storage de cada imagen.
+- `null` si la imagen es una URL externa (datos pre-Fase 6).
+- Solo el formulario de admin lo usa; la tienda pública lo ignora.
+
+**Carpetas virtuales vacías en Storage:**
+Al borrar un producto, los archivos físicos se eliminan del bucket. Sin embargo, Supabase Storage puede mostrar visualmente la carpeta vacía en el Dashboard. Este comportamiento es esperado y no requiere acción: la carpeta virtual desaparece automáticamente al crear el siguiente archivo con esa ruta, o puede ignorarse. Lo relevante es que no queden archivos huérfanos.
+
+**Reglas de subida/borrado:**
+
+| Operación | Flujo |
+|---|---|
+| Crear | Subir archivos → INSERT producto → INSERT imagenes; si falla → borrar archivos y producto |
+| Editar | Subir nuevos archivos → UPDATE producto → DELETE+INSERT imagenes; si OK → borrar archivos viejos |
+| Borrar | GET paths → DELETE producto (CASCADE) → borrar archivos (best-effort) |
 
 ### Riesgo aceptado: no hay transacciones en el cliente
 
