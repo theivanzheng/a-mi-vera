@@ -1,5 +1,5 @@
 import { MouseEvent } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import type { Product } from '../types/product';
 
 interface ProductCardProps {
@@ -9,17 +9,10 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, disabledLink = false }: ProductCardProps) => {
   const mainImage = product.images[0] ?? 'https://via.placeholder.com/600?text=Sin+Imagen';
-  const navigate = useNavigate();
   const productPath = `/producto/${product.slug || product.id}`;
 
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    if (disabledLink) {
-      e.preventDefault();
-      return;
-    }
-
-    e.preventDefault();
-    navigate(productPath);
+    if (disabledLink) e.preventDefault();
   };
 
   return (
@@ -29,7 +22,7 @@ const ProductCard = ({ product, disabledLink = false }: ProductCardProps) => {
       className="Plattsupply-card"
     >
       <div className="product-image-container">
-        <div className="product-category-tag">DESTACADO</div>
+        {product.destacado && <div className="product-category-tag">DESTACADO</div>}
         <img src={mainImage} alt={product.title} className="product-image" loading="lazy" />
       </div>
       <div className="product-info">

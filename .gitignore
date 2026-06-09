@@ -36,3 +36,6 @@ imagenesProductos/
 *.xlsx
 ~$*.xlsx
 crear_catalogo.py
+
+# Settings locales de Claude (permisos por máquina)
+.claude/settings.local.json

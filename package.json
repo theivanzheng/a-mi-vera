@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "import:validate": "tsc --noEmit -p scripts/tsconfig.json && tsx scripts/validate-products-import.ts",
-    "import:dev": "tsc --noEmit -p scripts/tsconfig.json && tsx scripts/import-products-dev.ts"
+    "import:dev": "tsc --noEmit -p scripts/tsconfig.json && tsx scripts/import-products-dev.ts",
+    "import:catalogo": "tsc --noEmit -p scripts/tsconfig.json && tsx scripts/import-catalogo-storage.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.105.4",

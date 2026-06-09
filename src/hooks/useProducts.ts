@@ -35,17 +35,22 @@ export interface UseProductsResult {
   error: string | null;
 }
 
+// Caché a nivel de módulo: al volver atrás, la tienda tiene datos al instante
+// (sin "Cargando…"), lo que permite restaurar el scroll correctamente.
+let cachedProducts: Product[] | null = null;
+let cachedCategories: string[] | null = null;
+
 export function useProducts(): UseProductsResult {
   const ctx = useProductContext();
 
   // Ref para acceder a ctx dentro del efecto Supabase sin añadirlo como dep
   const ctxRef = useRef(ctx);
-  ctxRef.current = ctx;
+  useEffect(() => { ctxRef.current = ctx; });
 
-  const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
-  // loading inicia en true solo si Supabase está configurado (hay fetch pendiente)
-  const [loading, setLoading] = useState(isSupabaseConfigured);
+  const [products, setProducts] = useState<Product[]>(cachedProducts ?? []);
+  const [categories, setCategories] = useState<string[]>(cachedCategories ?? []);
+  // loading solo si Supabase está configurado y aún no hay datos cacheados
+  const [loading, setLoading] = useState(isSupabaseConfigured && cachedProducts === null);
   const [error, setError] = useState<string | null>(null);
 
   // ── Ruta fallback: sincroniza con localStorage cuando Supabase no está configurado ──
@@ -83,8 +88,11 @@ export function useProducts(): UseProductsResult {
       } else {
         const rows = (data as DbProductoRow[] | null) ?? [];
         const mapped = rows.map(mapProductRow);
+        const cats = buildCategories(mapped);
+        cachedProducts = mapped;
+        cachedCategories = cats;
         setProducts(mapped);
-        setCategories(buildCategories(mapped));
+        setCategories(cats);
       }
       setLoading(false);
     })();

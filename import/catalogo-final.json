@@ -1,0 +1,697 @@
+[
+  {
+    "id": 1,
+    "title": "Huchas Cajas Fuertes",
+    "slug": "huchas-cajas-fuertes",
+    "price": 20.0,
+    "description": "Si buscas un regalo original para las comuniones...lo tenemos!!  Las huchas caja fuerte con combinación secreta y llave les ayudarán a ahorrar y tener sus secretos bajo control! En color coral, verde agua y negro y personalizadas con su nombre!!",
+    "categories": [
+      "Especial primera comunión",
+      "Nuestros peques"
+    ],
+    "photos": [
+      "huchas_caja_fuerte.jpg",
+      "huchas_caja_fuerte2.jpg",
+      "huchas_caja_fuerte3.jpg",
+      "huchas_caja_fuerte4.jpg"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Rodaja de madera con foto",
+    "slug": "rodaja-de-madera-con-foto",
+    "price": 35.0,
+    "description": "Rodaja de madera imitación encina, grabada a láser con tu foto favorita!! ideal para poner en bodegas y porches. Un regalo lleno de sentimiento. (Diámetro aproximado 35 cm)",
+    "categories": [
+      "Regalos con foto",
+      "Pasión por la madera"
+    ],
+    "photos": [
+      "Rodaja_madera.jpg",
+      "Rodaja_de_madera_con_foto_1.jpg"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Árbol de la Vida",
+    "slug": "arbol-de-la-vida",
+    "price": 35.0,
+    "description": "El regalo ideal para tus celebraciones!! Árbol de la vida con 50 corazones grabados a láser con el nombre de los invitados. Ideal para regalos de cumpleaños y aniversario.",
+    "categories": [
+      "Vivan los novios"
+    ],
+    "photos": [
+      "arbol_madera.jpg"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Villa De Madera",
+    "slug": "villa-de-madera",
+    "price": 50.0,
+    "description": "Olvídate de los regalos de siempre… ¡llega nuestra CASA DE MADERA PERSONALIZADA 🏠✨!\r\n\r\nUn regalo que lo tiene TODO:\r\n\r\n✅ Grabado con el nombre de quien tú quieras.\r\n✅ Dentro: un Rioja espectacular + 3 patés brutales de Hergaher Morcillas y Farinatos  🤤, los reyes de los farinatos y morcillas de Salamanca.\r\n✅ Un detallazo para empresas, colegas, amigos… o esa persona que ya tiene de todo.\r\n\r\nPrecio: 50 €uros con productos. \r\n40 €uros sin productos.",
+    "categories": [
+      "Pasión por la madera"
+    ],
+    "photos": [
+      "villa_madera.jpg",
+      "villa_madera_2.jpg"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Cajas de vino (2 huecos)",
+    "slug": "cajas-de-vino-2-huecos",
+    "price": 45.0,
+    "description": "Caja de vino de madera grabada a láser con la foto o diseño que más te guste. Incluye dos copas grabadas (ideal para una pareja) o una copa de vino grabada y botella de 24 Mozas. Un acierto seguro!!\r\nNota: \r\nNuestras cajas de madera están adquiridas en La Fundación Privada Ilersis, un centro especial de empleo que apoya a la integración social y laboral de personas con discapacidad",
+    "categories": [
+      "Pasión por el vino"
+    ],
+    "photos": [
+      "cajas_vino1.jpg",
+      "cajas_vino2.jpg",
+      "cajas_vino3.jpg",
+      "cajas_vino4.jpg"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Guitarra porta púas",
+    "slug": "guitarra-porta-puas",
+    "price": 20.0,
+    "description": "SUBIMOS EL VOLUMEN 🤘🔥\r\n\r\nSi tienes un guitarrista cerca…\r\nESTO NO ES UN REGALO. ES UNA DECLARACIÓN DE INTENCIONES. 🎸💣\r\n\r\nGuitarra de madera para guardar púas!! \r\n\r\n⚡ Personalizada con su nombre\r\n⚡ 2 púas de madera de REGALO\r\n⚡ Cero postureo. 100% actitud.\r\n\r\nPara los que viven a golpe de riff,\r\npara los que nunca pierden una púa\r\n(y si la pierden, ahora saben dónde guardarla 😏).\r\n\r\n🔥 Regala algo distinto\r\n🔥 Regala carácter\r\n🔥 Regala AmiVera\r\n\r\n¿A quién le harías este regalo salvaje? 🤘\r\n\r\n#RegalosRebeldes #AmiVera #Guitarra #RockLife #HechoConActitud 🎸🔥",
+    "categories": [
+      "Regalos únicos",
+      "Pasión por la madera"
+    ],
+    "photos": [
+      "guitarra1.jpg",
+      "guitarra2.jpg"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Porta cables",
+    "slug": "porta-cables",
+    "price": 8.0,
+    "description": "La solución perfecta para evitar que los cargadores y los cables estén enredados y perdidos!!  Totalmente personalizable. Color Negro.",
+    "categories": [
+      "Regalos únicos"
+    ],
+    "photos": [
+      "porta_cables.jpg"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Abanicos personalizados",
+    "slug": "abanicos-personalizados",
+    "price": 35.0,
+    "description": "Sorprende a una persona muy especial con nuestros abanicos con foto!! Grabados a láser, van acompañados de una caja de madera a medida grabada. Un regalo único!",
+    "categories": [
+      "Regalos con foto"
+    ],
+    "photos": [
+      "abanicos_1.jpg",
+      "abanicos_2.jpg",
+      "abanicos_3.jpg"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Funkos de Madera",
+    "slug": "funkos-de-madera",
+    "price": 37.0,
+    "description": "El Regalo perfecto para cualquier ocasión!! Elige la temática que más te guste...mandanos Dos fotos del protagonista y deja que nosotros hagamos la Magia!! Triunfarás seguro!!",
+    "categories": [
+      "Nuestros peques"
+    ],
+    "photos": [
+      "funkos.jpg",
+      "funko2.jpg",
+      "funko3.jpg"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Corazón de madera",
+    "slug": "corazon-de-madera",
+    "price": 30.0,
+    "description": "Corazón de madera totalmente personalizable. Dile todo lo que sientes y lo recordará para siempre ❤️ (altura aproximada 25 cm).",
+    "categories": [
+      "Vivan los novios",
+      "Pasión por la madera"
+    ],
+    "photos": [
+      "corazon_madera.jpg",
+      "corazon_madera2.jpg"
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Perchas Personalizadas",
+    "slug": "perchas-personalizadas",
+    "price": 15.0,
+    "description": "Un regalo perfecto que siempre recordarán nuestros peques, al ver colgado su vestido / traje de Comunión. Ideal para la sesión de fotos!!",
+    "categories": [
+      "Especial primera comunión",
+      "Nuestros peques"
+    ],
+    "photos": [
+      "perchas.jpg"
+    ]
+  },
+  {
+    "id": 12,
+    "title": "Joyero de viaje Corazón",
+    "slug": "joyero-de-viaje-corazon",
+    "price": 12.0,
+    "description": "Joyero de viaje en forma de corazón, para demostrarle a nuestra persona favorita, todo nuestro cariño. En color rosa y blanco, es el regalo ideal!!",
+    "categories": [
+      "Regalos únicos"
+    ],
+    "photos": [
+      "Joyero_de_viaje_Corazon_1.jpg",
+      "Joyero_de_viaje_Corazon_2.jpg"
+    ]
+  },
+  {
+    "id": 13,
+    "title": "Joyero de viaje doble",
+    "slug": "joyero-de-viaje-doble",
+    "price": 15.0,
+    "description": "Y aquí tenemos el joyero doble, para cuando las vacaciones...se nos van de las manos! Disponible en color rosa, blanco y negro.",
+    "categories": [
+      "Regalos únicos"
+    ],
+    "photos": [
+      "joyero_viaje_doble.jpg"
+    ]
+  },
+  {
+    "id": 14,
+    "title": "Joyero de viaje",
+    "slug": "joyero-de-viaje",
+    "price": 10.0,
+    "description": "El detalle perfecto para cualquier ocasión!! Sorprende a tu cuñada, a tu mejor amiga...o a ti misma! Ideal para llevar en tus viajes todo organizado! Disponible en color blanco, rosa, verde y negro. Y te grabamos lo que más te guste!!",
+    "categories": [
+      "Regalos únicos"
+    ],
+    "photos": [
+      "Joyero_de_viaje_1.jpg",
+      "joyero_viaje_2.jpg",
+      "joyero_viaje_3.jpg"
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Cepillos de madera grabados",
+    "slug": "cepillos-de-madera-grabados",
+    "price": 12.0,
+    "description": "Cepillo de bambú grabado a láser con el nombre de tu persona favorita ❤️",
+    "categories": [
+      "Detalles con magia",
+      "Pasión por la madera"
+    ],
+    "photos": [
+      "cepillos_madera.jpg",
+      "Cepillos_de_madera_grabados_1.jpg",
+      "Cepillos_de_madera_grabados_2.jpg",
+      "cepillos_madera_2.jpg",
+      "Cepillos_de_madera_grabados_3.jpg",
+      "cepillos_madera_3.jpg"
+    ]
+  },
+  {
+    "id": 16,
+    "title": "Tabla de Madera para quesos",
+    "slug": "tabla-de-madera-para-quesos",
+    "price": 12.0,
+    "description": "Nos encanta el queso ...y sobre todo, disfrutar de la compañía de nuestros amigos con mucho estilo!! \r\nTabla de queso personalizada con el nombre de tu persona favorita ... un queso y ... el regalo perfecto!!",
+    "categories": [
+      "Pasión por el vino",
+      "Pasión por la madera"
+    ],
+    "photos": [
+      "tablero.jpg"
+    ]
+  },
+  {
+    "id": 17,
+    "title": "Noria blanca",
+    "slug": "noria-blanca",
+    "price": 40.0,
+    "description": "Noria de 37 cm de altura con capacidad para 16 fotos. Un regalo sorprendente y lleno de Magia. Ideal para comuniones, fotos del primer año del Bebé, mejores amigas...!!",
+    "categories": [
+      "Regalos con foto",
+      "Nuestros peques"
+    ],
+    "photos": [
+      "noria_blanca_1.jpg",
+      "noria_blanca_2.jpg"
+    ]
+  },
+  {
+    "id": 18,
+    "title": "Medalleros personalizados",
+    "slug": "medalleros-personalizados",
+    "price": 35.0,
+    "description": "Quieres sorprender a un pequeño campeón?! Tenemos la idea!! Y la solución a todas esas medallas que quedan colgadas de cuadros, sillas...Ten todas sus medallas ordenadas con nuestros prácticos medalleros. Tenemos todas las disciplinas y ... Todos son diferentes!!",
+    "categories": [
+      "Nuestros peques",
+      "Regalos únicos"
+    ],
+    "photos": [
+      "medallero_personlizado.jpg",
+      "medallero_personlizado_2.jpg",
+      "medallero_personlizado_3.jpg",
+      "medallero_personlizado_4.jpg"
+    ]
+  },
+  {
+    "id": 19,
+    "title": "Caja libro",
+    "slug": "caja-libro",
+    "price": 35.0,
+    "description": "Caja libro en madera personalizada. Ideal como regalo para escritores grabando la portada de su libro, fotos de orla, momentos especiales ...",
+    "categories": [
+      "Pasión por la madera",
+      "Regalos con foto"
+    ],
+    "photos": [
+      "caja_libro.jpg",
+      "caja_libro_1.jpg",
+      "caja_libro_2.jpg",
+      "caja_libro_3.jpg",
+      "caja_libro_4.jpg"
+    ]
+  },
+  {
+    "id": 20,
+    "title": "Huchas de Ahorro personalizadas",
+    "slug": "huchas-de-ahorro-personalizadas",
+    "price": 25.0,
+    "description": "Buscas una manera divertida de ahorrar?!!! La tenemos!! Nuestras huchas personalizadas. Y encargarlas es muy sencillo...nos cuentas el propósito, la cantidad que quieres conseguir y nosotros nos encargamos de hacerte un diseño exclusivo. El juego es muy simple...metes la cantidad que te corresponda y tachas la casilla. Te atreves?! ( Y si...le hacemos una trampilla secreta para poder abrirlas sin romperlas...)",
+    "categories": [
+      "Detalles con magia",
+      "Regalos únicos"
+    ],
+    "photos": [
+      "huchas_ahorro_persdonalizado.jpg",
+      "huchas_ahorro_persdonalizado2.jpg",
+      "huchas_ahorro_persdonalizado3.jpg"
+    ]
+  },
+  {
+    "id": 21,
+    "title": "Caja de madera Somelier",
+    "slug": "caja-de-madera-somelier",
+    "price": 45.0,
+    "description": "El regalo perfecto para papá existe!! ✨\r\n\r\nPara papá, para ese tío especial o para la cuñada molona que ya lo tiene todo…\r\n\r\nEn A Mi Vera tenemos un regalo que nunca falla 🍷\r\n\r\n🪵 Caja de madera con conjunto de somelier + botella de vino “24 Mozas”\r\n\r\nY sí… la personalizamos como tú quieras:\r\n✨ Con su nombre\r\n✨ Con una frase especial\r\n✨ Con el escudo de su equipo favorito\r\n\r\nUn regalo único, elegante y con mucha clase, pensado para sorprender y disfrutar.\r\n\r\n⚠️ Unidades limitadas\r\n\r\nPorque los mejores regalos no se compran… se personalizan ❤️",
+    "categories": [
+      "Pasión por el vino"
+    ],
+    "photos": [
+      "caja_madera_somelier.jpg",
+      "caja_madera_somelier2.jpg"
+    ]
+  },
+  {
+    "id": 22,
+    "title": "Abridores de botellas",
+    "slug": "abridores-de-botellas",
+    "price": 6.0,
+    "description": "Abridores de botellas de bambú, grabados a láser con tu diseño favorito. Un detalle perfecto para acompañar cualquier regalo!!",
+    "categories": [
+      "Detalles con magia",
+      "Maestros cerveceros"
+    ],
+    "photos": [
+      "abridores_botellas.jpg",
+      "abridores_botellas2.jpg",
+      "abridores_botellas3.jpg",
+      "abridores_botellas4.jpg"
+    ]
+  },
+  {
+    "id": 23,
+    "title": "Porta alianzas corazón",
+    "slug": "porta-alianzas-corazon",
+    "price": 30.0,
+    "description": "Nuestro portaalianzas exclusivo está diseñado y realizado íntegramente en nuestro taller, cuidando cada detalle con mimo y dedicación.\r\nPensado para acompañar a los novios en uno de los momentos más importantes de su vida, se convierte en mucho más que un accesorio: es un recuerdo para siempre.\r\nPersonalizado con las iniciales de los novios y la fecha de la boda, cada pieza es única e irrepetible, creada especialmente para ellos.\r\nUn regalo lleno de magia, sentimiento y significado, que aporta un toque especial y emotivo a la ceremonia y que quedará como un precioso recuerdo de ese día tan inolvidable",
+    "categories": [
+      "Vivan los novios"
+    ],
+    "photos": [
+      "porta_alianzas_corazon.jpg",
+      "porta_alianzas_corazon2.jpg"
+    ]
+  },
+  {
+    "id": 24,
+    "title": "Ritual de la Arena",
+    "slug": "ritual-de-la-arena",
+    "price": 35.0,
+    "description": "Conjunto para el ritual de la Arena, compuesto por Dos corazones de cristal, botella grande y bandeja de madera. Todo grabado y en armonía, harán que el ritual sea un momento mágico en la ceremonia ✨",
+    "categories": [
+      "Vivan los novios"
+    ],
+    "photos": [
+      "Ritual_Arena.jpg"
+    ]
+  },
+  {
+    "id": 25,
+    "title": "Porta Alianzas",
+    "slug": "porta-alianzas",
+    "price": 35.0,
+    "description": "Rodaja de encina porta Alianzas. Totalmente personalizable. Diámetro aproximado 25 cm.",
+    "categories": [
+      "Vivan los novios"
+    ],
+    "photos": [
+      "Porta_Alianzas.jpg",
+      "Porta_Alianzas2.jpg"
+    ]
+  },
+  {
+    "id": 26,
+    "title": "Caja de madera con Cava",
+    "slug": "caja-de-madera-con-cava",
+    "price": 55.0,
+    "description": "Si...nos encanta el cava!! Si quieres sorprender a los novios en su noche de boda ... Encargamos el lote cava vip! Dos  copas grabadas con su nombre, una botella de cava y caja de madera grabada a láser!! REGALAZO!",
+    "categories": [
+      "Somos de cava"
+    ],
+    "photos": [
+      "Caja_Madera_Con_Cava.jpg"
+    ]
+  },
+  {
+    "id": 27,
+    "title": "Juego de copas de cava para Novios",
+    "slug": "juego-de-copas-de-cava-para-novios",
+    "price": 35.0,
+    "description": "Sin duda alguna...el producto estrella de AmiVera!! Caja serigrafiada con dos copas de cava grabadas a láser para los novios. Su brindis será perfecto!!",
+    "categories": [
+      "Somos de cava"
+    ],
+    "photos": [
+      "Juego_Copas_Cava_Novios.jpg",
+      "Juego_Copas_Cava_Novios2.jpg"
+    ]
+  },
+  {
+    "id": 28,
+    "title": "Bodys Bebé",
+    "slug": "bodys-bebe",
+    "price": 15.0,
+    "description": "Body en color blanco de manga larga totalmente personalizado. Tallas desde 3 meses a 18 meses. Un regalo único para una ocasión memorable. ✨",
+    "categories": [
+      "Nuestros peques"
+    ],
+    "photos": [
+      "bodys_bebe.jpg",
+      "bodys_bebe2.jpg",
+      "bodys_bebe3.jpg",
+      "bodys_bebe4.jpg"
+    ]
+  },
+  {
+    "id": 29,
+    "title": "Azulejo serigrafiado",
+    "slug": "azulejo-serigrafiado",
+    "price": 30.0,
+    "description": "Novedad en AmiVera!! Azulejos serigrafiados con tu foto favorita!! Ideal para chalets, terrazas y bodegas. Te imaginas tener la foto de tus mascotas a todo color integradas en la pared?! Cuéntanos tú idea y le damos forma!",
+    "categories": [
+      "Regalos con foto"
+    ],
+    "photos": [
+      "azulejo_serigrafiado.jpg"
+    ]
+  },
+  {
+    "id": 30,
+    "title": "Pen Drive",
+    "slug": "pen-drive",
+    "price": 18.0,
+    "description": "Buscas una idea original y rechula para un amigo especial? Mira que idea!! ... Pen Drive de bambú personalizados a láser con el nombre. Ideal para un regalo, lleno de fotos de vuestro último viaje, tus canciones favoritas o una carta   manuscrita. Infinitas posibilidades, a cual más coqueta!! Capacidad 16 GB.",
+    "categories": [
+      "Detalles con magia",
+      "Regalos con foto"
+    ],
+    "photos": [
+      "pen_drive.jpg",
+      "pen_drive2.jpg",
+      "pen_drive3.jpg",
+      "pen_drive4.jpg"
+    ]
+  },
+  {
+    "id": 31,
+    "title": "Tabla de madera",
+    "slug": "tabla-de-madera",
+    "price": 35.0,
+    "description": "Tabla para cortar embutido grabada a láser con el diseño que más te guste. Un regalo único!!",
+    "categories": [
+      "Regalos únicos"
+    ],
+    "photos": [
+      "tabla_de_madera.jpg",
+      "tabla_de_madera2.jpg",
+      "tabla_de_madera3.jpg"
+    ]
+  },
+  {
+    "id": 32,
+    "title": "Petacas personalizadas",
+    "slug": "petacas-personalizadas",
+    "price": 25.0,
+    "description": "Un detalle único que no deja a nadie indiferente!! Petacas grabadas a láser. Vuelven a estar de moda!!",
+    "categories": [
+      "Regalos únicos"
+    ],
+    "photos": [
+      "petacas_personalizadas.jpg",
+      "petacas_personalizadas2.jpg",
+      "petacas_personalizadas3.jpg"
+    ]
+  },
+  {
+    "id": 33,
+    "title": "Espinilleras para fútbol",
+    "slug": "espinilleras-para-futbol",
+    "price": 45.0,
+    "description": "El regalo ideal para los pequeños campeones!! Caja reutilizable con su nombre y el escudo de su equipo, espinilleras de alta calidad serigrafíadas con su foto y funda protectora para conservarlas siempre impecables.",
+    "categories": [
+      "Regalos únicos"
+    ],
+    "photos": [
+      "espinilleras.jpg",
+      "espinilleras_2.jpg"
+    ]
+  },
+  {
+    "id": 34,
+    "title": "Álbum de firmas de Scrapbook para Comunión",
+    "slug": "album-de-firmas-de-scrapbook-para-comunion",
+    "price": 60.0,
+    "description": "Álbum de firmas totalmente personalizado para Primera Comunión. Consta de seis páginas de papel de Scrap con bolsillos, sobres, tags...para colocar fotos y 25 páginas de cartulina para firmas de los invitados, todas decoradas con sellos de temática Comunión. Cada álbum es único!! Y de regalo, una práctica caja con el nombre del niño para guardarlo junto a pequeños recuerdos de ese día tan especial!! ✨",
+    "categories": [
+      "Especial primera comunión"
+    ],
+    "photos": [
+      "album_de_firmas.jpg",
+      "album_de_firmas2.jpg",
+      "album_de_firmas3.jpg",
+      "album_de_firmas4.jpg"
+    ]
+  },
+  {
+    "id": 35,
+    "title": "Llave Disney",
+    "slug": "llave-disney",
+    "price": 25.0,
+    "description": "Llave Disney serigrafiada con caja de madera a medida. Totalmente personalizable.",
+    "categories": [
+      "Especial primera comunión"
+    ],
+    "photos": [
+      "llave_disney.jpg"
+    ]
+  },
+  {
+    "id": 36,
+    "title": "Pala para tarta",
+    "slug": "pala-para-tarta",
+    "price": 25.0,
+    "description": "El regalo perfecto para las comuniones!! Pala grabada a láser con caja de madera  a medida. Un recuerdo para siempre!!",
+    "categories": [
+      "Especial primera comunión"
+    ],
+    "photos": [
+      "pala_tarta.jpg"
+    ]
+  },
+  {
+    "id": 37,
+    "title": "Jarra de Cerveza",
+    "slug": "jarra-de-cerveza",
+    "price": 20.0,
+    "description": "Jarra de cerveza 🍺 grabada a láser y presentada en caja personalizada. Acierto seguro!!",
+    "categories": [
+      "Maestros cerveceros"
+    ],
+    "photos": [
+      "jarra_cerveza.jpg",
+      "jarra_cerveza2.jpg",
+      "jarra_cerveza3.jpg"
+    ]
+  },
+  {
+    "id": 38,
+    "title": "Caja de copas de vino",
+    "slug": "caja-de-copas-de-vino",
+    "price": 35.0,
+    "description": "Sin duda, nuestro producto más vendido...y si funciona...porque cambiarlo??! Caja serigrafíada con dos copas de vino grabadas a láser. Ideal como regalo para bodas, parejas..o para sorprender a unos amigos!! Iguales...o diferentes...tú eliges el diseño!!",
+    "categories": [
+      "Pasión por el vino"
+    ],
+    "photos": [
+      "copas_caja_vino.jpg",
+      "copas_cajas_vino2.jpg"
+    ]
+  },
+  {
+    "id": 39,
+    "title": "Caja de Vino ( tres huecos)",
+    "slug": "caja-de-vino-tres-huecos",
+    "price": 55.0,
+    "description": "Caja de vino grabada a láser con dos copas grabadas y botella de vino 24 Mozas.\r\n\r\nNota: \r\nNuestras cajas de madera están adquiridas en La Fundación Privada Ilersis, un centro especial de empleo que apoya a la integración social y laboral de personas con discapacidad.",
+    "categories": [
+      "Pasión por el vino"
+    ],
+    "photos": [
+      "caja_vino_tres_butacas.jpg",
+      "caja_vino_tres_butacas2.jpg",
+      "caja_vino_tres_butacas3.jpg"
+    ]
+  },
+  {
+    "id": 40,
+    "title": "Cajas de madera rectangulares",
+    "slug": "cajas-de-madera-rectangulares",
+    "price": 40.0,
+    "description": "Cajas de madera de 26 por 35 cm  grabadas a láser con todo nuestro cariño. Ideales para recuerdos, fotos, como regalo para recién nacidos ...\r\nNota: \r\nNuestras cajas de madera están adquiridas en La Fundación Privada Ilersis, un centro especial de empleo que apoya a la integración social y laboral de personas con discapacidad",
+    "categories": [
+      "Pasión por la madera"
+    ],
+    "photos": [
+      "cajas_madera_rectangular.jpg",
+      "Cajas_de_madera_rectangulares_1.jpg",
+      "Cajas_de_madera_rectangulares_2.jpg",
+      "cajas_madera_rectangular2.jpg",
+      "Cajas_de_madera_rectangulares_3.jpg",
+      "cajas_madera_rectangular3.jpg"
+    ]
+  },
+  {
+    "id": 41,
+    "title": "Cajas cuadradas de madera",
+    "slug": "cajas-cuadradas-de-madera",
+    "price": 40.0,
+    "description": "Cajas de madera de 28 por 28 cm grabadas a láser con todo nuestro cariño. Ideales para recuerdos, fotos, como regalo para recién nacidos ...\r\nNota: \r\nNuestras cajas de madera están adquiridas en La Fundación Privada Ilersis, un centro especial de empleo que apoya a la integración social y laboral de personas con discapacidad.\r\n1",
+    "categories": [
+      "Pasión por la madera"
+    ],
+    "photos": [
+      "cajas_cuadradas_madera.jpg",
+      "cajas_cuadradas_madera2.jpg",
+      "cajas_cuadradas_madera3.jpg",
+      "cajas_cuadradas_madera4.jpg"
+    ]
+  },
+  {
+    "id": 42,
+    "title": "Caja de cartas personalizadas",
+    "slug": "caja-de-cartas-personalizadas",
+    "price": 15.0,
+    "description": "Guarda tus cartas con estilo y presume de caja en tus tardes con amigos!! El regalo perfecto para los que aman una buena sobremesa de timba!!",
+    "categories": [
+      "Detalles con magia",
+      "Pasión por la madera"
+    ],
+    "photos": [
+      "cajas_cartas_madera.jpg",
+      "Caja_de_cartas_personalizadas_1.jpg",
+      "Caja_de_cartas_personalizadas_2.jpg",
+      "cajas_cartas_madera2.jpg",
+      "Caja_de_cartas_personalizadas_3.jpg",
+      "cajas_cartas_madera3.jpg"
+    ]
+  },
+  {
+    "id": 43,
+    "title": "Cojines personalizados",
+    "slug": "cojines-personalizados",
+    "price": 18.0,
+    "description": "Un regalo achuchable!! Cojines personalizados con fotos, frases rechulas, tú mascota de fútbol...o el escudo de tu equipo favorito!!",
+    "categories": [
+      "Regalos con foto"
+    ],
+    "photos": [
+      "Cojines_personalizables.jpg",
+      "Cojines_personalizables2.jpg",
+      "Cojines_personalizables3.jpg",
+      "Cojines_personalizables4.jpg"
+    ]
+  },
+  {
+    "id": 44,
+    "title": "Carteras personalizadas para Hombre",
+    "slug": "carteras-personalizadas-para-hombre",
+    "price": 20.0,
+    "description": "Un regalo exclusivo para los chicos de la casa?! Lo tenemos!! Carteras personalizadas con el diseño que elijas... Una foto familiar, su frase favorita...el escudo de su equipo... Sorpréndele!!",
+    "categories": [
+      "Regalos con foto"
+    ],
+    "photos": [
+      "carteras_personalizadas.jpg",
+      "Carteras_personalizadas_para_Hombre_1.jpg",
+      "carteras_personalizadas2.jpg",
+      "Carteras_personalizadas_para_Hombre_2.jpg",
+      "carteras_personalizadas3.jpg",
+      "Carteras_personalizadas_para_Hombre_3.jpg"
+    ]
+  },
+  {
+    "id": 45,
+    "title": "Números de madera para cumpleaños",
+    "slug": "numeros-de-madera-para-cumpleanos",
+    "price": 15.0,
+    "description": "Números de madera para cumpleaños. Se acabaron las tarjetas que acaban en un cajón!! Grabamos el nombre del cumpleañero a láser, los invitados firman y es un recuerdo perfecto para colgar en la pared! (Medida aproximada 35 cm de alto por 37 cm de ancho). Para otras medidas, consultar precios.",
+    "categories": [
+      "Detalles con magia"
+    ],
+    "photos": [
+      "numero_madera.jpg",
+      "numero_madera2.jpg",
+      "numero_madera3.jpg",
+      "Numeros_de_madera_para_cumpleanos_3.jpg"
+    ]
+  },
+  {
+    "id": 46,
+    "title": "Monederos Personalizados para Mujer",
+    "slug": "monederos-personalizados-para-mujer",
+    "price": 25.0,
+    "description": "Carteras personalizadas a todo color con nuestra foto favorita. Con diferentes compartimentos para documentación y un práctico asa para llevarla como bolso de mano.",
+    "categories": [
+      "Regalos con foto"
+    ],
+    "photos": [
+      "Monederos_Personalizados_para_Mujer_1.jpg",
+      "Monederos_Personalizados_para_Mujer_2.jpg"
+    ]
+  }
+]

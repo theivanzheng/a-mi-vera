@@ -73,7 +73,14 @@ const Navbar = ({ isProductDetail = false }: NavbarProps) => {
           ) : (
             <>
               {isProductDetail ? (
-                <Link to="/" style={{ color: 'inherit' }}><ArrowLeft size={24} className="nav-icon" /></Link>
+                <button
+                  type="button"
+                  className="nav-back-btn"
+                  aria-label="Volver"
+                  onClick={() => (window.history.length > 1 ? navigate(-1) : navigate('/'))}
+                >
+                  <ArrowLeft size={24} className="nav-icon" />
+                </button>
               ) : (
                 <Menu size={24} className="nav-icon" onClick={() => setIsMenuOpen(true)} />
               )}

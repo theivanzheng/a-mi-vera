@@ -260,8 +260,9 @@
    ============================================================ */
 
 .Plattsupply-card {
-  flex: 0 0 70%;
-  max-width: 280px;
+  flex: 0 0 46%;
+  max-width: 196px; /* 30% más pequeñas que antes (280px) */
+  min-width: 0;     /* evita que el título nowrap estire la tarjeta → todas iguales */
   scroll-snap-align: start;
   text-decoration: none;
   color: inherit;
@@ -276,20 +277,24 @@
 .Plattsupply-card .product-image-container {
   background-color: var(--color-surface);
   border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  aspect-ratio: 1/1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1rem;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  margin-bottom: 0.75rem;
   position: relative;
+  overflow: hidden;
 }
 
+/* La imagen va en posición absoluta: NUNCA afecta a la altura de la caja,
+   así toda tarjeta es un cuadrado idéntico sea la foto vertical u horizontal. */
 .Plattsupply-card .product-image {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  mix-blend-mode: multiply;
+  padding: 0.85rem;
+  box-sizing: border-box;
+  object-fit: contain; /* imagen entera dentro del cuadro gris, sin recortar */
+  display: block;
 }
 
 .Plattsupply-card .product-category-tag {
@@ -328,15 +333,16 @@
   color: var(--color-text-muted);
 }
 
-/* ── Grid de resultados de búsqueda ── */
+/* ── Grid de resultados de búsqueda / categoría ── */
 .search-results-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1.25rem 1rem;
 }
 
 .search-results-grid .Plattsupply-card {
   max-width: none;
+  flex: initial; /* en grid no hereda el flex-basis del carrusel */
 }
 
 .no-products {
@@ -465,7 +471,6 @@
 }
 
 .recommended-card .product-image-container {
-  padding: 1rem;
   aspect-ratio: 1/1;
 }
 
@@ -515,4 +520,42 @@
   .nav-links {
     display: none;
   }
+}
+
+
+/* ── Botón "atrás" del navbar (reset de <button>) ── */
+.nav-back-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.nav-back-btn:active {
+  transform: translateX(-2px);
+}
+
+/* ── Vista de categoría completa ("Ver todos") ── */
+.category-view-header {
+  margin-bottom: 2rem;
+}
+.category-back-link {
+  display: inline-block;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.75rem;
+  transition: color 160ms ease;
+}
+.category-back-link:hover {
+  color: var(--primary);
+}
+.category-view-count {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
 }
