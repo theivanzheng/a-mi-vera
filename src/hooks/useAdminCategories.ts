@@ -19,6 +19,7 @@ export interface UseAdminCategoriesResult {
   createCategory: (nombre: string) => Promise<string | null>;
   updateCategory: (id: string, fields: Partial<Pick<Category, 'nombre' | 'visible' | 'orden'>>) => Promise<string | null>;
   deleteCategory: (id: string) => Promise<string | null>;
+  reorderCategories: (orderedIds: string[]) => Promise<string | null>;
 }
 
 function getNextCategoryOrder(categories: Category[]): number {
@@ -113,6 +114,27 @@ export function useAdminCategories(): UseAdminCategoriesResult {
     }
   }
 
+  async function reorderCategories(orderedIds: string[]): Promise<string | null> {
+    if (!isSupabaseConfigured) return 'Conecta Supabase para reordenar categorías.';
+    setSaving(true);
+    setError(null);
+    try {
+      const results = await Promise.all(
+        orderedIds.map((id, i) => apiUpdate(id, { orden: (i + 1) * 10 })),
+      );
+      const firstErr = results.find(r => r.error)?.error ?? null;
+      if (!firstErr) await refresh();
+      else setError(firstErr);
+      return firstErr;
+    } catch (ex) {
+      const msg = ex instanceof Error ? ex.message : 'Error inesperado al reordenar.';
+      setError(msg);
+      return msg;
+    } finally {
+      setSaving(false);
+    }
+  }
+
   if (!isSupabaseConfigured) {
     // Fallback: convierte string[] del contexto en Category[] para mantener la UI coherente
     const fallbackCategories: Category[] = ctxRef.current.categories
@@ -134,6 +156,7 @@ export function useAdminCategories(): UseAdminCategoriesResult {
       createCategory,
       updateCategory,
       deleteCategory,
+      reorderCategories,
     };
   }
 
@@ -146,5 +169,6 @@ export function useAdminCategories(): UseAdminCategoriesResult {
     createCategory,
     updateCategory,
     deleteCategory,
+    reorderCategories,
   };
 }

@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { useProducts } from '../hooks/useProducts';
+import { useHeroBloque } from '../hooks/useHeroBloque';
 import Navbar from '../components/Navbar';
 import ProductCard from '../components/ProductCard';
 import Logotipo from '../../IdentidadVisual/Logo_AmiVera.png';
@@ -7,14 +8,37 @@ import HeroVideo from '../assets/AmiVera_Hero_Background.mp4';
 
 const PublicStore = () => {
   const { products, categories, loading, error } = useProducts();
+  const hero = useHeroBloque();
   const location = useLocation();
 
   const searchParams = new URLSearchParams(location.search);
   const searchQuery = searchParams.get('q') ?? '';
 
+  // Sección Novedades: fijados manualmente vigentes + los 10 más recientes.
+  const now = Date.now();
+  const isPinnedNovedad = (p: typeof products[number]) =>
+    p.novedadFija === true ||
+    (p.novedadHasta != null && new Date(p.novedadHasta).getTime() > now);
+
+  const novedades = (() => {
+    const pinned = products.filter(isPinnedNovedad);
+    const recent = [...products]
+      .filter(p => p.createdAt)
+      .sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime())
+      .slice(0, 10);
+    const seen = new Set<string>();
+    return [...pinned, ...recent].filter(p => {
+      if (seen.has(p.id)) return false;
+      seen.add(p.id);
+      return true;
+    });
+  })();
+
   const categorizedProducts = categories.map(cat => ({
     category: cat,
-    items: products.filter(p => p.category === cat),
+    items: cat === 'Novedades'
+      ? novedades
+      : products.filter(p => (p.categories ?? []).includes(cat)),
   })).filter(group => group.items.length > 0);
 
   const searchResults = products.filter(p =>
@@ -48,10 +72,10 @@ const PublicStore = () => {
         </video>
         <div className="hero-bg-overlay"></div>
         <div className="hero-content">
-          <span className="hero-pill">NUEVA COLECCIÓN</span>
-          <h1 className="hero-title">Regalos que dejan huella esta temporada</h1>
-          <p className="hero-subtitle">Detalles personalizados para toda ocasión. Originales y únicos en cada entrega.</p>
-          <a href="#catalogo" className="cta-button primary-dark">Ver el catálogo</a>
+          {hero.pill_texto && <span className="hero-pill">{hero.pill_texto}</span>}
+          <h1 className="hero-title">{hero.titulo}</h1>
+          <p className="hero-subtitle">{hero.subtitulo}</p>
+          <a href="#catalogo" className="cta-button primary-dark">{hero.cta_texto}</a>
         </div>
       </header>
 

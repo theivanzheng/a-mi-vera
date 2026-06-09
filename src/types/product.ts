@@ -3,9 +3,13 @@ export interface Product {
   slug: string;
   title: string;
   price: number;
-  category: string;
+  category: string;        // categoría principal (= categories[0]) — compatibilidad
+  categories: string[];    // todas las categorías (relación N:N)
   description: string;
   images: string[];
+  // Novedades (opcional; presente desde Supabase). Ausente en fallback local.
+  novedadHasta?: string | null; // ISO 8601 o null
+  novedadFija?: boolean;
   // Rutas de Storage alineadas con images[] (null = URL externa). Opcional: ausente en el fallback local.
   imagePaths?: (string | null)[];
   // Campos opcionales: presentes cuando se carga desde Supabase, ausentes en el fallback localStorage.

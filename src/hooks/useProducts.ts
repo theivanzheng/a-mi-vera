@@ -64,8 +64,10 @@ export function useProducts(): UseProductsResult {
       const { data, error: err } = await supabase!
         .from('productos')
         .select(`
-          id, titulo, slug, descripcion, precio,
-          categorias ( nombre ),
+          id, titulo, slug, descripcion, precio, stock, visible, destacado, nuevo, created_at,
+          novedad_hasta, novedad_fija,
+          categorias!categoria_id ( nombre ),
+          producto_categorias ( categorias ( nombre ) ),
           imagenes_producto ( url, path, orden )
         `)
         .eq('visible', true)

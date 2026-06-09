@@ -12,7 +12,6 @@ import { validateImageFile, resizeImage } from '../../lib/storageApi';
 interface TextFields {
   title: string;
   price: string;
-  category: string;
   description: string;
   // Campos URL solo usados en el fallback (sin Supabase)
   image1: string;
@@ -20,6 +19,15 @@ interface TextFields {
   image3: string;
   image4: string;
 }
+
+// Opciones de duración del fijado manual en Novedades
+type NovedadDuration = '7' | '15' | '30' | 'indef' | 'keep';
+const NOVEDAD_OPTIONS: { value: Exclude<NovedadDuration, 'keep'>; label: string }[] = [
+  { value: '7', label: '7 días' },
+  { value: '15', label: '15 días' },
+  { value: '30', label: '30 días' },
+  { value: 'indef', label: 'Indefinido' },
+];
 
 interface ImageSlot {
   file: File | null;          // archivo nuevo (null si no hay upload pendiente)
@@ -34,7 +42,7 @@ const EMPTY_SLOT: ImageSlot = {
 };
 const PLACEHOLDER = 'https://via.placeholder.com/600?text=Sin+Imagen';
 const EMPTY_FORM: TextFields = {
-  title: '', price: '', category: '', description: '',
+  title: '', price: '', description: '',
   image1: '', image2: '', image3: '', image4: '',
 };
 
@@ -50,6 +58,11 @@ export default function ProductForm() {
   const loading = prodLoading || catLoading;
 
   const [formData, setFormData] = useState<TextFields>(EMPTY_FORM);
+  const [selectedCats, setSelectedCats] = useState<string[]>([]);
+  const [novedadEnabled, setNovedadEnabled] = useState(false);
+  const [novedadDuration, setNovedadDuration] = useState<NovedadDuration>('30');
+  // Valor original de Novedades al entrar en edición (para la opción "keep")
+  const originalNovedadRef = useRef<{ fija: boolean; hasta: string | null }>({ fija: false, hasta: null });
   const [imageSlots, setImageSlots] = useState<[ImageSlot, ImageSlot, ImageSlot, ImageSlot]>([
     { ...EMPTY_SLOT }, { ...EMPTY_SLOT }, { ...EMPTY_SLOT }, { ...EMPTY_SLOT },
   ]);
@@ -80,9 +93,19 @@ export default function ProductForm() {
       ...prev,
       title: product.title,
       price: String(product.price),
-      category: product.category,
       description: product.description,
     }));
+
+    setSelectedCats(product.categories ?? []);
+
+    // Restaurar estado de Novedades
+    const fija = product.novedadFija ?? false;
+    const hasta = product.novedadHasta ?? null;
+    originalNovedadRef.current = { fija, hasta };
+    const pinned = fija || (hasta != null && new Date(hasta).getTime() > Date.now());
+    setNovedadEnabled(pinned);
+    // En edición, "keep" preserva el valor actual mientras no se elija otra duración
+    setNovedadDuration(pinned ? 'keep' : '30');
 
     if (isSupabaseConfigured) {
       // Modo Supabase: poblar slots con imágenes existentes
@@ -168,15 +191,42 @@ export default function ProductForm() {
     });
   }
 
+  function toggleCategory(name: string) {
+    setSelectedCats(prev =>
+      prev.includes(name) ? prev.filter(c => c !== name) : [...prev, name],
+    );
+  }
+
+  // Calcula los campos de Novedades a partir del estado del formulario
+  function computeNovedad(): { novedadFija: boolean; novedadHasta: string | null } {
+    if (!novedadEnabled) return { novedadFija: false, novedadHasta: null };
+    if (novedadDuration === 'keep') {
+      return {
+        novedadFija: originalNovedadRef.current.fija,
+        novedadHasta: originalNovedadRef.current.hasta,
+      };
+    }
+    if (novedadDuration === 'indef') return { novedadFija: true, novedadHasta: null };
+    const days = Number(novedadDuration);
+    const hasta = new Date(Date.now() + days * 86_400_000).toISOString();
+    return { novedadFija: false, novedadHasta: hasta };
+  }
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSubmitError(null);
 
+    if (isSupabaseConfigured && selectedCats.length === 0) {
+      setSubmitError('Selecciona al menos una categoría.');
+      return;
+    }
+
     const fields: ProductTextFields = {
       title: formData.title,
       price: formData.price,
-      category: formData.category,
+      categories: selectedCats,
       description: formData.description,
+      ...computeNovedad(),
     };
 
     // Construir entradas de imagen según el modo
@@ -246,6 +296,8 @@ export default function ProductForm() {
 
   const disabled = saving || success;
   const filledSlots = imageSlots.filter(s => s.file || s.storagePath || s.legacyUrl).length;
+  // Novedades no es una categoría real; "Todos" es la vista global. Se excluyen del selector.
+  const realCategoryNames = categoryNames.filter(c => c !== 'Todos' && c !== 'Novedades');
 
   // ── Render ─────────────────────────────────────────────────────────────────
 
@@ -287,18 +339,83 @@ export default function ProductForm() {
           </div>
 
           <div className="admin-field">
-            <label htmlFor="category">Categoría</label>
-            <select
-              id="category" name="category"
-              value={formData.category} onChange={handleChange}
-              required disabled={disabled}
-            >
-              <option value="">Selecciona una categoría</option>
-              {categoryNames.map(c => (
-                <option key={c} value={c}>{c}</option>
-              ))}
-            </select>
+            <label>Categorías</label>
+            <div className="admin-cat-chips" role="group" aria-label="Categorías del producto">
+              {realCategoryNames.map(c => {
+                const on = selectedCats.includes(c);
+                return (
+                  <button
+                    key={c}
+                    type="button"
+                    className={`admin-cat-chip${on ? ' admin-cat-chip--on' : ''}`}
+                    aria-pressed={on}
+                    onClick={() => toggleCategory(c)}
+                    disabled={disabled}
+                  >
+                    {c}
+                  </button>
+                );
+              })}
+            </div>
+            <span className="admin-field-hint">
+              Pulsa para añadir o quitar. Un producto puede estar en varias categorías.
+            </span>
           </div>
+
+          {isSupabaseConfigured && (
+            <div className="admin-field">
+              <label className="admin-novedad-toggle">
+                <input
+                  type="checkbox"
+                  className="admin-novedad-checkbox"
+                  checked={novedadEnabled}
+                  onChange={e => setNovedadEnabled(e.currentTarget.checked)}
+                  disabled={disabled}
+                />
+                <span className="admin-novedad-track" aria-hidden="true">
+                  <span className="admin-novedad-thumb" />
+                </span>
+                <span className="admin-novedad-label">Mostrar en Novedades</span>
+              </label>
+
+              <div
+                className={`admin-novedad-panel${novedadEnabled ? ' admin-novedad-panel--open' : ''}`}
+                aria-hidden={!novedadEnabled}
+              >
+                <div className="admin-novedad-panel-inner">
+                  <span className="admin-novedad-question">¿Durante cuánto tiempo?</span>
+                  <div className="admin-novedad-segmented" role="group" aria-label="Duración en Novedades">
+                    {novedadDuration === 'keep' && (
+                      <button
+                        type="button"
+                        className="admin-seg admin-seg--on"
+                        aria-pressed={true}
+                        disabled={disabled}
+                      >
+                        Mantener actual
+                      </button>
+                    )}
+                    {NOVEDAD_OPTIONS.map(opt => {
+                      const on = novedadDuration === opt.value;
+                      return (
+                        <button
+                          key={opt.value}
+                          type="button"
+                          className={`admin-seg${on ? ' admin-seg--on' : ''}`}
+                          aria-pressed={on}
+                          onClick={() => setNovedadDuration(opt.value)}
+                          disabled={disabled || (!novedadEnabled)}
+                          tabIndex={novedadEnabled ? 0 : -1}
+                        >
+                          {opt.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="admin-field">
             <label htmlFor="description">Descripción</label>

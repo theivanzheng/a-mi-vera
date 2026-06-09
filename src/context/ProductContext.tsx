@@ -51,7 +51,11 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     // v6 ya migrado — usar directamente
     const v6 = localStorage.getItem('amivera_products_v6');
     if (v6) {
-      const parsed = JSON.parse(v6) as Product[];
+      const parsed = (JSON.parse(v6) as Product[]).map(p => ({
+        ...p,
+        // Backfill: productos guardados antes de añadir categories[]
+        categories: p.categories ?? (p.category ? [p.category] : []),
+      }));
       setProducts(parsed);
       extractCategories(parsed);
       return;
@@ -71,6 +75,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       title: p.title,
       price: p.price,
       category: p.category,
+      categories: p.category ? [p.category] : [],
       description: p.description,
       images: p.images,
       id: typeof p.id === 'string' ? p.id : crypto.randomUUID(),
@@ -95,6 +100,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       title: formData.title,
       price: parseFloat(formData.price),
       category: formData.category,
+      categories: formData.category ? [formData.category] : [],
       description: formData.description,
       images: imagesArray.length > 0
         ? imagesArray
@@ -118,6 +124,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       title: formData.title,
       price: parseFloat(formData.price),
       category: formData.category,
+      categories: formData.category ? [formData.category] : [],
       description: formData.description,
       images: images.length > 0
         ? images

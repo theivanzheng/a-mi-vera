@@ -29,3 +29,10 @@ dist-ssr
 *.sw?
 .agents/
 skills-lock.json
+
+# Fuentes de datos del catálogo (las fotos viven en Supabase Storage tras importar)
+Fotos Productos/
+imagenesProductos/
+*.xlsx
+~$*.xlsx
+crear_catalogo.py

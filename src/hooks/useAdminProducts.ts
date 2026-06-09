@@ -44,7 +44,10 @@ function toFallbackFormData(fields: ProductTextFields, images: ImageEntry[]): Pr
   const getUrl = (e: ImageEntry | undefined) =>
     e?.kind === 'url' ? e.url : '';
   return {
-    ...fields,
+    title: fields.title,
+    price: fields.price,
+    category: fields.categories[0] ?? '', // fallback local: una sola categoría
+    description: fields.description,
     image1: getUrl(images[0]),
     image2: getUrl(images[1]),
     image3: getUrl(images[2]),

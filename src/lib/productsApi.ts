@@ -14,8 +14,10 @@ export type ImageEntry =
 export interface ProductTextFields {
   title: string;
   price: string;
-  category: string;
+  categories: string[];          // varias categorías (relación N:N)
   description: string;
+  novedadFija: boolean;          // fijado indefinido en Novedades
+  novedadHasta: string | null;   // ISO 8601 o null (fijado con caducidad)
 }
 
 // Actualización parcial de campos escalares (sin imágenes)
@@ -33,7 +35,9 @@ export type ProgressFn = (phase: 'uploading' | 'saving') => void;
 
 const PRODUCT_SELECT = `
   id, titulo, slug, descripcion, precio, stock, visible, destacado, nuevo, created_at,
-  categorias ( nombre ),
+  novedad_hasta, novedad_fija,
+  categorias!categoria_id ( nombre ),
+  producto_categorias ( categorias ( nombre ) ),
   imagenes_producto ( url, path, orden )
 `;
 
@@ -57,17 +61,29 @@ export function mapProductRow(row: DbProductoRow): Product {
     }
   }
 
+  // Categorías desde la relación N:N (nueva fuente de verdad), deduplicadas.
+  // Fallback a la FK antigua categorias(nombre) si aún no hay enlaces N:N (transición).
+  const nmsFromNN = (row.producto_categorias ?? [])
+    .map(pc => pc.categorias?.nombre)
+    .filter((n): n is string => !!n);
+  const categories = nmsFromNN.length > 0
+    ? Array.from(new Set(nmsFromNN))
+    : (row.categorias?.nombre ? [row.categorias.nombre] : []);
+
   return {
     id: row.id,
     slug: row.slug,
     title: row.titulo,
     price: Number(row.precio),
-    category: row.categorias?.nombre ?? '',
+    category: categories[0] ?? '',
+    categories,
     description: row.descripcion ?? '',
     visible: row.visible,
     stock: row.stock,
     destacado: row.destacado,
     nuevo: row.nuevo,
+    novedadHasta: row.novedad_hasta,
+    novedadFija: row.novedad_fija,
     images: images.length > 0 ? images : ['https://via.placeholder.com/600?text=Sin+Imagen'],
     imagePaths,
     createdAt: row.created_at,
@@ -95,13 +111,39 @@ function translateDbError(message: string): string {
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
-async function resolveCategoriaId(nombre: string): Promise<string | null> {
+// Resuelve una lista de nombres de categoría a sus IDs, conservando el orden
+// y descartando los que no existan en la tabla categorias.
+async function resolveCategoriaIds(nombres: string[]): Promise<string[]> {
+  if (nombres.length === 0) return [];
   const { data } = await supabase!
     .from('categorias')
-    .select('id')
-    .eq('nombre', nombre)
-    .maybeSingle();
-  return (data as { id: string } | null)?.id ?? null;
+    .select('id, nombre')
+    .in('nombre', nombres);
+  const map = new Map(
+    ((data as { id: string; nombre: string }[] | null) ?? []).map(r => [r.nombre, r.id]),
+  );
+  return nombres
+    .map(n => map.get(n))
+    .filter((id): id is string => !!id);
+}
+
+// Reescribe los enlaces N:N de un producto: borra los existentes e inserta los nuevos.
+async function replaceProductoCategorias(
+  productoId: string,
+  categoriaIds: string[],
+): Promise<string | null> {
+  const { error: delErr } = await supabase!
+    .from('producto_categorias')
+    .delete()
+    .eq('producto_id', productoId);
+  if (delErr) return delErr.message;
+
+  if (categoriaIds.length === 0) return null;
+
+  const { error: insErr } = await supabase!
+    .from('producto_categorias')
+    .insert(categoriaIds.map(cid => ({ producto_id: productoId, categoria_id: cid })));
+  return insErr ? insErr.message : null;
 }
 
 // ── API pública ──────────────────────────────────────────────────────────────
@@ -126,7 +168,8 @@ export async function createProduct(
   const productId = crypto.randomUUID();
   const slug = toSlug(fields.title);
   const precio = parseFloat(fields.price);
-  const categoria_id = fields.category ? await resolveCategoriaId(fields.category) : null;
+  const categoriaIds = await resolveCategoriaIds(fields.categories);
+  const categoria_id = categoriaIds[0] ?? null; // FK antigua (transición) = categoría principal
 
   // 1. Subir archivos nuevos ANTES de tocar la DB
   const hasFiles = images.some(img => img.kind === 'file');
@@ -163,12 +206,22 @@ export async function createProduct(
       descripcion: fields.description || null,
       precio,
       categoria_id,
+      novedad_fija: fields.novedadFija,
+      novedad_hasta: fields.novedadHasta,
       visible: true,
     });
 
   if (prodErr) {
     await deleteStorageImages(uploadedPaths);
     return { error: translateDbError(prodErr.message) };
+  }
+
+  // 2b. Enlaces N:N de categorías
+  const catErr = await replaceProductoCategorias(productId, categoriaIds);
+  if (catErr) {
+    await supabase!.from('productos').delete().eq('id', productId);
+    await deleteStorageImages(uploadedPaths);
+    return { error: translateDbError(catErr) };
   }
 
   // 3. Insertar filas de imágenes
@@ -211,7 +264,8 @@ export async function updateProduct(
 ): Promise<{ error: string | null }> {
   const slug = toSlug(fields.title);
   const precio = parseFloat(fields.price);
-  const categoria_id = fields.category ? await resolveCategoriaId(fields.category) : null;
+  const categoriaIds = await resolveCategoriaIds(fields.categories);
+  const categoria_id = categoriaIds[0] ?? null; // FK antigua (transición) = categoría principal
 
   // 1. Subir archivos nuevos ANTES de tocar la DB
   const hasFiles = images.some(img => img.kind === 'file');
@@ -247,12 +301,21 @@ export async function updateProduct(
       descripcion: fields.description || null,
       precio,
       categoria_id,
+      novedad_fija: fields.novedadFija,
+      novedad_hasta: fields.novedadHasta,
     })
     .eq('id', id);
 
   if (prodErr) {
     await deleteStorageImages(newlyUploadedPaths);
     return { error: translateDbError(prodErr.message) };
+  }
+
+  // 2b. Reescribir enlaces N:N de categorías
+  const catErr = await replaceProductoCategorias(id, categoriaIds);
+  if (catErr) {
+    await deleteStorageImages(newlyUploadedPaths);
+    return { error: translateDbError(catErr) };
   }
 
   // 3. Borrar filas antiguas de imágenes
