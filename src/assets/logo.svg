@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 305" role="img" aria-label="A Mi Vera — Regalos personalizados">
+  <title>A Mi Vera</title>
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+      .av-ink   { fill: #5C4D5E; }
+      .av-rose  { fill: #E88098; }
+      .av-rose-d{ fill: #C45A78; }
+      .av-rose-l{ fill: #F0B0C0; }
+      .av-leaf  { fill: #7FAD6E; }
+      .av-leaf-l{ fill: #9FC98E; }
+      .av-swash { fill: none; stroke: #5C4D5E; stroke-width: 5; stroke-linecap: round; }
+    </style>
+  </defs>
+
+  <!-- ── Hojas izquierda ── -->
+  <path class="av-leaf"   d="M20,148 C10,122 35,105 48,108 C46,130 28,150 20,148Z"/>
+  <path class="av-leaf-l" d="M42,165 C20,154 19,128 30,122 C44,134 47,158 42,165Z"/>
+
+  <!-- ── Rosa izquierda ── -->
+  <g transform="translate(64,103)">
+    <ellipse class="av-rose"   rx="13" ry="9" transform="rotate(-30) translate(0,-9)"/>
+    <ellipse class="av-rose"   rx="13" ry="9" transform="rotate(42)  translate(0,-9)"/>
+    <ellipse class="av-rose-d" rx="12" ry="8" transform="rotate(114) translate(0,-9)"/>
+    <ellipse class="av-rose-d" rx="12" ry="8" transform="rotate(186) translate(0,-9)"/>
+    <ellipse class="av-rose"   rx="13" ry="9" transform="rotate(258) translate(0,-9)"/>
+    <circle  class="av-rose-d" r="8"/>
+    <circle  class="av-rose-l" r="4"/>
+  </g>
+
+  <!-- ── Hojas derecha ── -->
+  <path class="av-leaf"   d="M448,88  C458,70 478,78 480,90 C468,102 450,98 448,88Z"/>
+  <path class="av-leaf-l" d="M510,168 C526,150 522,128 510,124 C500,138 502,164 510,168Z"/>
+
+  <!-- ── Flor derecha ── -->
+  <g transform="translate(464,100)">
+    <ellipse class="av-rose"   rx="9" ry="14" transform="rotate(-18) translate(-5,-2)"/>
+    <ellipse class="av-rose"   rx="9" ry="14" transform="rotate(18)  translate(5,-2)"/>
+    <ellipse class="av-rose-l" rx="7" ry="12" transform="translate(0,-3)"/>
+    <circle  class="av-rose-d" r="5" cy="7"/>
+  </g>
+
+  <!-- ── Texto principal ── -->
+  <text
+    x="290" y="200"
+    class="av-ink"
+    font-family="Pacifico, cursive"
+    font-size="108"
+    text-anchor="middle">AmiVera</text>
+
+  <!-- ── Swash subrayado ── -->
+  <path class="av-swash" d="M42,245 Q180,272 290,268 Q400,264 538,238"/>
+</svg>

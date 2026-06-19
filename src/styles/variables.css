@@ -10,7 +10,7 @@
   ---------------------------------------------------------- */
   --primary:   #1A1A1A; /* negro cálido — texto principal, botones */
   --secondary: #F5F5F7; /* gris muy claro — superficies secundarias */
-  --accent:    #E5B299; /* beige/melocotón — color de énfasis de marca */
+  --accent:    #C4909A; /* rosa muted — color de énfasis de marca */
 
   /* ----------------------------------------------------------
      COLORES BASE
@@ -24,6 +24,14 @@
   --color-surface:     #f3f4f6; /* fondos de imagen, promo text, contenedores neutros */
   --color-surface-alt: #f8f9fa; /* fondo del panel admin, secciones de preview */
 
+  /* Fondo base de la tienda pública: off-white cálido (no blanco puro).
+     Armoniza con el acento melocotón; evoca el papel artesanal de la marca. */
+  --bg-base:      #FAF6F1; /* fondo de página de la tienda */
+  --surface-soft: #F2EBE4; /* caja de imagen de producto, en cálido (no gris frío) */
+  --color-dark-deep: #2E1F28; /* footer, hero oscuro, ticker */
+  --color-dark-mid:  #4A2830; /* botones, hover, navbar */
+  --color-text-mid:  #7A5C68; /* precios, textos de apoyo */
+
   /* ----------------------------------------------------------
      BORDES
   ---------------------------------------------------------- */
@@ -33,7 +41,7 @@
   /* ----------------------------------------------------------
      TEXTO
   ---------------------------------------------------------- */
-  --text-main:              #2D2D2D; /* cuerpo principal */
+  --text-main:              #3D2B35; /* cuerpo principal */
   --text-light:             #6E6E73; /* texto secundario cálido */
   --color-text-muted:       #6b7280; /* precios de cards, textos de apoyo */
   --color-text-body:        #374151; /* descripción de producto */
@@ -43,7 +51,7 @@
   /* ----------------------------------------------------------
      FOOTER
   ---------------------------------------------------------- */
-  --color-footer-bg:   #111827;
+  --color-footer-bg:   #2E1F28;
   --color-footer-text: #9ca3af;
 
   /* ----------------------------------------------------------
@@ -99,7 +107,8 @@
   /* ----------------------------------------------------------
      TIPOGRAFÍA
   ---------------------------------------------------------- */
-  --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif; /* títulos de categoría */
 
   /* ----------------------------------------------------------
      LAYOUT

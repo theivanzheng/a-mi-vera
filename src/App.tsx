@@ -5,6 +5,10 @@ import { AuthProvider } from './context/AuthContext';
 // Tienda pública
 import PublicStore from './pages/PublicStore';
 import ProductDetail from './pages/ProductDetail';
+import Catalogo from './pages/Catalogo';
+import Destacados from './pages/Destacados';
+import Bodas from './pages/Bodas';
+import WeddingPlanners from './pages/WeddingPlanners';
 
 // Auth
 import Login from './pages/admin/Login';
@@ -33,6 +37,10 @@ function App() {
           {/* Tienda pública */}
           <Route path="/" element={<PublicStore />} />
           <Route path="/producto/:slug" element={<ProductDetail />} />
+          <Route path="/catalogo" element={<Catalogo />} />
+          <Route path="/destacados" element={<Destacados />} />
+          <Route path="/bodas" element={<Bodas />} />
+          <Route path="/bodas/wedding-planners" element={<WeddingPlanners />} />
 
           {/* Login */}
           <Route path="/login" element={<Login />} />
