@@ -19,20 +19,11 @@
   top: 0;
   left: 0;
   width: 100%;
-  padding: 1rem 1.5rem;
+  padding: 0.85rem 1.5rem;
   z-index: var(--z-navbar);
-  background-color: rgba(250, 246, 241, 0.72);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background-color: rgb(250, 246, 241);
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid rgba(61, 43, 53, 0.08);
-}
-
-.nav-icons-group {
-  display: flex;
-  gap: 1.5rem;
   align-items: center;
 }
 
@@ -41,22 +32,11 @@
   cursor: pointer;
 }
 
-/* Nueva estructura navbar: izquierda | centro | derecha */
-.nav-left,
-.nav-right {
-  display: flex;
-  align-items: center;
-  min-width: 60px;
-}
-.nav-right {
-  justify-content: flex-end;
-}
-
+/* Logo — izquierda */
 .nav-logo-link {
   display: flex;
   align-items: center;
-  flex: 1;
-  justify-content: center;
+  text-decoration: none;
 }
 
 .nav-logo {
@@ -64,172 +44,168 @@
   object-fit: contain;
 }
 
-/* Botón "Buscar" texto */
-.nav-search-btn {
+/* Botón volver (ProductDetail) */
+.nav-back-btn {
   background: none;
   border: none;
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-main);
   cursor: pointer;
   padding: 0;
+  display: flex;
+  align-items: center;
 }
 
-/* Overlay blur cuando el buscador está abierto */
-.nav-search-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(250, 246, 241, 0) 0%,
-    rgba(250, 246, 241, 0.55) 30%,
-    rgba(250, 246, 241, 0.75) 100%
-  );
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  z-index: calc(var(--z-navbar) - 5);
-  animation: searchOverlayIn 0.28s ease forwards;
+/* Hamburguesa — derecha */
+.nav-hamburger {
+  background: none;
+  border: none;
   cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  color: var(--primary);
 }
 
-@keyframes searchOverlayIn {
+/* ── Backdrop ── */
+.nav-backdrop {
+  position: fixed;
+  top: var(--navbar-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(26, 14, 10, 0.28);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  z-index: calc(var(--z-navbar) - 2);
+  animation: backdropIn 0.3s ease forwards;
+}
+
+@keyframes backdropIn {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
 
-.nav-search-overlay.closing {
-  animation: searchOverlayOut 0.26s ease forwards;
-}
-@keyframes searchOverlayOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
-}
-
-.nav-search-bar.closing {
-  animation: searchBarOut 0.26s ease forwards;
-}
-@keyframes searchBarOut {
-  from { opacity: 1; transform: translateY(0); }
-  to   { opacity: 0; transform: translateY(-6px); }
-}
-
-/* Barra de búsqueda desplegable */
-.nav-search-bar {
+/* ── Drawer — animación de arriba hacia abajo ── */
+.nav-drawer {
   position: fixed;
   top: var(--navbar-height);
   left: 0;
   width: 100%;
-  background: rgba(250, 246, 241, 0.97);
+  background: rgba(250, 246, 241, 0.94);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(61, 43, 53, 0.1);
-  padding: 0.75rem 1.5rem;
   z-index: calc(var(--z-navbar) - 1);
+  max-height: calc(100vh - var(--navbar-height));
+  overflow-y: auto;
+  pointer-events: none;
+  /* Barrido de arriba a abajo con clip-path */
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.38s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.nav-search-form {
+.nav-drawer.open {
+  clip-path: inset(0 0 0% 0);
+  pointer-events: auto;
+}
+
+/* ── Secciones internas del drawer ── */
+.nav-drawer-section {
+  padding: 1.5rem 1.75rem;
+}
+
+.nav-drawer-divider {
+  height: 1px;
+  background: rgba(61, 43, 53, 0.08);
+  margin: 0 1.75rem;
+}
+
+/* Etiqueta de sección */
+.nav-drawer-eyebrow {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+/* Buscador dentro del drawer */
+.nav-drawer-search-form {
   display: flex;
   align-items: center;
-  width: 100%;
   gap: 0.5rem;
+  border-bottom: 1.5px solid rgba(61, 43, 53, 0.18);
+  padding-bottom: 0.5rem;
 }
 
-.nav-search-input {
+.nav-drawer-search-input {
+  flex: 1;
   border: none;
   outline: none;
-  font-family: var(--font-body);
-  font-size: 1rem;
-  flex: 1;
   background: transparent;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
   color: var(--text-main);
 }
-.nav-search-input::placeholder {
+
+.nav-drawer-search-input::placeholder {
   color: var(--color-text-muted);
 }
 
-.nav-search-submit {
+.nav-drawer-search-submit {
   background: none;
   border: none;
   font-size: 1.1rem;
   color: var(--text-main);
   cursor: pointer;
   padding: 0 0.25rem;
+  flex-shrink: 0;
 }
 
-/* ── Drawer ── */
-.nav-drawer {
-  position: fixed;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100vh;
-  background-color: var(--color-white);
-  z-index: var(--z-drawer);
-  transition: left var(--transition-drawer);
-  overflow-y: auto;
-}
-
-.nav-drawer.open {
-  left: 0;
-}
-
-.nav-drawer-header {
-  padding: 1rem 1.5rem;
+/* Links de páginas — estilo editorial Playfair */
+.nav-drawer-pages {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--color-border-subtle);
+  flex-direction: column;
+  gap: 0.1rem;
 }
 
-.nav-drawer-content {
-  padding: 2rem 1.5rem;
-}
-
-.nav-drawer-title {
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  letter-spacing: 0.5px;
-}
-
-.nav-category-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.nav-category-list li {
-  margin-bottom: 1.5rem;
-}
-
-.nav-category-list a {
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: var(--color-black);
+.nav-drawer-link {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.65rem;
+  color: var(--text-main);
   text-decoration: none;
-  cursor: pointer;
+  line-height: 1.5;
+  transition: color 150ms ease;
 }
 
-/* ── Buscador ── */
-.nav-search-form {
+.nav-drawer-link:hover {
+  color: var(--accent);
+}
+
+/* Categorías — pills */
+.nav-drawer-cat-list {
   display: flex;
-  align-items: center;
-  width: 100%;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
-.nav-search-input {
-  border: none;
-  outline: none;
-  font-size: 1.1rem;
-  width: 200px;
-  background: transparent;
+.nav-drawer-cat-btn {
+  background: none;
+  border: 1px solid rgba(61, 43, 53, 0.2);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+.nav-drawer-cat-btn:hover {
+  background: rgba(122, 92, 104, 0.1);
+  border-color: var(--accent);
 }
 
 

@@ -1,2 +1,28 @@
 /* Los estilos han sido reorganizados en src/styles/.
    Este fichero se mantiene para no romper el import en App.tsx. */
+
+/* ============================================================
+   PAGE REVEAL — transición suave al cambiar de ruta
+   Solo opacity + clip-path (seguros con el navbar position: fixed).
+   ============================================================ */
+.page-reveal {
+  animation: pageReveal 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes pageReveal {
+  from {
+    opacity: 0;
+    clip-path: inset(6% 0 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Respeta la preferencia de movimiento reducido del sistema. */
+@media (prefers-reduced-motion: reduce) {
+  .page-reveal {
+    animation: none;
+  }
+}

@@ -177,7 +177,7 @@ const PublicStore = () => {
         <section id="destacados" className="av-featured">
           <div className="av-featured-header">
             <h2 className="av-featured-title">Productos Destacados</h2>
-            <Link to="/destacados" className="av-featured-ver">Ver todos →</Link>
+            <Link to="/catalogo#destacados" className="av-featured-ver">Ver todos →</Link>
           </div>
           <div className="av-featured-scroll">
             {loading ? (

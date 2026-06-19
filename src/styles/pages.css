@@ -43,7 +43,7 @@
 
 /* ── Hero de página editorial ── */
 .page-hero {
-  padding: calc(var(--navbar-height) + 3.5rem) 1.5rem 3.5rem;
+  padding: calc(var(--navbar-height) + 1.25rem) 1.5rem 3.5rem;
   background:
     radial-gradient(120% 90% at 50% 0%, #fbf7f1 0%, var(--bg-base) 55%, var(--surface-soft) 100%);
   text-align: center;
@@ -61,6 +61,9 @@
   text-wrap: balance;
   margin-bottom: 1.1rem;
 }
+/* Salto manual: primera línea más larga que la segunda */
+.nosotros-hero-title { text-wrap: normal; }
+
 .page-hero-sub {
   font-size: 1.05rem;
   line-height: 1.6;
@@ -186,6 +189,186 @@
 }
 .galeria-item { aspect-ratio: 1 / 1; }
 
+/* ── Marco de vídeo (taller / láser) ── */
+.video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--color-dark-deep);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.video-frame video,
+.video-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+}
+.video-frame-coming {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  color: color-mix(in srgb, var(--color-white) 70%, transparent);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.video-frame-play {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-white) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-white) 30%, transparent);
+  color: var(--color-white);
+}
+
+/* ── Nosotros: vídeo del hero (primer elemento, encima del título) ── */
+.hero-video {
+  margin: 0 0 1.5rem;
+  box-shadow: var(--shadow-md);
+}
+
+/* ── Nosotros: apartados del taller (scroll horizontal) ── */
+.apartados-scroll {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.75rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 0.5rem;
+}
+.apartados-scroll::-webkit-scrollbar { display: none; }
+.apartados-hint { margin-top: 1rem; }
+
+.apartado-card {
+  flex: 0 0 auto;
+  width: 270px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-white);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.apartado-video {
+  aspect-ratio: 4 / 5;
+  border-radius: 0;
+}
+.apartado-body {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+}
+.apartado-eyebrow { margin-bottom: 0.5rem; }
+.apartado-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+.apartado-text {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--color-text-body);
+}
+
+/* ── Nosotros: proceso (pasos numerados) ── */
+.proceso-grid {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+.proceso-card {
+  position: relative;
+  background: var(--color-white);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 1.5rem 1.5rem;
+}
+.proceso-num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--accent);
+}
+.proceso-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin: 0.75rem 0 1rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: var(--primary);
+}
+.proceso-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+.proceso-text {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--color-text-body);
+}
+
+/* ── Nosotros: valores ── */
+.valores-grid {
+  margin-top: 1.75rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+.valor-card {
+  text-align: center;
+  padding: 1.5rem 1.25rem;
+}
+.valor-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  background: var(--surface-soft);
+  color: var(--accent);
+}
+.valor-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+.valor-text {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--color-text-body);
+  max-width: 36ch;
+  margin: 0 auto;
+}
+
 /* ── Teaser wedding planners ── */
 .planners-teaser {
   display: flex;
@@ -294,6 +477,9 @@
   .bodas-intro { grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items: center; }
   .paquetes-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
   .galeria-grid { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .proceso-grid { grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+  .valores-grid { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .apartado-card { width: 340px; }
   .sobre-inner { grid-template-columns: 1fr 1fr; gap: 3.5rem; }
   .page-section { padding: 4.5rem 0; }
 }
@@ -317,13 +503,12 @@
 
 /* ── HERO ── */
 .av-hero {
-  min-height: 92vh;
   background: var(--bg-base);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: var(--navbar-height) 1.5rem 3rem;
+  justify-content: flex-start;
+  padding: calc(var(--navbar-height) + 1.25rem) 1.5rem 3rem;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -541,7 +726,7 @@
   width: 140px;
   height: 140px;
   background: var(--surface-soft);
-  border-radius: 16px;
+  border-radius: 5px;
   overflow: hidden;
   margin-bottom: 10px;
 }
@@ -752,7 +937,7 @@
 
 /* Header */
 .cat-header {
-  padding: 3rem 1.5rem 1.5rem;
+  padding: 1rem 1.5rem 1.5rem;
   text-align: center;
 }
 
@@ -772,16 +957,85 @@
   color: var(--color-text-mid);
 }
 
-/* Sticky filter tabs */
-.cat-filters-wrap {
+/* Buscador de producto */
+.cat-search {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: 420px;
+  margin: 1.5rem auto 0;
+  padding: 0.7rem 1rem;
+  background: var(--surface-soft);
+  border: 1px solid var(--color-text-mid);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+}
+.cat-search-icon { color: var(--color-text-mid); flex: none; }
+.cat-search-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--text-main);
+}
+.cat-search-input::placeholder { color: var(--color-text-placeholder); }
+.cat-search-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 50%;
+  background: var(--surface-soft);
+  color: var(--color-text-mid);
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+.cat-search-clear:hover { background: color-mix(in srgb, var(--accent) 25%, transparent); }
+
+/* Sticky filter tabs — contenedor externo (fades + posición sticky) */
+.cat-filters-outer {
   position: sticky;
   top: var(--navbar-height);
   z-index: 20;
   background: var(--bg-base);
   border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+
+/* Difuminado en los bordes: indica que hay más categorías fuera de vista */
+.cat-filters-outer::before,
+.cat-filters-outer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2.5rem;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+.cat-filters-outer::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg-base) 15%, transparent);
+}
+.cat-filters-outer::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg-base) 15%, transparent);
+}
+.cat-filters-outer.fade-left::before { opacity: 1; }
+.cat-filters-outer.fade-right::after { opacity: 1; }
+
+.cat-filters-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  scroll-behavior: smooth;
 }
 .cat-filters-wrap::-webkit-scrollbar { display: none; }
 
@@ -852,9 +1106,10 @@
 
 .cat-card-img {
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 1 / 1;
   background: var(--surface-soft);
   overflow: hidden;
+  border-radius: 5px;
   margin-bottom: 0.6rem;
 }
 

@@ -1,14 +1,15 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ProductProvider } from './context/ProductContext';
 import { AuthProvider } from './context/AuthContext';
+import PageTransition from './components/PageTransition';
 
 // Tienda pública
 import PublicStore from './pages/PublicStore';
 import ProductDetail from './pages/ProductDetail';
 import Catalogo from './pages/Catalogo';
-import Destacados from './pages/Destacados';
 import Bodas from './pages/Bodas';
 import WeddingPlanners from './pages/WeddingPlanners';
+import Nosotros from './pages/Nosotros';
 
 // Auth
 import Login from './pages/admin/Login';
@@ -33,12 +34,13 @@ function App() {
     <ProductProvider>
       <AuthProvider>
       <Router>
+        <PageTransition>
         <Routes>
           {/* Tienda pública */}
           <Route path="/" element={<PublicStore />} />
           <Route path="/producto/:slug" element={<ProductDetail />} />
           <Route path="/catalogo" element={<Catalogo />} />
-          <Route path="/destacados" element={<Destacados />} />
+          <Route path="/nosotros" element={<Nosotros />} />
           <Route path="/bodas" element={<Bodas />} />
           <Route path="/bodas/wedding-planners" element={<WeddingPlanners />} />
 
@@ -59,6 +61,7 @@ function App() {
             </Route>
           </Route>
         </Routes>
+        </PageTransition>
       </Router>
       </AuthProvider>
     </ProductProvider>
