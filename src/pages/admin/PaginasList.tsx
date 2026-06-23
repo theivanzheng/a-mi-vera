@@ -1,16 +1,18 @@
+import type { ComponentType } from 'react';
 import { Link } from 'react-router-dom';
-import { Pencil, Home, Lock } from 'lucide-react';
+import { Pencil, Home, Users, Lock } from 'lucide-react';
 
 interface PaginaItem {
   slug: string;
   nombre: string;
   desc: string;
   editable: boolean;
+  Icon: ComponentType<{ size?: number; className?: string }>;
 }
 
 const PAGINAS: PaginaItem[] = [
-  { slug: 'inicio', nombre: 'Inicio', desc: 'Portada de la tienda', editable: true },
-  { slug: 'nosotros', nombre: 'Nosotros', desc: 'Página "Detrás de cada regalo"', editable: false },
+  { slug: 'inicio', nombre: 'Inicio', desc: 'Portada de la tienda', editable: true, Icon: Home },
+  { slug: 'nosotros', nombre: 'Nosotros', desc: 'Página "Detrás de cada regalo"', editable: true, Icon: Users },
 ];
 
 export default function PaginasList() {
@@ -24,10 +26,11 @@ export default function PaginasList() {
       </p>
 
       <div className="admin-paginas-list">
-        {PAGINAS.map(p =>
-          p.editable ? (
+        {PAGINAS.map(p => {
+          const Icon = p.editable ? p.Icon : Lock;
+          return p.editable ? (
             <Link key={p.slug} to={`/admin/paginas/${p.slug}/editar`} className="admin-pagina-card">
-              <Home size={18} className="admin-pagina-icon" />
+              <Icon size={18} className="admin-pagina-icon" />
               <div className="admin-pagina-info">
                 <span className="admin-pagina-nombre">{p.nombre}</span>
                 <span className="admin-pagina-desc">{p.desc}</span>
@@ -36,15 +39,15 @@ export default function PaginasList() {
             </Link>
           ) : (
             <div key={p.slug} className="admin-pagina-card admin-pagina-card--soon">
-              <Lock size={18} className="admin-pagina-icon" />
+              <Icon size={18} className="admin-pagina-icon" />
               <div className="admin-pagina-info">
                 <span className="admin-pagina-nombre">{p.nombre}</span>
                 <span className="admin-pagina-desc">{p.desc}</span>
               </div>
               <span className="admin-pagina-soon">Próximamente</span>
             </div>
-          ),
-        )}
+          );
+        })}
       </div>
     </div>
   );

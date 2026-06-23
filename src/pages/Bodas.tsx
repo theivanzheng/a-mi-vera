@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { Heart, ArrowRight } from 'lucide-react';
-import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { whatsappLink } from '../lib/whatsapp';
 
@@ -39,8 +38,6 @@ const PAQUETES: Paquete[] = [
 const Bodas = () => {
   return (
     <div className="store-container">
-      <Navbar />
-
       {/* Hero */}
       <header className="page-hero bodas-hero">
         <div className="page-hero-inner">

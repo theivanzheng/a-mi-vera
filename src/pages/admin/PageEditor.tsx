@@ -1,22 +1,46 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, type ComponentType } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Italic, X, AlertCircle, Check } from 'lucide-react';
 import { isSupabaseConfigured } from '../../lib/supabase';
 import { getPaginaContenido, upsertPaginaContenido } from '../../lib/paginasApi';
 import { HOME_DEFAULTS, mergeHomeContent, type HomeContent } from '../../content/home';
+import { NOSOTROS_DEFAULTS, mergeNosotrosContent, type NosotrosContent } from '../../content/nosotros';
 import { PageContentProvider } from '../../context/PageContent';
 import HomeView from '../../components/HomeView';
+import NosotrosView from '../../components/NosotrosView';
 
-// Páginas editables (de momento solo la portada).
-const PAGINAS: Record<string, { nombre: string }> = {
-  inicio: { nombre: 'Inicio' },
+// Contenido de una página: objeto JSON cualquiera (la forma la conoce su View).
+type Contenido = Record<string, unknown>;
+
+interface PaginaConfig {
+  nombre: string;
+  defaults: Contenido;
+  merge: (stored: unknown) => Contenido;
+  View: ComponentType;
+}
+
+// Páginas editables. Cada una aporta sus defaults, su merge y su vista. Añadir
+// una página nueva = añadir aquí su entrada (más la fila en PaginasList).
+const PAGINAS: Record<string, PaginaConfig> = {
+  inicio: {
+    nombre: 'Inicio',
+    defaults: HOME_DEFAULTS as unknown as Contenido,
+    merge: (s) => mergeHomeContent((s as Partial<HomeContent>) ?? null) as unknown as Contenido,
+    View: HomeView,
+  },
+  nosotros: {
+    nombre: 'Nosotros',
+    defaults: NOSOTROS_DEFAULTS as unknown as Contenido,
+    merge: (s) => mergeNosotrosContent((s as Partial<NosotrosContent>) ?? null) as unknown as Contenido,
+    View: NosotrosView,
+  },
 };
 
-// Set inmutable por ruta de puntos ('hero.titulo').
-function setByPath(obj: HomeContent, path: string, value: unknown): HomeContent {
+// Set inmutable por ruta de puntos ('hero.titulo', 'laser.ventajas.0').
+function setByPath(obj: Contenido, path: string, value: unknown): Contenido {
   const next = structuredClone(obj);
   const keys = path.split('.');
-  let cursor: Record<string, unknown> = next as unknown as Record<string, unknown>;
+  let cursor: Record<string, unknown> = next;
   for (let i = 0; i < keys.length - 1; i++) cursor = cursor[keys[i]] as Record<string, unknown>;
   cursor[keys[keys.length - 1]] = value;
   return next;
@@ -26,23 +50,30 @@ export default function PageEditor() {
   const { slug = '' } = useParams();
   const navigate = useNavigate();
 
-  const [saved, setSaved] = useState<HomeContent>(HOME_DEFAULTS);   // último estado guardado
-  const [draft, setDraft] = useState<HomeContent>(HOME_DEFAULTS);   // borrador en edición
+  const pagina = PAGINAS[slug];
+
+  const [saved, setSaved] = useState<Contenido>(() => pagina?.defaults ?? {});   // último estado guardado
+  const [draft, setDraft] = useState<Contenido>(() => pagina?.defaults ?? {});   // borrador en edición
   const [hasStored, setHasStored] = useState(false);
   const [loading, setLoading] = useState(isSupabaseConfigured);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [justSaved, setJustSaved] = useState(false);
 
-  const pagina = PAGINAS[slug];
-
   // ── Cargar contenido ───────────────────────────────────────────────────────
   useEffect(() => {
-    if (!pagina || slug !== 'inicio' || !isSupabaseConfigured) return;
+    if (!pagina) return;
+    // Reinicia a los defaults de ESTA página (evita mostrar la nueva vista con
+    // datos de la anterior si se cambia de página sin desmontar el editor).
+    setSaved(pagina.defaults);
+    setDraft(pagina.defaults);
+    setHasStored(false);
+    if (!isSupabaseConfigured) { setLoading(false); return; }
+    setLoading(true);
     let active = true;
-    getPaginaContenido('inicio').then(({ data }) => {
+    getPaginaContenido(slug).then(({ data }) => {
       if (!active) return;
-      const merged = mergeHomeContent((data as Partial<HomeContent>) ?? null);
+      const merged = pagina.merge(data ?? null);
       setSaved(merged);
       setDraft(merged);
       setHasStored(data != null);
@@ -61,7 +92,7 @@ export default function PageEditor() {
   async function handleSave() {
     setSaving(true);
     setError(null);
-    const { error } = await upsertPaginaContenido('inicio', draft);
+    const { error } = await upsertPaginaContenido(slug, draft);
     setSaving(false);
     if (error) {
       setError(error);
@@ -112,6 +143,8 @@ export default function PageEditor() {
     return <div className="page-editor-msg"><p>Cargando…</p></div>;
   }
 
+  const View = pagina.View;
+
   return (
     <div className="page-editor">
       {!hasStored && (
@@ -126,7 +159,7 @@ export default function PageEditor() {
       <div className="page-editor-canvas" onClickCapture={blockNav}>
         <PageContentProvider value={{ content: draft, editing: true, hasStored, setField }}>
           <div className="store-container">
-            <HomeView />
+            <View />
           </div>
         </PageContentProvider>
 

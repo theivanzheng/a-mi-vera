@@ -571,7 +571,7 @@
 
 .av-ticker-track {
   display: inline-flex;
-  animation: avTickerMove 22s linear infinite;
+  animation: avTickerMove 44s linear infinite;
 }
 
 .av-ticker-item {
@@ -1347,7 +1347,8 @@
 .av-hero-pill-wrap:has(.av-editable),
 .av-hero-cta:has(.av-editable),
 .av-link-cta:has(.av-editable),
-.av-wa-btn:has(.av-editable) { display: block; width: 100%; }
+.av-wa-btn:has(.av-editable),
+.btn-whatsapp:has(.av-editable) { display: block; width: 100%; }
 
 /* ── Escaparate de productos: tarjeta de edición autocontenida ── */
 .esc-block {

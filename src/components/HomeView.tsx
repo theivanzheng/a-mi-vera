@@ -5,7 +5,7 @@ import { usePageContext } from '../context/PageContent';
 import EditableText from './editable/EditableText';
 import EditableMedia from './editable/EditableMedia';
 import { toSlug } from '../lib/slug';
-import type { Escaparate } from '../content/home';
+import type { Escaparate, HomeContent } from '../content/home';
 import LogotipoSvg from '../../IdentidadVisual/AmiVera_LogoEditable.svg';
 import CardAzul    from '../../IdentidadVisual/FotosHeader/Azul porcelana.png';
 import CardBlush   from '../../IdentidadVisual/FotosHeader/Blush.png';
@@ -48,7 +48,7 @@ const rid = () => Math.random().toString(36).slice(2, 8);
  */
 export default function HomeView() {
   const { products, categories, loading } = useProducts();
-  const { content, editing, setField } = usePageContext();
+  const { content, editing, setField } = usePageContext<HomeContent>();
 
   // Categorías reales para el selector (sin la categoría comodín "Todos").
   const cats = categories.filter(c => c.toLowerCase() !== 'todos');

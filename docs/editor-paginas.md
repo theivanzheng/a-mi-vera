@@ -1,7 +1,8 @@
 # Editor de páginas en línea — A Mi Vera
 
 Cómo funciona la edición de contenido de las páginas públicas desde el admin, y
-cómo se integra cada elemento editable. Página piloto: **Inicio** (`/`).
+cómo se integra cada elemento editable. Páginas editables: **Inicio** (`/`) y
+**Nosotros** (`/nosotros`).
 
 > Complementa a [`sistema-diseno.md`](sistema-diseno.md). Si hay duda sobre
 > estilos, manda el sistema de diseño; sobre edición, manda este documento y el
@@ -110,6 +111,18 @@ con controles; en **vista** se renderiza el diseño real (carrusel / cinta anima
 | **Frase oscura** | frase, firma | `EditableText` (`fraseOscura.*`) |
 | **CTA WhatsApp** | eyebrow, título, subtítulo, botón | `EditableText` (`whatsapp.*`) |
 
+### Mapa de Nosotros (`/nosotros`)
+
+| Sección | Qué se edita | Componente / patrón |
+|--------|--------------|---------------------|
+| **Hero** | vídeo, eyebrow, título (`*cursiva*`), subtítulo, texto botón | `EditableMedia` (`hero.video`) + `EditableText` (`hero.*`) |
+| **Bloques: taller / láser / personalización** | eyebrow, título, párrafo (`*cursiva*`) + vídeo | `EditableText` (`<bloque>.*`) + `EditableMedia` (`<bloque>.video`) |
+| **Ventajas del láser** | lista de puntos | bloque editable (array `laser.ventajas`) con añadir/quitar, reusa las clases del ticker |
+| **CTA final** | título, subtítulo, botón | `EditableText` (`cta.*`) |
+
+Los vídeos de Nosotros usan `EditableMedia` con `className="video-frame"`, que conserva
+el marco 16:9 de la web y añade el botón "Cambiar vídeo". Se suben a `paginas/nosotros/`.
+
 La barra inferior del editor: **Cursiva** (envuelve la selección en `*…*`),
 **Descartar**, **Guardar**. Y un botón grande **"Guardar todo"** al final. Al
 guardar: botón en verde con tic + toast "Cambios guardados".
@@ -133,12 +146,16 @@ guardar: botón en verde con tic + toast "Cambios guardados".
    `setField('array', …)`) y la vista pública real; cada item con `EditableText`
    por índice.
 
-### Una página editable nueva (p. ej. Nosotros)
-1. `src/content/nosotros.ts` con su `NosotrosContent`, defaults y merge.
-2. Un `NosotrosView` que consuma `usePageContext()` y use `Editable*`.
-3. En `PageEditor`, añade el slug a `PAGINAS` y la carga del contenido; renderiza
-   `NosotrosView` cuando `slug === 'nosotros'`.
+### Una página editable nueva
+*(Inicio y Nosotros ya están hechas; este es el patrón para la siguiente.)*
+1. `src/content/<pagina>.ts` con su `…Content`, defaults y `merge…`.
+2. Un `…View` que consuma `usePageContext<…Content>()` y use `Editable*`.
+3. En `PageEditor`, añade una entrada al registro `PAGINAS`:
+   `{ nombre, defaults, merge, View }`. El editor ya es **genérico** — carga,
+   edita (borrador) y guarda por slug sin tocar nada más.
 4. Añade la entrada en `PaginasList` (marcar `editable: true`).
+5. La página pública (`src/pages/<Pagina>.tsx`) envuelve su `…View` en
+   `PageContentProvider` con `editing: false`, usando su hook `use…Content()`.
 
 ---
 

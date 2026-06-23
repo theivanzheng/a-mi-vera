@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ProductProvider } from './context/ProductContext';
 import { AuthProvider } from './context/AuthContext';
-import PageTransition from './components/PageTransition';
 
 // Tienda pública
+import PublicLayout from './components/PublicLayout';
 import PublicStore from './pages/PublicStore';
 import ProductDetail from './pages/ProductDetail';
 import Catalogo from './pages/Catalogo';
@@ -36,15 +36,16 @@ function App() {
     <ProductProvider>
       <AuthProvider>
       <Router>
-        <PageTransition>
         <Routes>
-          {/* Tienda pública */}
-          <Route path="/" element={<PublicStore />} />
-          <Route path="/producto/:slug" element={<ProductDetail />} />
-          <Route path="/catalogo" element={<Catalogo />} />
-          <Route path="/nosotros" element={<Nosotros />} />
-          <Route path="/bodas" element={<Bodas />} />
-          <Route path="/bodas/wedding-planners" element={<WeddingPlanners />} />
+          {/* Tienda pública — navbar persistente + transición fade-up */}
+          <Route element={<PublicLayout />}>
+            <Route path="/" element={<PublicStore />} />
+            <Route path="/producto/:slug" element={<ProductDetail />} />
+            <Route path="/catalogo" element={<Catalogo />} />
+            <Route path="/nosotros" element={<Nosotros />} />
+            <Route path="/bodas" element={<Bodas />} />
+            <Route path="/bodas/wedding-planners" element={<WeddingPlanners />} />
+          </Route>
 
           {/* Login */}
           <Route path="/login" element={<Login />} />
@@ -66,7 +67,6 @@ function App() {
             <Route path="/admin/paginas/:slug/editar" element={<PageEditor />} />
           </Route>
         </Routes>
-        </PageTransition>
       </Router>
       </AuthProvider>
     </ProductProvider>

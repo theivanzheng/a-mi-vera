@@ -1,11 +1,14 @@
 import { createContext, useContext, ReactNode } from 'react';
-import type { HomeContent } from '../content/home';
 
 // Valor que comparten la página pública y el editor.
 // - En público: editing=false, setField no hace nada.
-// - En el editor (Paso 3): editing=true, setField actualiza el borrador.
-export interface PageContextValue {
-  content: HomeContent;
+// - En el editor: editing=true, setField actualiza el borrador.
+//
+// Es genérico en el tipo de contenido (HomeContent, NosotrosContent…). Los
+// componentes editables (EditableText/EditableMedia) navegan el contenido por
+// "path" y no dependen de la forma concreta, así que usan el default `unknown`.
+export interface PageContextValue<T = unknown> {
+  content: T;
   editing: boolean;
   hasStored: boolean; // ¿hay contenido guardado en Supabase? (para avisar en el editor)
   setField: (path: string, value: unknown) => void;
@@ -13,18 +16,18 @@ export interface PageContextValue {
 
 const PageContext = createContext<PageContextValue | null>(null);
 
-export function PageContentProvider({
+export function PageContentProvider<T>({
   value,
   children,
 }: {
-  value: PageContextValue;
+  value: PageContextValue<T>;
   children: ReactNode;
 }) {
-  return <PageContext.Provider value={value}>{children}</PageContext.Provider>;
+  return <PageContext.Provider value={value as PageContextValue}>{children}</PageContext.Provider>;
 }
 
-export function usePageContext(): PageContextValue {
+export function usePageContext<T = unknown>(): PageContextValue<T> {
   const ctx = useContext(PageContext);
   if (!ctx) throw new Error('usePageContext debe usarse dentro de <PageContentProvider>');
-  return ctx;
+  return ctx as PageContextValue<T>;
 }

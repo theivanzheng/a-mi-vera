@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Check } from 'lucide-react';
-import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { whatsappLink } from '../lib/whatsapp';
 
@@ -17,8 +16,6 @@ const VENTAJAS: string[] = [
 const WeddingPlanners = () => {
   return (
     <div className="store-container">
-      <Navbar />
-
       <main className="page-main planners-page">
         <Link to="/bodas" className="page-back-link">
           <ArrowLeft size={18} strokeWidth={1.5} /> Volver a Bodas

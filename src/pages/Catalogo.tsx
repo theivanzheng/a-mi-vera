@@ -2,7 +2,6 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Search, X } from 'lucide-react';
 import { useProducts } from '../hooks/useProducts';
-import Navbar from '../components/Navbar';
 import { toSlug } from '../lib/slug';
 
 interface CatProduct {
@@ -159,8 +158,6 @@ const Catalogo = () => {
 
   return (
     <div className="store-container">
-      <Navbar />
-
       <div className="cat-page">
         {/* Page header */}
         <header className="cat-header">

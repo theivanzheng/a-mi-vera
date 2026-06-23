@@ -4,7 +4,6 @@ import { useProducts } from '../hooks/useProducts';
 import { useHomeContent } from '../hooks/useHomeContent';
 import { PageContentProvider } from '../context/PageContent';
 import HomeView from '../components/HomeView';
-import Navbar from '../components/Navbar';
 import ProductCard from '../components/ProductCard';
 
 const PublicStore = () => {
@@ -141,7 +140,6 @@ const PublicStore = () => {
 
   return (
     <div className="store-container">
-      <Navbar />
       {catalogContent}
     </div>
   );

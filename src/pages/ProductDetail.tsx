@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useProducts } from '../hooks/useProducts';
-import Navbar from '../components/Navbar';
 import { MessageCircle } from 'lucide-react';
 import Logotipo from '../../IdentidadVisual/Logo_AmiVera.png';
 
@@ -16,7 +15,6 @@ const ProductDetail = () => {
   if (loading) {
     return (
       <div className="store-container">
-        <Navbar isProductDetail={true} />
         <p style={{ marginTop: '120px', textAlign: 'center' }}>Cargando producto…</p>
       </div>
     );
@@ -29,7 +27,6 @@ const ProductDetail = () => {
   if (!product) {
     return (
       <div className="store-container" style={{ paddingTop: '100px', textAlign: 'center' }}>
-        <Navbar isProductDetail={true} />
         <h2 style={{ marginTop: '120px' }}>Producto no encontrado</h2>
         <Link to="/" style={{ color: 'blue', textDecoration: 'underline' }}>Volver a la tienda</Link>
       </div>
@@ -53,8 +50,6 @@ const ProductDetail = () => {
 
   return (
     <div className="store-container pdp-page">
-      <Navbar isProductDetail={true} />
-
       <main className="pdp-main-content">
         <div className="pdp-image-container">
           <img src={mainImage} alt={product.title} className="pdp-main-image" />
