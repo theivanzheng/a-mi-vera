@@ -2,6 +2,9 @@
 
 Aplicación web de comercio electrónico para **A Mi Vera**, una tienda de regalos personalizados. SPA construida con React + TypeScript. La venta se canaliza a través de WhatsApp. En evolución activa hacia Supabase como backend.
 
+> 🟢 **En producción:** [www.amivera13.es](https://www.amivera13.es) — Vercel (deploy desde `main`) + Supabase PROD.
+> **Estado y siguientes pasos → [`docs/pendiente.md`](docs/pendiente.md).**
+
 ---
 
 ## Estado actual del proyecto
