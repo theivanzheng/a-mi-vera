@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "import:validate": "tsc --noEmit -p scripts/tsconfig.json && tsx scripts/validate-products-import.ts",
     "import:dev": "tsc --noEmit -p scripts/tsconfig.json && tsx scripts/import-products-dev.ts",
+    "migrate:prod": "tsc --noEmit -p scripts/tsconfig.json && tsx scripts/migrate-dev-to-prod.ts",
     "import:catalogo": "tsc --noEmit -p scripts/tsconfig.json && tsx scripts/import-catalogo-storage.ts"
   },
   "dependencies": {
