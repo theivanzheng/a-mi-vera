@@ -1,108 +1,61 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { MessageCircle, PenTool, Hammer, Package, Hand, Sparkles, Heart, Play } from 'lucide-react';
+import { Play, Check } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import LogotipoSvg from '../../IdentidadVisual/AmiVera_LogoEditable.svg';
+import HeaderVideo from '../../IdentidadVisual/Videos/web/Header.mp4';
+import MaquinaVideo from '../../IdentidadVisual/Videos/web/Maquina.mp4';
+import TallerVideo from '../../IdentidadVisual/Videos/web/Video3.mp4';
+import PersonalizacionVideo from '../../IdentidadVisual/Videos/web/Video2.mp4';
 import { whatsappLink } from '../lib/whatsapp';
 
 // ── Contenido de ejemplo (placeholder) ───────────────────────────────────────
 // Editable desde el admin (Páginas → Nosotros) cuando se conecte a Supabase.
-// Los vídeos se añadirán sustituyendo el contenido de <VideoFrame> por un
-// <video> en bucle silenciado o un embed.
 
-interface Paso {
-  icono: typeof MessageCircle;
-  titulo: string;
-  texto: string;
-}
-
-const PROCESO: Paso[] = [
-  {
-    icono: MessageCircle,
-    titulo: 'Conversamos',
-    texto: 'Nos cuentas a quién va dirigido y qué quieres transmitir. Cada regalo nace de una conversación.',
-  },
-  {
-    icono: PenTool,
-    titulo: 'Diseñamos contigo',
-    texto: 'Damos forma a la idea: nombres, fechas, fotos o frases. Te enseñamos cómo quedará antes de empezar.',
-  },
-  {
-    icono: Hammer,
-    titulo: 'Lo hacemos a mano',
-    texto: 'Grabamos y personalizamos cada pieza una a una en el taller. Nada de producción en serie.',
-  },
-  {
-    icono: Package,
-    titulo: 'Enviamos con cariño',
-    texto: 'Lo preparamos con un packaging cuidado y lo enviamos listo para emocionar a quien lo reciba.',
-  },
+const LASER_VENTAJAS = [
+  'Precisión milimétrica en cada grabado',
+  'Graba sobre madera, metacrilato, cuero, metal y más',
+  'Acabados limpios, nítidos y duraderos',
+  'Lo último en tecnología de grabado láser',
 ];
 
-// Apartados del taller — scroll horizontal. La máquina láser va primero.
-interface Apartado {
-  eyebrow: string;
-  titulo: string;
-  texto: string;
-  videoLabel: string;
-}
-
-const APARTADOS: Apartado[] = [
-  {
-    eyebrow: 'Tecnología',
-    titulo: 'Máquina de grabado láser',
-    texto: 'El corazón del taller. Grabamos cada detalle con una precisión imposible de lograr a mano, sobre madera, metacrilato, cuero o metal.',
-    videoLabel: 'Vídeo de la láser próximamente',
-  },
-  {
-    eyebrow: 'El taller',
-    titulo: 'Donde nace cada pieza',
-    texto: 'Te enseñamos el proceso real: el diseño, el grabado y los acabados que hacen único cada regalo. Sin filtros.',
-    videoLabel: 'Vídeo del taller próximamente',
-  },
-  {
-    eyebrow: 'A tu medida',
-    titulo: 'Personalización 1 a 1',
-    texto: 'Hablamos contigo de tú a tú y adaptamos cada regalo a lo que quieres transmitir. Tú lo imaginas, nosotros lo hacemos realidad.',
-    videoLabel: 'Vídeo próximamente',
-  },
-];
-
-interface Valor {
-  icono: typeof Hand;
-  titulo: string;
-  texto: string;
-}
-
-const VALORES: Valor[] = [
-  {
-    icono: Hand,
-    titulo: 'Hecho a mano',
-    texto: 'Cada detalle pasa por nuestras manos. Piezas únicas, cuidadas y con alma artesanal.',
-  },
-  {
-    icono: Sparkles,
-    titulo: '100% personalizado',
-    texto: 'No vendemos un regalo más: lo pensamos especialmente para la persona que lo va a recibir.',
-  },
-  {
-    icono: Heart,
-    titulo: 'Trato cercano',
-    texto: 'Hablamos contigo de tú a tú, sin intermediarios, acompañándote en cada paso del proceso.',
-  },
-];
-
-// Marco con formato de vídeo. Estado "próximamente" mientras no hay archivo.
-const VideoFrame = ({ label = 'Vídeo próximamente', className = '' }: { label?: string; className?: string }) => (
+// Marco con formato de vídeo. Reproduce el vídeo si recibe `src`; si no, muestra
+// el estado "próximamente".
+const VideoFrame = ({
+  src,
+  poster,
+  label = 'Vídeo próximamente',
+  className = '',
+}: {
+  src?: string;
+  poster?: string;
+  label?: string;
+  className?: string;
+}) => (
   <div className={`video-frame ${className}`.trim()}>
-    {/* Sustituir por <video autoPlay muted loop playsInline> cuando esté el archivo */}
-    <span className="video-frame-coming">
-      <span className="video-frame-play"><Play size={22} strokeWidth={1.5} /></span>
-      {label}
-    </span>
+    {src ? (
+      <video
+        src={src}
+        poster={poster}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+      />
+    ) : (
+      <span className="video-frame-coming">
+        <span className="video-frame-play"><Play size={22} strokeWidth={1.5} /></span>
+        {label}
+      </span>
+    )}
   </div>
 );
 
 const Nosotros = () => {
+  // Al entrar (la home usa scrollRestoration manual), abrir siempre arriba.
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
   return (
     <div className="store-container">
       <Navbar />
@@ -110,7 +63,7 @@ const Nosotros = () => {
       {/* Hero */}
       <header className="page-hero">
         <div className="page-hero-inner">
-          <VideoFrame className="hero-video" label="Vídeo próximamente" />
+          <VideoFrame className="hero-video" src={HeaderVideo} />
           <span className="page-eyebrow">Nosotros</span>
           <h1 className="page-hero-title nosotros-hero-title">Detrás de cada regalo,<br />una historia</h1>
           <p className="page-hero-sub">
@@ -128,62 +81,67 @@ const Nosotros = () => {
         </div>
       </header>
 
-      <main className="page-main">
-        {/* Cómo trabajamos */}
-        <section className="page-section">
-          <h2 className="section-title centered">Cómo trabajamos</h2>
-          <p className="placeholder-note centered">Texto de ejemplo — editable desde el admin.</p>
-          <ol className="proceso-grid">
-            {PROCESO.map((p, i) => {
-              const Icono = p.icono;
-              return (
-                <li key={p.titulo} className="proceso-card">
-                  <span className="proceso-num">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="proceso-icon">
-                    <Icono size={26} strokeWidth={1.5} />
-                  </span>
-                  <h3 className="proceso-title">{p.titulo}</h3>
-                  <p className="proceso-text">{p.texto}</p>
-                </li>
-              );
-            })}
-          </ol>
-        </section>
-
-        {/* Apartados del taller — scroll horizontal (láser primero) */}
-        <section className="page-section">
-          <h2 className="section-title centered">Conoce el taller</h2>
-          <div className="apartados-scroll">
-            {APARTADOS.map((a) => (
-              <article key={a.titulo} className="apartado-card">
-                <VideoFrame className="apartado-video" label={a.videoLabel} />
-                <div className="apartado-body">
-                  <span className="page-eyebrow apartado-eyebrow">{a.eyebrow}</span>
-                  <h3 className="apartado-title">{a.titulo}</h3>
-                  <p className="apartado-text">{a.texto}</p>
-                </div>
-              </article>
-            ))}
+      <main>
+        {/* 1 — Donde nace cada pieza */}
+        <section className="nosotros-bloque nosotros-bloque--white">
+          <div className="bloque-inner">
+            <div className="bloque-head">
+              <span className="page-eyebrow">El taller</span>
+              <h2 className="section-title">Donde nace cada pieza</h2>
+            </div>
+            <VideoFrame src={TallerVideo} />
+            <div className="bloque-text">
+              <p>
+                Cada pieza pasa por nuestras manos de principio a fin. Diseñamos contigo la idea, la
+                grabamos con mimo y la rematamos a mano hasta que queda perfecta. Nada de producción
+                en serie: aquí cada regalo se piensa, se prueba y se cuida como si fuera para nosotros.
+              </p>
+            </div>
           </div>
-          <p className="placeholder-note centered apartados-hint">Desliza para ver más — los vídeos se añadirán pronto.</p>
         </section>
 
-        {/* Por qué A Mi Vera */}
-        <section className="page-section">
-          <h2 className="section-title centered">Por qué A Mi Vera</h2>
-          <div className="valores-grid">
-            {VALORES.map((v) => {
-              const Icono = v.icono;
-              return (
-                <article key={v.titulo} className="valor-card">
-                  <span className="valor-icon">
-                    <Icono size={24} strokeWidth={1.5} />
-                  </span>
-                  <h3 className="valor-title">{v.titulo}</h3>
-                  <p className="valor-text">{v.texto}</p>
-                </article>
-              );
-            })}
+        {/* 2 — Máquina de grabado láser */}
+        <section className="nosotros-bloque">
+          <div className="bloque-inner">
+            <div className="bloque-head">
+              <span className="page-eyebrow">Tecnología</span>
+              <h2 className="section-title">Nuestra máquina de grabado láser</h2>
+            </div>
+            <VideoFrame src={MaquinaVideo} />
+            <div className="bloque-text">
+              <p>
+                Nos obsesiona el detalle, y por eso invertimos en la mejor maquinaria posible.
+                Grabamos con una <strong>xTool</strong>, una de las máquinas de grabado láser de
+                referencia del mercado, que nos permite una precisión imposible de lograr a mano sobre
+                madera, metacrilato, cuero o metal. Mejor herramienta, mejor acabado, mejor regalo.
+              </p>
+              <ul className="ventajas-list">
+                {LASER_VENTAJAS.map((v) => (
+                  <li key={v}>
+                    <span className="ventaja-icon"><Check size={15} strokeWidth={2.5} /></span>
+                    {v}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* 3 — Personalización 1 a 1 */}
+        <section className="nosotros-bloque nosotros-bloque--white">
+          <div className="bloque-inner">
+            <div className="bloque-head">
+              <span className="page-eyebrow">A tu medida</span>
+              <h2 className="section-title">Personalización 1 a 1</h2>
+            </div>
+            <VideoFrame src={PersonalizacionVideo} />
+            <div className="bloque-text">
+              <p>
+                Hablamos contigo de tú a tú y adaptamos cada regalo a lo que quieres transmitir: un
+                nombre, una fecha, una foto o una frase que solo vosotros entendéis. Tú lo imaginas y
+                nosotros lo hacemos realidad, sin moldes ni catálogos cerrados.
+              </p>
+            </div>
           </div>
         </section>
       </main>

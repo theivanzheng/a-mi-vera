@@ -2,6 +2,7 @@ import { useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, ArrowLeft } from 'lucide-react';
 import { useProductContext } from '../context/ProductContext';
+import { toSlug } from '../lib/slug';
 import LogotipoTransp from '../../IdentidadVisual/AmiVera Logo Transparent.png';
 
 interface NavbarProps {
@@ -31,7 +32,7 @@ const Navbar = ({ isProductDetail = false }: NavbarProps) => {
 
   const goToCategory = (cat: string) => {
     closeMenu();
-    navigate(`/?categoria=${encodeURIComponent(cat)}`);
+    navigate(`/catalogo#${toSlug(cat)}`);
   };
 
   return (

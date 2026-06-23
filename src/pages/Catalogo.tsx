@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Search, X } from 'lucide-react';
 import { useProducts } from '../hooks/useProducts';
 import Navbar from '../components/Navbar';
+import { toSlug } from '../lib/slug';
 
 interface CatProduct {
   id: string;
@@ -21,15 +22,6 @@ interface Group {
   label: string;
   items: CatProduct[];
 }
-
-// Convierte un texto en un id seguro para usar como ancla en la URL.
-const slugify = (s: string) =>
-  s
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(new RegExp('[\\u0300-\\u036f]', 'g'), '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
 
 const Catalogo = () => {
   const { products, categories, loading } = useProducts();
@@ -50,7 +42,7 @@ const Catalogo = () => {
 
   categories.forEach(cat => {
     const items = (products as CatProduct[]).filter(p => (p.categories ?? []).includes(cat));
-    if (items.length > 0) groups.push({ key: cat, id: slugify(cat), label: cat, items });
+    if (items.length > 0) groups.push({ key: cat, id: toSlug(cat), label: cat, items });
   });
 
   const uncategorized = (products as CatProduct[]).filter(p => !p.categories || p.categories.length === 0);
@@ -77,10 +69,18 @@ const Catalogo = () => {
   const sectionRefs = useRef<Map<string, HTMLElement>>(new Map());
   const tabRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
 
-  // Distancia desde el top del viewport hasta el borde inferior de la barra
-  // sticky (navbar + pestañas). Sirve de línea de referencia para el spy.
-  const getStickyOffset = () =>
-    filtersWrapRef.current?.getBoundingClientRect().bottom ?? 0;
+  // Borde inferior de la barra sticky cuando está PEGADA (navbar + alto de las
+  // pestañas). Se calcula con la posición pegada, no con la actual: así también
+  // funciona el deep-link al cargar con la página en scroll 0 (donde la barra
+  // aún no se ha pegado y su getBoundingClientRect daría un valor mayor).
+  const getStickyOffset = () => {
+    const wrap = filtersWrapRef.current;
+    if (!wrap) return 0;
+    const navH = parseFloat(
+      getComputedStyle(document.documentElement).getPropertyValue('--navbar-height'),
+    ) || 60;
+    return navH + wrap.offsetHeight;
+  };
 
   const scrollToKey = useCallback((key: string, behavior: ScrollBehavior) => {
     const sec = sectionRefs.current.get(key);

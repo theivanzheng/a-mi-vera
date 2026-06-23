@@ -122,6 +122,39 @@ export function getPublicImageUrl(path: string): string {
   return data.publicUrl;
 }
 
+// ── Media de páginas (vídeos editables del editor de páginas) ──
+const ALLOWED_VIDEO = new Set(['video/mp4', 'video/webm', 'video/quicktime']);
+const MAX_VIDEO_SIZE = 30 * 1024 * 1024; // 30 MB
+
+export function validateVideoFile(file: File): string | null {
+  if (!ALLOWED_VIDEO.has(file.type)) {
+    return 'Solo se aceptan vídeos MP4, WEBM o MOV.';
+  }
+  if (file.size > MAX_VIDEO_SIZE) {
+    return `El vídeo pesa ${(file.size / 1024 / 1024).toFixed(1)} MB. El máximo es 30 MB. Conviene optimizarlo antes de subirlo.`;
+  }
+  return null;
+}
+
+// Sube un archivo de media de página al bucket (carpeta paginas/{slug}/…).
+// Devuelve la URL pública lista para guardar en el contenido de la página.
+export async function uploadPageMedia(
+  slug: string,
+  file: File,
+): Promise<{ url: string | null; error: string | null }> {
+  const ext = file.name.split('.').pop()?.toLowerCase() ?? 'mp4';
+  const uuid = crypto.randomUUID().replace(/-/g, '').slice(0, 8);
+  const safe = safeName(file.name);
+  const path = `paginas/${slug}/${uuid}_${safe}.${ext}`;
+
+  const { error } = await supabase!.storage
+    .from(BUCKET)
+    .upload(path, file, { contentType: file.type, upsert: false });
+
+  if (error) return { url: null, error: translateStorageError(error.message) };
+  return { url: getPublicImageUrl(path), error: null };
+}
+
 // Devuelve null si todo fue bien, o un mensaje de error en español si falla.
 // No lanza — el llamador decide si bloquear o solo avisar.
 export async function deleteStorageImages(paths: string[]): Promise<string | null> {

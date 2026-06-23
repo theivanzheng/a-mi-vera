@@ -375,6 +375,7 @@
 
 .Plattsupply-card .product-image-container {
   background-color: var(--surface-soft);
+  border: 1px solid var(--color-dark-mid);
   border-radius: var(--radius-lg);
   aspect-ratio: 1 / 1;
   width: 100%;
@@ -571,6 +572,7 @@
 
 .recommended-card .product-image-container {
   aspect-ratio: 1/1;
+  border: 1px solid var(--color-dark-mid);
 }
 
 .recommended-card .product-title {

@@ -177,8 +177,8 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background: var(--primary);
-  color: var(--color-white);
+  background: var(--color-dark-mid);
+  color: #FAF6F1;
   padding: 1rem;
   border-radius: var(--radius-md);
   font-weight: 600;
@@ -188,7 +188,7 @@
 }
 
 .submit-btn:hover {
-  background: var(--accent);
+  background: var(--color-dark-deep);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }

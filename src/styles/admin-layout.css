@@ -6,11 +6,11 @@
   --admin-sidebar-width:     220px;
   --admin-topbar-height:     56px;
   --admin-bottom-nav-height: 64px;
-  --admin-bg:                #f8fafc;
-  --admin-topbar-bg:         var(--primary);
-  --admin-topbar-text:       var(--color-white);
+  --admin-bg:                var(--bg-base);          /* off-white cálido de marca */
+  --admin-topbar-bg:         var(--color-dark-deep);  /* oscuro cálido (como footer/ticker) */
+  --admin-topbar-text:       #FAF6F1;
   --admin-nav-active-color:  var(--accent);
-  --admin-nav-active-bg:     rgba(229, 178, 153, 0.12);
+  --admin-nav-active-bg:     rgba(196, 144, 154, 0.14); /* accent rosa con opacidad */
 }
 
 /* ── LOGIN ── */
@@ -20,14 +20,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-gradient);
+  background:
+    radial-gradient(120% 90% at 50% 0%, #fbf7f1 0%, var(--bg-base) 55%, var(--surface-soft) 100%);
   padding: 1.5rem;
 }
 
 .login-card {
   background: var(--color-white);
+  border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-lg);
-  padding: 2.5rem 2rem;
+  padding: 2.75rem 2rem;
   width: 100%;
   max-width: 400px;
   box-shadow: var(--shadow-md);
@@ -43,15 +45,18 @@
 }
 
 .login-logo-name {
-  font-size: 1.75rem;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 2rem;
+  font-weight: 600;
   color: var(--primary);
-  letter-spacing: -0.02em;
 }
 
 .login-logo-sub {
-  font-size: 0.85rem;
-  color: var(--text-light);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-text-mid);
 }
 
 .login-form {
@@ -88,8 +93,8 @@
 }
 
 .login-btn {
-  background: var(--primary);
-  color: var(--color-white);
+  background: var(--color-dark-mid);
+  color: #FAF6F1;
   padding: 1rem;
   border-radius: var(--radius-md);
   font-weight: 600;
@@ -99,7 +104,7 @@
 }
 
 .login-btn:hover:not(:disabled) {
-  background: var(--accent);
+  background: var(--color-dark-deep);
   transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
 }
@@ -296,8 +301,9 @@
 }
 
 .admin-stat-value {
-  font-size: 1.75rem;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 600;
   color: var(--primary);
   line-height: 1;
 }
@@ -312,11 +318,11 @@
 }
 
 .admin-quick-actions h2 {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  color: var(--text-light);
+  color: var(--color-text-mid);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.16em;
   margin-bottom: 0.875rem;
 }
 
@@ -348,15 +354,15 @@
 }
 
 .admin-action-btn--primary {
-  background: var(--primary);
-  color: var(--color-white);
-  border-color: var(--primary);
+  background: var(--color-dark-mid);
+  color: #FAF6F1;
+  border-color: var(--color-dark-mid);
 }
 
 .admin-action-btn--primary:hover {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--color-white);
+  background: var(--color-dark-deep);
+  border-color: var(--color-dark-deep);
+  color: #FAF6F1;
 }
 
 /* ── LISTA DE PRODUCTOS ── */
@@ -369,8 +375,10 @@
 }
 
 .admin-list-header h1 {
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.5rem;
+  font-weight: 600;
   color: var(--primary);
 }
 
@@ -378,8 +386,8 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  background: var(--primary);
-  color: var(--color-white);
+  background: var(--color-dark-mid);
+  color: #FAF6F1;
   padding: 0.6rem 1rem;
   border-radius: var(--radius-md);
   font-size: 0.875rem;
@@ -390,7 +398,7 @@
 }
 
 .admin-add-btn:hover {
-  background: var(--accent);
+  background: var(--color-dark-deep);
 }
 
 .admin-product-cards {
@@ -1678,16 +1686,20 @@
 
 .admin-sidebar-brand-name {
   display: block;
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.3rem;
+  font-weight: 600;
   color: var(--primary);
 }
 
 .admin-sidebar-brand-sub {
   display: block;
-  font-size: 0.72rem;
-  color: var(--text-light);
-  margin-top: 0.1rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-mid);
+  margin-top: 0.2rem;
 }
 
 .admin-sidebar-nav {
@@ -2085,4 +2097,150 @@
   .admin-seg:active:not(:disabled) {
     transform: none;
   }
+}
+
+/* ============================================================
+   EDITOR DE PÁGINAS — lista + edición en línea
+   ============================================================ */
+
+/* ── Lista de páginas ── */
+.admin-paginas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.admin-pagina-card {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  background: var(--color-white);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.25rem;
+  text-decoration: none;
+  color: var(--text-main);
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.admin-pagina-card:hover { border-color: var(--accent); box-shadow: var(--shadow-xs); }
+.admin-pagina-card--soon { opacity: 0.6; }
+.admin-pagina-icon { color: var(--accent); flex: none; }
+.admin-pagina-info { display: flex; flex-direction: column; flex: 1; }
+.admin-pagina-nombre {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--primary);
+}
+.admin-pagina-desc { font-size: 0.8rem; color: var(--color-text-mid); }
+.admin-pagina-edit { color: var(--color-text-mid); flex: none; }
+.admin-pagina-soon {
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-mid);
+  flex: none;
+}
+
+/* ── Editor a pantalla completa ── */
+.page-editor { position: relative; min-height: 100vh; background: var(--bg-base); }
+
+.page-editor-notice {
+  position: sticky;
+  top: 0;
+  z-index: 8000;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  background: #fff3cd;
+  color: #856404;
+  border-bottom: 1px solid #ffe69a;
+  padding: 0.7rem 1rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.page-editor-canvas { padding-bottom: 78px; }
+
+.page-editor-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 4rem 1.5rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+/* Barra de edición fija */
+.page-editor-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  background: var(--color-dark-deep);
+  color: #FAF6F1;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.18);
+}
+.page-editor-bar-title { font-size: 0.85rem; opacity: 0.85; white-space: nowrap; }
+.page-editor-bar-title strong {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+}
+.page-editor-bar-actions { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end; }
+
+.page-editor-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: #FAF6F1;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 0.45rem 0.7rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.page-editor-tool:hover { background: rgba(255, 255, 255, 0.18); }
+
+.page-editor-btn {
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.page-editor-btn--ghost {
+  background: transparent;
+  color: #FAF6F1;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.page-editor-btn--ghost:disabled { opacity: 0.4; cursor: not-allowed; }
+.page-editor-btn--primary { background: #FAF6F1; color: var(--color-dark-deep); }
+.page-editor-btn--primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.page-editor-exit {
+  background: none;
+  border: none;
+  color: #FAF6F1;
+  cursor: pointer;
+  display: inline-flex;
+  padding: 0.3rem;
+  opacity: 0.8;
+}
+.page-editor-exit:hover { opacity: 1; }
+
+.page-editor-saved { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.8rem; color: #bff5c8; }
+.page-editor-error { font-size: 0.78rem; color: #ffb4a8; max-width: 220px; }
+
+@media (max-width: 560px) {
+  .page-editor-bar-title { display: none; }
 }

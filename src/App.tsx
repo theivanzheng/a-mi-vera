@@ -25,6 +25,8 @@ import ProductForm from './pages/admin/ProductForm';
 import CategoryList from './pages/admin/CategoryList';
 import StockManager from './pages/admin/StockManager';
 import HomeEditor from './pages/admin/HomeEditor';
+import PaginasList from './pages/admin/PaginasList';
+import PageEditor from './pages/admin/PageEditor';
 
 import './index.css';
 import './App.css';
@@ -58,7 +60,10 @@ function App() {
               <Route path="/admin/categorias" element={<CategoryList />} />
               <Route path="/admin/stock" element={<StockManager />} />
               <Route path="/admin/portada" element={<HomeEditor />} />
+              <Route path="/admin/paginas" element={<PaginasList />} />
             </Route>
+            {/* Editor de páginas a pantalla completa (fuera del AdminLayout) */}
+            <Route path="/admin/paginas/:slug/editar" element={<PageEditor />} />
           </Route>
         </Routes>
         </PageTransition>

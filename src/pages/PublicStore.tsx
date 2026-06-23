@@ -1,22 +1,15 @@
 import { useLayoutEffect, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useProducts } from '../hooks/useProducts';
+import { useHomeContent } from '../hooks/useHomeContent';
+import { PageContentProvider } from '../context/PageContent';
+import HomeView from '../components/HomeView';
 import Navbar from '../components/Navbar';
 import ProductCard from '../components/ProductCard';
-import LogotipoSvg from '../../IdentidadVisual/AmiVera_LogoEditable.svg';
-import CardAzul    from '../../IdentidadVisual/Fotosheader/Azul porcelana.png';
-import CardBlush   from '../../IdentidadVisual/Fotosheader/Blush.png';
-import CardCiruela from '../../IdentidadVisual/Fotosheader/CiruelaSuave.png';
-import Hoja        from '../../IdentidadVisual/Rosas/Hoja.png';
-import { whatsappLink } from '../lib/whatsapp';
-
-const TICKER_ITEMS = [
-  'Hecho a mano', 'Personalizado para ti', 'Envío 24h a toda la península',
-  'Pack especial de envío', 'Trato uno a uno', 'Con cariño en cada detalle',
-];
 
 const PublicStore = () => {
   const { products, categories, loading, error } = useProducts();
+  const { content, hasStored } = useHomeContent();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -139,109 +132,10 @@ const PublicStore = () => {
     );
   // ── Vista 3: portada boutique ────────────────────────────────────────────
   } else {
-    const featuredProducts = products.filter(p => p.destacado).slice(0, 5);
-    const displayFeatured = featuredProducts.length > 0 ? featuredProducts : products.slice(0, 5);
-
     catalogContent = (
-      <>
-        {/* HERO */}
-        <section className="av-hero">
-          <div className="av-cards-fan">
-            <img src={CardAzul}    className="av-fan-card av-fan-card-1" alt="" aria-hidden="true" />
-            <img src={CardBlush}   className="av-fan-card av-fan-card-2" alt="" aria-hidden="true" />
-            <img src={CardCiruela} className="av-fan-card av-fan-card-3" alt="" aria-hidden="true" />
-          </div>
-          <h1 className="av-hero-title">"Cada regalo nace<br />de una conversación."</h1>
-          <div className="av-hero-pill-row">
-            <div className="av-hero-pill-wrap">
-              <img src={Hoja} className="av-hero-hoja" alt="" aria-hidden="true" />
-              <span className="av-hero-pill">Regalos personalizados · Hechos a mano</span>
-            </div>
-          </div>
-          <p className="av-hero-sub">
-            Grabamos, personalizamos y enviamos con cariño para que tu regalo llegue perfecto.
-          </p>
-          <Link to="/catalogo" className="av-hero-cta">Descubre el Catálogo →</Link>
-        </section>
-
-        {/* TICKER */}
-        <div className="av-ticker" aria-hidden="true">
-          <div className="av-ticker-track">
-            {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
-              <span key={i} className="av-ticker-item">{item}</span>
-            ))}
-          </div>
-        </div>
-
-        {/* PRODUCTOS DESTACADOS */}
-        <section id="destacados" className="av-featured">
-          <div className="av-featured-header">
-            <h2 className="av-featured-title">Productos Destacados</h2>
-            <Link to="/catalogo#destacados" className="av-featured-ver">Ver todos →</Link>
-          </div>
-          <div className="av-featured-scroll">
-            {loading ? (
-              <p style={{ padding: '0 1rem', color: 'var(--color-text-mid)', fontSize: '0.85rem' }}>Cargando…</p>
-            ) : (
-              displayFeatured.map(p => (
-                <Link key={p.id} to={`/producto/${p.slug}`} className="av-feat-card">
-                  <div className="av-feat-img">
-                    {p.images?.[0] && <img src={p.images[0]} alt={p.title} loading="lazy" />}
-                  </div>
-                  <div className="av-feat-name">{p.title}</div>
-                  <div className="av-feat-price">{p.price} €</div>
-                </Link>
-              ))
-            )}
-          </div>
-        </section>
-
-        {/* CRISTINA */}
-        <section className="av-cristina">
-          <p className="av-cristina-eyebrow">¿Nos Conocemos?</p>
-          <h2 className="av-cristina-title">Hola! Soy Cristina</h2>
-          <div className="av-cristina-video">vídeo próximamente</div>
-          <p className="av-cristina-copy">
-            Creé A Mi Vera con una sola idea en mente:{' '}
-            <em>"que cada regalo cuente una historia"</em>. Cada pieza que sale de mi taller la
-            pienso especialmente para la persona que la va a recibir. No es producción en serie,
-            no es un regalo más, es algo único, hecho con cariño, que se queda para siempre.
-          </p>
-          <Link to="/nosotros" className="av-link-cta">Así lo hacemos →</Link>
-        </section>
-
-        {/* FRASE OSCURA */}
-        <section className="av-dark-quote">
-          <p className="av-dark-quote-text">"No vendemos objetos.<br />Creamos recuerdos."</p>
-          <span className="av-dark-quote-firma">— Cristina, fundadora de A Mi Vera</span>
-        </section>
-
-        {/* WHATSAPP CTA */}
-        <section className="av-wa-cta">
-          <p className="av-wa-eyebrow">¿Tienes algo en mente?</p>
-          <h2 className="av-wa-title">Cuéntame qué quieres regalar</h2>
-          <p className="av-wa-sub">Respondo en menos de 24 horas y lo diseñamos juntos, sin compromiso.</p>
-          <a
-            href={whatsappLink('Hola Cristina, me gustaría información sobre un regalo personalizado.')}
-            className="av-wa-btn"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Escribir por WhatsApp →
-          </a>
-        </section>
-
-        {/* FOOTER */}
-        <footer className="av-footer">
-          <img src={LogotipoSvg} alt="A Mi Vera" className="av-footer-logo" />
-          <nav className="av-footer-links">
-            <Link to="/" className="av-footer-link">Inicio</Link>
-            <Link to="/nosotros" className="av-footer-link">Nosotros</Link>
-            <a href="#catalogo" className="av-footer-link">Catálogo</a>
-          </nav>
-          <p className="av-footer-copy">© {new Date().getFullYear()} A Mi Vera · Todos los derechos reservados</p>
-        </footer>
-      </>
+      <PageContentProvider value={{ content, editing: false, hasStored, setField: () => {} }}>
+        <HomeView />
+      </PageContentProvider>
     );
   }
 
