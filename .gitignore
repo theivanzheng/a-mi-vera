@@ -40,5 +40,9 @@ crear_catalogo.py
 # Vídeos originales sin comprimir (másters) — la web usa solo Videos/web/*.mp4
 /IdentidadVisual/Videos/*.mp4
 
+# Archivos de trabajo de edición de imagen (Pixelmator/Photoshop) — no van al repo
+*.pxd
+*.psd
+
 # Settings locales de Claude (permisos por máquina)
 .claude/settings.local.json
