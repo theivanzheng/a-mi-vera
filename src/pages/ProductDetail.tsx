@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useProducts } from '../hooks/useProducts';
 import { MessageCircle } from 'lucide-react';
-import Logotipo from '../../IdentidadVisual/Logo_AmiVera.png';
+import { whatsappLink } from '../lib/whatsapp';
+import LogotipoSvg from '../../IdentidadVisual/AmiVera_LogoEditable.svg';
 
 const ProductDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -44,8 +45,9 @@ const ProductDetail = () => {
     : products.filter(p => p.id !== product.id).slice(0, 4);
 
   const handleWhatsappClick = () => {
-    const text = `Hola, me interesa encargar: ${product.title}`;
-    window.open(`https://wa.me/34646555027?text=${encodeURIComponent(text)}`, '_blank');
+    const url = `${window.location.origin}/producto/${product.slug}`;
+    const text = `Hola, me interesa este producto: ${product.title}\n${url}`;
+    window.open(whatsappLink(text), '_blank');
   };
 
   return (
@@ -97,11 +99,14 @@ const ProductDetail = () => {
         )}
       </main>
 
-      <footer className="footer">
-        <div className="footer-content">
-          <img src={Logotipo} alt="A Mi Vera Logo" className="footer-logo darker" />
-          <p>&copy; {new Date().getFullYear()} A Mi Vera. Todos los derechos reservados.</p>
-        </div>
+      <footer className="av-footer">
+        <img src={LogotipoSvg} alt="A Mi Vera" className="av-footer-logo" />
+        <nav className="av-footer-links">
+          <Link to="/" className="av-footer-link">Inicio</Link>
+          <Link to="/nosotros" className="av-footer-link">Nosotros</Link>
+          <Link to="/catalogo" className="av-footer-link">Catálogo</Link>
+        </nav>
+        <p className="av-footer-copy">© {new Date().getFullYear()} A Mi Vera · Todos los derechos reservados</p>
       </footer>
     </div>
   );
