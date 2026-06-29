@@ -1,11 +1,15 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Plus, Pencil, Trash2, Package, Search, Eye, EyeOff, X, Star, Sparkles, ArrowUpDown, Tag, CheckSquare } from 'lucide-react';
+import { Plus, Pencil, Trash2, Package, Search, Eye, EyeOff, X, Star, Sparkles, ArrowUpDown, Tag, CheckSquare, Check } from 'lucide-react';
 import { useAdminProducts } from '../../hooks/useAdminProducts';
 import { useAdminCategories } from '../../hooks/useAdminCategories';
 
 type VisibilityFilter = 'all' | 'visible' | 'hidden';
 type SortBy          = 'newest' | 'oldest' | 'price-asc' | 'price-desc' | 'alpha';
+
+// Valores "en escena" para la edición masiva ('' = mantener sin cambios)
+type TriState = '' | 'yes' | 'no';
+type VisState = '' | 'show' | 'hide';
 
 export default function ProductList() {
   const { products, loading, saving, deleteProduct, patchProduct, bulkPatch, bulkSetCategory, bulkDelete, storageWarning } = useAdminProducts();
@@ -25,11 +29,24 @@ export default function ProductList() {
   const [deleteError, setDeleteError]     = useState<string | null>(null);
 
   // Edición masiva
-  const [selectMode, setSelectMode]         = useState(false);
-  const [selected, setSelected]             = useState<Set<string>>(new Set());
-  const [bulkBusy, setBulkBusy]             = useState(false);
-  const [bulkError, setBulkError]           = useState<string | null>(null);
+  const [selecting, setSelecting]   = useState(false);   // modo selección activo
+  const [barOpen, setBarOpen]       = useState(false);   // estado de la animación de la barra
+  const [selected, setSelected]     = useState<Set<string>>(new Set());
+  const [stCategory, setStCategory] = useState('');      // cambios "en escena"
+  const [stVisible, setStVisible]   = useState<VisState>('');
+  const [stDestacado, setStDestacado] = useState<TriState>('');
+  const [stNuevo, setStNuevo]       = useState<TriState>('');
+  const [bulkBusy, setBulkBusy]     = useState(false);
+  const [bulkError, setBulkError]   = useState<string | null>(null);
   const [bulkDeleteConfirm, setBulkDeleteConfirm] = useState(false);
+
+  // Al entrar en modo selección, abre la barra en el siguiente frame para que
+  // la transición (reveal + empuje hacia abajo) se reproduzca.
+  useEffect(() => {
+    if (!selecting) return;
+    const id = requestAnimationFrame(() => setBarOpen(true));
+    return () => cancelAnimationFrame(id);
+  }, [selecting]);
 
   // ── Filtrado ───────────────────────────────────────────────────────────────
 
@@ -91,25 +108,52 @@ export default function ProductList() {
   }
   function selectAllFiltered() { setSelected(new Set(filtered.map(p => p.id))); }
   function clearSelection() { setSelected(new Set()); }
-  function exitSelectMode() {
-    setSelectMode(false);
-    setSelected(new Set());
-    setBulkDeleteConfirm(false);
+
+  function enterSelectMode() { setSelecting(true); }
+
+  // Cierra el modo selección con animación inversa (la usan Cancelar y Guardar).
+  function closeSelectMode() {
+    setBarOpen(false);
     setBulkError(null);
+    setBulkDeleteConfirm(false);
+    setTimeout(() => {
+      setSelecting(false);
+      setSelected(new Set());
+      setStCategory(''); setStVisible(''); setStDestacado(''); setStNuevo('');
+    }, 280);
   }
 
-  async function runBulk(fn: () => Promise<string | null>, clearAfter = false) {
+  const hasStagedChanges = stCategory !== '' || stVisible !== '' || stDestacado !== '' || stNuevo !== '';
+  const canSave = selected.size > 0 && hasStagedChanges && !bulkBusy;
+
+  async function handleSave() {
+    if (!canSave) return;
     setBulkBusy(true);
     setBulkError(null);
-    const err = await fn();
+    const ids = [...selected];
+
+    const patch: Parameters<typeof bulkPatch>[1] = {};
+    if (stVisible) patch.visible = stVisible === 'show';
+    if (stDestacado) patch.destacado = stDestacado === 'yes';
+    if (stNuevo) patch.nuevo = stNuevo === 'yes';
+
+    let err: string | null = null;
+    if (Object.keys(patch).length > 0) err = await bulkPatch(ids, patch);
+    if (!err && stCategory) err = await bulkSetCategory(ids, stCategory);
+
     setBulkBusy(false);
     if (err) { setBulkError(err); return; }
-    if (clearAfter) { setSelected(new Set()); setBulkDeleteConfirm(false); }
+    closeSelectMode();
   }
-  const selectedIds = () => [...selected];
-  function handleBulkCategory(name: string) { if (name) runBulk(() => bulkSetCategory(selectedIds(), name)); }
-  function handleBulkPatch(patch: Parameters<typeof bulkPatch>[1]) { runBulk(() => bulkPatch(selectedIds(), patch)); }
-  function handleBulkDelete() { runBulk(() => bulkDelete(selectedIds()), true); }
+
+  async function handleBulkDelete() {
+    setBulkBusy(true);
+    setBulkError(null);
+    const err = await bulkDelete([...selected]);
+    setBulkBusy(false);
+    if (err) { setBulkError(err); return; }
+    closeSelectMode();
+  }
 
   // ── Estados de carga / vacío ─────────────────────────────────────────────────
 
@@ -149,23 +193,114 @@ export default function ProductList() {
       <div className="admin-list-header">
         <h1>Productos</h1>
         <div className="admin-list-header-actions">
-          <button
-            type="button"
-            className="admin-add-btn admin-add-btn--ghost"
-            onClick={() => (selectMode ? exitSelectMode() : setSelectMode(true))}
-          >
-            {selectMode ? <><X size={16} /> Cancelar</> : <><CheckSquare size={16} /> Seleccionar</>}
-          </button>
-          {!selectMode && (
-            <Link to="/admin/productos/nuevo" className="admin-add-btn">
-              <Plus size={16} /> Añadir
-            </Link>
+          {selecting ? (
+            <>
+              <button type="button" className="admin-add-btn admin-add-btn--ghost" onClick={closeSelectMode} disabled={bulkBusy}>
+                <X size={16} /> Cancelar
+              </button>
+              <button type="button" className="admin-add-btn" onClick={handleSave} disabled={!canSave}>
+                {bulkBusy ? 'Guardando…' : <><Check size={16} /> Guardar</>}
+              </button>
+            </>
+          ) : (
+            <>
+              <button type="button" className="admin-add-btn admin-add-btn--ghost" onClick={enterSelectMode}>
+                <CheckSquare size={16} /> Seleccionar
+              </button>
+              <Link to="/admin/productos/nuevo" className="admin-add-btn">
+                <Plus size={16} /> Añadir
+              </Link>
+            </>
           )}
         </div>
       </div>
 
       {storageWarning && (
         <div className="admin-storage-warning">{storageWarning}</div>
+      )}
+
+      {/* ── Barra de edición masiva (reveal animado) ── */}
+      {selecting && (
+        <div className={`admin-bulk-wrap${barOpen ? ' is-open' : ''}`}>
+          <div className="admin-bulk-inner">
+            <div className="admin-bulk-bar">
+              <div className="admin-bulk-bar-head">
+                <span className="admin-bulk-bar-count">
+                  {selected.size} seleccionado{selected.size === 1 ? '' : 's'}
+                </span>
+                <button type="button" className="admin-chip" onClick={selectAllFiltered}>
+                  Seleccionar todos ({filtered.length})
+                </button>
+                {selected.size > 0 && (
+                  <button type="button" className="admin-chip" onClick={clearSelection}>Ninguno</button>
+                )}
+              </div>
+
+              {selected.size === 0 ? (
+                <p className="admin-bulk-hint">Marca productos abajo, elige los cambios y pulsa <strong>Guardar</strong>.</p>
+              ) : (
+                <>
+                  <div className="admin-bulk-actions">
+                    <label className="admin-bulk-field">
+                      <span>Categoría</span>
+                      <select className="admin-chip admin-chip--select" value={stCategory} disabled={bulkBusy} onChange={e => setStCategory(e.target.value)}>
+                        <option value="">— mantener —</option>
+                        {categoryNames.map(c => <option key={c} value={c}>{c}</option>)}
+                      </select>
+                    </label>
+
+                    <label className="admin-bulk-field">
+                      <span>Visibilidad</span>
+                      <select className="admin-chip admin-chip--select" value={stVisible} disabled={bulkBusy} onChange={e => setStVisible(e.target.value as VisState)}>
+                        <option value="">— mantener —</option>
+                        <option value="show">Mostrar</option>
+                        <option value="hide">Ocultar</option>
+                      </select>
+                    </label>
+
+                    <label className="admin-bulk-field">
+                      <span>Destacado</span>
+                      <select className="admin-chip admin-chip--select" value={stDestacado} disabled={bulkBusy} onChange={e => setStDestacado(e.target.value as TriState)}>
+                        <option value="">— mantener —</option>
+                        <option value="yes">Sí</option>
+                        <option value="no">No</option>
+                      </select>
+                    </label>
+
+                    <label className="admin-bulk-field">
+                      <span>Nuevo</span>
+                      <select className="admin-chip admin-chip--select" value={stNuevo} disabled={bulkBusy} onChange={e => setStNuevo(e.target.value as TriState)}>
+                        <option value="">— mantener —</option>
+                        <option value="yes">Sí</option>
+                        <option value="no">No</option>
+                      </select>
+                    </label>
+                  </div>
+
+                  <div className="admin-bulk-danger">
+                    {bulkDeleteConfirm ? (
+                      <>
+                        <span className="admin-delete-question">
+                          ¿Eliminar {selected.size} producto{selected.size === 1 ? '' : 's'}? No se puede deshacer.
+                        </span>
+                        <button className="admin-delete-no" disabled={bulkBusy} onClick={() => setBulkDeleteConfirm(false)}>No</button>
+                        <button className="admin-delete-yes" disabled={bulkBusy} onClick={handleBulkDelete}>
+                          {bulkBusy ? '…' : 'Sí, eliminar'}
+                        </button>
+                      </>
+                    ) : (
+                      <button className="admin-chip admin-chip--danger" disabled={bulkBusy} onClick={() => setBulkDeleteConfirm(true)}>
+                        <Trash2 size={12} /> Eliminar seleccionados
+                      </button>
+                    )}
+                  </div>
+                </>
+              )}
+
+              {bulkError && <p className="admin-form-error" style={{ margin: '0.25rem 0 0' }}>{bulkError}</p>}
+            </div>
+          </div>
+        </div>
       )}
 
       {/* ── Barra de búsqueda y filtros ── */}
@@ -256,83 +391,6 @@ export default function ProductList() {
         </div>
       </div>
 
-      {/* ── Barra de acciones masivas ── */}
-      {selectMode && (
-        <div className="admin-bulk-bar">
-          <div className="admin-bulk-bar-head">
-            <span className="admin-bulk-bar-count">
-              {selected.size} seleccionado{selected.size === 1 ? '' : 's'}
-            </span>
-            <button type="button" className="admin-chip" onClick={selectAllFiltered}>
-              Seleccionar todos ({filtered.length})
-            </button>
-            {selected.size > 0 && (
-              <button type="button" className="admin-chip" onClick={clearSelection}>Ninguno</button>
-            )}
-          </div>
-
-          {selected.size === 0 ? (
-            <p className="admin-bulk-hint">Marca productos para editarlos en bloque.</p>
-          ) : bulkDeleteConfirm ? (
-            <div className="admin-bulk-actions">
-              <span className="admin-delete-question">
-                ¿Eliminar {selected.size} producto{selected.size === 1 ? '' : 's'}? No se puede deshacer.
-              </span>
-              <button className="admin-delete-no" disabled={bulkBusy} onClick={() => setBulkDeleteConfirm(false)}>No</button>
-              <button className="admin-delete-yes" disabled={bulkBusy} onClick={handleBulkDelete}>
-                {bulkBusy ? '…' : 'Sí, eliminar'}
-              </button>
-            </div>
-          ) : (
-            <div className="admin-bulk-actions">
-              <select
-                className="admin-chip admin-chip--select"
-                value=""
-                disabled={bulkBusy}
-                onChange={e => handleBulkCategory(e.target.value)}
-                aria-label="Cambiar categoría de los seleccionados"
-              >
-                <option value="">Cambiar categoría…</option>
-                {categoryNames.map(c => <option key={c} value={c}>{c}</option>)}
-              </select>
-
-              <span className="admin-bulk-sep" aria-hidden="true" />
-
-              <button className="admin-chip" disabled={bulkBusy} onClick={() => handleBulkPatch({ visible: true })}>
-                <Eye size={12} /> Mostrar
-              </button>
-              <button className="admin-chip" disabled={bulkBusy} onClick={() => handleBulkPatch({ visible: false })}>
-                <EyeOff size={12} /> Ocultar
-              </button>
-
-              <button className="admin-chip" disabled={bulkBusy} onClick={() => handleBulkPatch({ destacado: true })}>
-                <Star size={12} /> Destacar
-              </button>
-              <button className="admin-chip" disabled={bulkBusy} onClick={() => handleBulkPatch({ destacado: false })}>
-                Quitar destacado
-              </button>
-
-              <button className="admin-chip" disabled={bulkBusy} onClick={() => handleBulkPatch({ nuevo: true })}>
-                <Sparkles size={12} /> Nuevo
-              </button>
-              <button className="admin-chip" disabled={bulkBusy} onClick={() => handleBulkPatch({ nuevo: false })}>
-                Quitar nuevo
-              </button>
-
-              <span className="admin-bulk-sep" aria-hidden="true" />
-
-              <button className="admin-chip admin-chip--danger" disabled={bulkBusy} onClick={() => setBulkDeleteConfirm(true)}>
-                <Trash2 size={12} /> Eliminar
-              </button>
-
-              {bulkBusy && <span className="admin-bulk-busy">Guardando…</span>}
-            </div>
-          )}
-
-          {bulkError && <p className="admin-form-error" style={{ margin: '0.5rem 0 0' }}>{bulkError}</p>}
-        </div>
-      )}
-
       {/* ── Sin resultados tras filtro ── */}
       {filtered.length === 0 && (
         <div className="admin-no-results">
@@ -348,7 +406,7 @@ export default function ProductList() {
       <div className="admin-product-cards">
         {filtered.map(product => {
           // ── Modo selección: tarjeta marcable ──
-          if (selectMode) {
+          if (selecting) {
             const isSelected = selected.has(product.id);
             return (
               <div
@@ -479,7 +537,7 @@ export default function ProductList() {
         })}
       </div>
 
-      {hasActiveFilters && filtered.length > 0 && !selectMode && (
+      {hasActiveFilters && filtered.length > 0 && !selecting && (
         <p className="admin-filter-summary">
           Mostrando {filtered.length} de {products.length} productos
         </p>
