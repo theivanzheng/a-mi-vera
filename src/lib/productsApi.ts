@@ -444,3 +444,21 @@ export async function patchProductFields(
     .eq('id', id);
   return { error: error ? translateDbError(error.message) : null };
 }
+
+// Cambia la categoría de un producto SUSTITUYENDO las que tuviera por una sola.
+// Usado por la edición masiva. Actualiza la FK antigua (categoria_id) y la
+// relación N:N (producto_categorias), reutilizando los helpers existentes.
+export async function setProductCategoria(
+  id: string,
+  categoryName: string,
+): Promise<{ error: string | null }> {
+  const ids = await resolveCategoriaIds([categoryName]);
+  const { error: updErr } = await supabase!
+    .from('productos')
+    .update({ categoria_id: ids[0] ?? null })
+    .eq('id', id);
+  if (updErr) return { error: translateDbError(updErr.message) };
+
+  const relErr = await replaceProductoCategorias(id, ids);
+  return { error: relErr ? translateDbError(relErr) : null };
+}

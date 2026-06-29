@@ -8,6 +8,7 @@ import {
   updateProduct as apiUpdate,
   deleteProduct as apiDelete,
   patchProductFields,
+  setProductCategoria,
   type ImageEntry,
   type ProductTextFields,
   type ProductPatch,
@@ -67,6 +68,10 @@ export interface UseAdminProductsResult {
   updateProduct: (id: string, fields: ProductTextFields, images: ImageEntry[], oldStoragePaths: string[], onProgress?: ProgressFn) => Promise<string | null>;
   deleteProduct: (id: string) => Promise<string | null>;
   patchProduct: (id: string, patch: ProductPatch) => Promise<string | null>;
+  // Edición masiva (varios productos a la vez, un solo refresh al final)
+  bulkPatch: (ids: string[], patch: ProductPatch) => Promise<string | null>;
+  bulkSetCategory: (ids: string[], categoryName: string) => Promise<string | null>;
+  bulkDelete: (ids: string[]) => Promise<string | null>;
 }
 
 export function useAdminProducts(): UseAdminProductsResult {
@@ -169,6 +174,61 @@ export function useAdminProducts(): UseAdminProductsResult {
     return err ?? null;
   }
 
+  // ── Edición masiva ──────────────────────────────────────────────────────────
+  // Aplican la operación a cada id en secuencia y hacen UN solo refresh al final.
+  async function bulkPatch(ids: string[], patch: ProductPatch): Promise<string | null> {
+    if (!isSupabaseConfigured || ids.length === 0) return null;
+    setSaving(true);
+    setError(null);
+    let firstErr: string | null = null;
+    for (const id of ids) {
+      const { error: err } = await patchProductFields(id, patch);
+      if (err && !firstErr) firstErr = err;
+    }
+    await refresh();
+    if (firstErr) setError(firstErr);
+    setSaving(false);
+    return firstErr;
+  }
+
+  async function bulkSetCategory(ids: string[], categoryName: string): Promise<string | null> {
+    if (!isSupabaseConfigured || ids.length === 0) return null;
+    setSaving(true);
+    setError(null);
+    let firstErr: string | null = null;
+    for (const id of ids) {
+      const { error: err } = await setProductCategoria(id, categoryName);
+      if (err && !firstErr) firstErr = err;
+    }
+    await refresh();
+    if (firstErr) setError(firstErr);
+    setSaving(false);
+    return firstErr;
+  }
+
+  async function bulkDelete(ids: string[]): Promise<string | null> {
+    if (!isSupabaseConfigured || ids.length === 0) return null;
+    setSaving(true);
+    setError(null);
+    setStorageWarning(null);
+    let firstErr: string | null = null;
+    let anyStorageWarn = false;
+    for (const id of ids) {
+      const product = sbProducts.find(p => p.id === id);
+      const storagePaths = (product?.imagePaths ?? []).filter((p): p is string => p !== null);
+      const { error: err, storageWarning: sw } = await apiDelete(id, storagePaths);
+      if (err && !firstErr) firstErr = err;
+      if (sw) anyStorageWarn = true;
+    }
+    await refresh();
+    if (firstErr) setError(firstErr);
+    if (anyStorageWarn) {
+      setStorageWarning('Algunos productos se eliminaron, pero ciertas imágenes no pudieron borrarse del almacenamiento.');
+    }
+    setSaving(false);
+    return firstErr;
+  }
+
   return {
     products: isSupabaseConfigured ? sbProducts : ctx.products,
     categories: isSupabaseConfigured ? buildCategories(sbProducts) : ctx.categories,
@@ -180,5 +240,8 @@ export function useAdminProducts(): UseAdminProductsResult {
     updateProduct,
     deleteProduct,
     patchProduct,
+    bulkPatch,
+    bulkSetCategory,
+    bulkDelete,
   };
 }
