@@ -72,6 +72,8 @@ export interface UseAdminProductsResult {
   bulkPatch: (ids: string[], patch: ProductPatch) => Promise<string | null>;
   bulkSetCategory: (ids: string[], categoryName: string) => Promise<string | null>;
   bulkDelete: (ids: string[]) => Promise<string | null>;
+  // Importación masiva (Excel): crea varios productos y refresca una vez al final.
+  importProducts: (items: { fields: ProductTextFields; images: ImageEntry[] }[]) => Promise<{ ok: number; errors: string[] }>;
 }
 
 export function useAdminProducts(): UseAdminProductsResult {
@@ -229,6 +231,24 @@ export function useAdminProducts(): UseAdminProductsResult {
     return firstErr;
   }
 
+  async function importProducts(
+    items: { fields: ProductTextFields; images: ImageEntry[] }[],
+  ): Promise<{ ok: number; errors: string[] }> {
+    if (!isSupabaseConfigured || items.length === 0) return { ok: 0, errors: [] };
+    setSaving(true);
+    setError(null);
+    let ok = 0;
+    const errors: string[] = [];
+    for (const it of items) {
+      const { error: err } = await apiCreate(it.fields, it.images);
+      if (err) errors.push(`«${it.fields.title}»: ${err}`);
+      else ok++;
+    }
+    await refresh();
+    setSaving(false);
+    return { ok, errors };
+  }
+
   return {
     products: isSupabaseConfigured ? sbProducts : ctx.products,
     categories: isSupabaseConfigured ? buildCategories(sbProducts) : ctx.categories,
@@ -243,5 +263,6 @@ export function useAdminProducts(): UseAdminProductsResult {
     bulkPatch,
     bulkSetCategory,
     bulkDelete,
+    importProducts,
   };
 }
