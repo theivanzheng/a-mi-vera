@@ -221,8 +221,8 @@ export default function ProductList() {
 
       {/* ── Barra de edición masiva (reveal animado) ── */}
       {selecting && (
-        <div className={`admin-bulk-wrap${barOpen ? ' is-open' : ''}`}>
-          <div className="admin-bulk-inner">
+        <div className={`reveal-rows${barOpen ? ' is-open' : ''}`}>
+          <div>
             <div className="admin-bulk-bar">
               <div className="admin-bulk-bar-head">
                 <span className="admin-bulk-bar-count">
@@ -236,10 +236,16 @@ export default function ProductList() {
                 )}
               </div>
 
-              {selected.size === 0 ? (
-                <p className="admin-bulk-hint">Marca productos abajo, elige los cambios y pulsa <strong>Guardar</strong>.</p>
-              ) : (
-                <>
+              {/* Pista (cuando no hay selección) — reveal */}
+              <div className={`reveal-rows${selected.size === 0 ? ' is-open' : ''}`}>
+                <div>
+                  <p className="admin-bulk-hint">Marca productos abajo, elige los cambios y pulsa <strong>Guardar</strong>.</p>
+                </div>
+              </div>
+
+              {/* Acciones (cuando hay ≥1 seleccionado) — reveal */}
+              <div className={`reveal-rows${selected.size > 0 ? ' is-open' : ''}`}>
+                <div>
                   <div className="admin-bulk-actions">
                     <label className="admin-bulk-field">
                       <span>Categoría</span>
@@ -294,8 +300,8 @@ export default function ProductList() {
                       </button>
                     )}
                   </div>
-                </>
-              )}
+                </div>
+              </div>
 
               {bulkError && <p className="admin-form-error" style={{ margin: '0.25rem 0 0' }}>{bulkError}</p>}
             </div>

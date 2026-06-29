@@ -40,3 +40,33 @@ button {
   border: none;
   background: none;
 }
+
+/* ============================================================
+   UTILIDAD: reveal-rows — aparición/desaparición suave por altura
+   Anima la altura (grid-rows 0fr→1fr) + opacidad, empujando el
+   contenido contiguo. Reutilizable en toda la plataforma.
+   Uso: <div class="reveal-rows is-open?"><div>…contenido…</div></div>
+   (un único hijo directo, que se recorta mientras colapsa).
+   Ver docs/animaciones.md.
+   ============================================================ */
+.reveal-rows {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 220ms ease;
+}
+.reveal-rows.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.reveal-rows > * {
+  overflow: hidden;
+  min-height: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-rows {
+    transition: none;
+  }
+}
