@@ -40,16 +40,13 @@ La web está **online con el catálogo real**.
 
 ## 🟡 Siguientes pasos (trabajo de producto)
 
-### 1. Página **Bodas** — la menos terminada
-`src/pages/Bodas.tsx` está estructurada pero es **estática y con placeholders**:
-- Faltan **fotos reales**: intro, los 4 paquetes y la galería (6) muestran "Foto próximamente".
-- **Hacerla editable** desde el admin replicando el patrón de Nosotros (rápido, el editor ya
-  es genérico):
-  1. `src/content/bodas.ts` (modelo + defaults + merge).
-  2. `src/components/BodasView.tsx` (consume `usePageContext<BodasContent>()`, usa `Editable*`).
-  3. Añadir la entrada al registro `PAGINAS` en `src/pages/admin/PageEditor.tsx`.
-  4. Marcar `editable: true` en `src/pages/admin/PaginasList.tsx`.
-  5. Página pública envuelta en `PageContentProvider` (editing=false) con su `useBodasContent()`.
+### 1. Página **Bodas** — ✅ rehecha (editable, packs)
+`src/pages/Bodas.tsx` ahora vende **packs a wedding planners** y es **editable** desde
+Admin → Páginas → Bodas: hero, packs (cada uno con precio, líneas de "incluye" y
+"recomendado"), ventajas y CTA. Modelo en `src/content/bodas.ts`, vista compartida en
+`src/components/BodasView.tsx`.
+- Pendiente: **fotos reales / galería editable** (necesita un componente de imagen
+  editable; hoy `EditableMedia` solo soporta vídeo — ver punto 3).
 
 ### 2. Página **Wedding Planners**
 `src/pages/WeddingPlanners.tsx`: igual que Bodas — copy de ejemplo y no editable. Finalizar

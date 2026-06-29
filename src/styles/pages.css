@@ -1569,3 +1569,89 @@
   .page-editor-btn--saved svg,
   .page-editor-save-btn.is-saved svg { animation: none; }
 }
+
+/* ── BODAS: packs para wedding planners ── */
+.packs-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+@media (min-width: 860px) {
+  .packs-grid { grid-template-columns: repeat(3, 1fr); align-items: start; }
+}
+.pack-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  background: var(--color-white);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.6rem 1.35rem;
+}
+.pack-card--rec {
+  border: 2px solid var(--color-dark-mid);
+  box-shadow: var(--shadow-md);
+}
+.pack-badge {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-dark-mid);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.pack-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.35rem;
+  line-height: 1.15;
+  color: var(--primary);
+  margin: 0;
+}
+.pack-price {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-dark-mid);
+  margin: 0 0 0.25rem;
+}
+.pack-incluye {
+  list-style: none;
+  margin: 0.4rem 0 0.75rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex: 1;
+}
+.pack-incluye li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--color-text-body);
+}
+.pack-cta {
+  margin-top: auto;
+  align-self: flex-start;
+}
+.pack-card-controls { align-self: flex-end; }
+.pack-rec-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: 0.1rem 0 0.3rem;
+}
+.pack-incluye-edit { margin: 0.3rem 0 0.6rem; }

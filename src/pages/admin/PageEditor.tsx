@@ -5,9 +5,11 @@ import { isSupabaseConfigured } from '../../lib/supabase';
 import { getPaginaContenido, upsertPaginaContenido } from '../../lib/paginasApi';
 import { HOME_DEFAULTS, mergeHomeContent, type HomeContent } from '../../content/home';
 import { NOSOTROS_DEFAULTS, mergeNosotrosContent, type NosotrosContent } from '../../content/nosotros';
+import { BODAS_DEFAULTS, mergeBodasContent, type BodasContent } from '../../content/bodas';
 import { PageContentProvider } from '../../context/PageContent';
 import HomeView from '../../components/HomeView';
 import NosotrosView from '../../components/NosotrosView';
+import BodasView from '../../components/BodasView';
 
 // Contenido de una página: objeto JSON cualquiera (la forma la conoce su View).
 type Contenido = Record<string, unknown>;
@@ -33,6 +35,12 @@ const PAGINAS: Record<string, PaginaConfig> = {
     defaults: NOSOTROS_DEFAULTS as unknown as Contenido,
     merge: (s) => mergeNosotrosContent((s as Partial<NosotrosContent>) ?? null) as unknown as Contenido,
     View: NosotrosView,
+  },
+  bodas: {
+    nombre: 'Bodas',
+    defaults: BODAS_DEFAULTS as unknown as Contenido,
+    merge: (s) => mergeBodasContent((s as Partial<BodasContent>) ?? null) as unknown as Contenido,
+    View: BodasView,
   },
 };
 

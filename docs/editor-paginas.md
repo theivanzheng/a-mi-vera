@@ -1,8 +1,8 @@
 # Editor de páginas en línea — A Mi Vera
 
 Cómo funciona la edición de contenido de las páginas públicas desde el admin, y
-cómo se integra cada elemento editable. Páginas editables: **Inicio** (`/`) y
-**Nosotros** (`/nosotros`).
+cómo se integra cada elemento editable. Páginas editables: **Inicio** (`/`),
+**Nosotros** (`/nosotros`) y **Bodas** (`/bodas`, packs para wedding planners).
 
 > Complementa a [`sistema-diseno.md`](sistema-diseno.md). Si hay duda sobre
 > estilos, manda el sistema de diseño; sobre edición, manda este documento y el

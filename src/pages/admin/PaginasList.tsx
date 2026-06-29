@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 import { Link } from 'react-router-dom';
-import { Pencil, Home, Users, Lock } from 'lucide-react';
+import { Pencil, Home, Users, Heart, Lock } from 'lucide-react';
 
 interface PaginaItem {
   slug: string;
@@ -13,6 +13,7 @@ interface PaginaItem {
 const PAGINAS: PaginaItem[] = [
   { slug: 'inicio', nombre: 'Inicio', desc: 'Portada de la tienda', editable: true, Icon: Home },
   { slug: 'nosotros', nombre: 'Nosotros', desc: 'Página "Detrás de cada regalo"', editable: true, Icon: Users },
+  { slug: 'bodas', nombre: 'Bodas', desc: 'Packs para wedding planners', editable: true, Icon: Heart },
 ];
 
 export default function PaginasList() {
