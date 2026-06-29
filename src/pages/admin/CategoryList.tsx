@@ -390,7 +390,6 @@ export default function CategoryList() {
         {localCats.map((cat, i) => {
           // ── Modo edición ───────────────────────────────────────────────
           if (editingId === cat.id) {
-            const prods = products.filter(p => (p.categories ?? []).includes(cat.nombre));
             return (
               <div key={cat.id}>
                 <div className="admin-product-card admin-cat-editing">
@@ -432,23 +431,6 @@ export default function CategoryList() {
                   </div>
                 </div>
                 {editError && <p className="admin-form-error admin-cat-inline-error">{editError}</p>}
-
-                {/* Previsualización: productos de esta categoría */}
-                <div className="admin-cat-preview-wrap">
-                  <span className="admin-cat-preview-label">Productos en esta categoría ({prods.length})</span>
-                  {prods.length === 0 ? (
-                    <p className="admin-cat-preview-empty">Esta categoría todavía no tiene productos.</p>
-                  ) : (
-                    <div className="admin-cat-preview">
-                      {prods.map(p => (
-                        <div key={p.id} className="admin-cat-preview-item">
-                          <img src={p.images[0] ?? 'https://via.placeholder.com/80?text=?'} alt={p.title} loading="lazy" />
-                          <span>{p.title}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
               </div>
             );
           }
@@ -500,12 +482,14 @@ export default function CategoryList() {
           }
 
           // ── Vista normal ───────────────────────────────────────────────
+          const prods = products.filter(p => (p.categories ?? []).includes(cat.nombre));
           return (
             <div
               key={cat.id}
-              className="admin-product-card"
+              className="admin-product-card admin-cat-card"
               ref={el => { const m = rowRefs.current; if (el) m.set(cat.id, el); else m.delete(cat.id); }}
             >
+              <div className="admin-cat-card-main">
               {canReorder && (
                 <div className="admin-cat-reorder-arrows">
                   <button
@@ -565,6 +549,23 @@ export default function CategoryList() {
                       <Trash2 size={16} />
                     </button>
                   </>
+                )}
+              </div>
+              </div>
+
+              <div className="admin-cat-preview-wrap">
+                <span className="admin-cat-preview-label">Productos ({prods.length})</span>
+                {prods.length === 0 ? (
+                  <p className="admin-cat-preview-empty">Sin productos en esta categoría.</p>
+                ) : (
+                  <div className="admin-cat-preview">
+                    {prods.map(p => (
+                      <div key={p.id} className="admin-cat-preview-item">
+                        <img src={p.images[0] ?? 'https://via.placeholder.com/80?text=?'} alt={p.title} loading="lazy" />
+                        <span>{p.title}</span>
+                      </div>
+                    ))}
+                  </div>
                 )}
               </div>
             </div>

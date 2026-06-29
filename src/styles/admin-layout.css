@@ -2257,9 +2257,23 @@
   border-top: 1px solid var(--color-border);
 }
 
-/* ── PREVISUALIZACIÓN DE PRODUCTOS EN CATEGORÍAS (modo edición) ── */
+/* ── PREVISUALIZACIÓN DE PRODUCTOS EN CADA CATEGORÍA ── */
+/* La tarjeta pasa a columna: fila de datos arriba + fila de productos debajo. */
+.admin-cat-card {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+.admin-cat-card-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+  width: 100%;
+}
 .admin-cat-preview-wrap {
-  padding: 0.6rem 0.25rem 0.25rem;
+  margin-top: 0.75rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--color-border-subtle);
 }
 .admin-cat-preview-label {
   display: block;
