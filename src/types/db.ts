@@ -35,20 +35,6 @@ export interface DbProductoRow {
   imagenes_producto: DbImagenProducto[];
 }
 
-// Shape exacta del SELECT en bloqueHomeApi
-export interface DbBloqueHome {
-  id: string;
-  tipo: 'hero' | 'banner' | 'featured';
-  titulo: string | null;
-  subtitulo: string | null;
-  imagen_url: string | null;
-  categoria_id: string | null;
-  pill_texto: string | null;
-  cta_texto: string | null;
-  visible: boolean;
-  orden: number;
-}
-
 // Shape exacta del SELECT en useAdminCategories
 export interface DbCategoriaRow {
   id: string;

@@ -5,13 +5,15 @@ import { isSupabaseConfigured } from '../../lib/supabase';
 
 export default function Login() {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, requestPasswordReset } = useAuth();
+  const [mode, setMode] = useState<'login' | 'recover'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [info, setInfo] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleLogin(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
     setSubmitting(true);
@@ -25,6 +27,31 @@ export default function Login() {
     }
 
     navigate('/admin/dashboard', { replace: true });
+  }
+
+  async function handleRecover(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+    setInfo(null);
+    setSubmitting(true);
+
+    const errorMsg = await requestPasswordReset(email);
+    setSubmitting(false);
+
+    if (errorMsg) {
+      setError(errorMsg);
+      return;
+    }
+    setInfo(
+      'Si existe una cuenta con ese correo, te hemos enviado un enlace para crear una ' +
+      'contraseña nueva. Revisa tu bandeja de entrada (y la carpeta de spam).',
+    );
+  }
+
+  function switchMode(next: 'login' | 'recover') {
+    setMode(next);
+    setError(null);
+    setInfo(null);
   }
 
   return (
@@ -41,41 +68,88 @@ export default function Login() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="login-form">
-          <div className="login-field">
-            <label htmlFor="email">Correo electrónico</label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.currentTarget.value)}
-              placeholder="admin@amivera.es"
-              required
-              autoComplete="email"
+        {mode === 'login' ? (
+          <form onSubmit={handleLogin} className="login-form">
+            <div className="login-field">
+              <label htmlFor="email">Correo electrónico</label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.currentTarget.value)}
+                placeholder="admin@amivera.es"
+                required
+                autoComplete="email"
+                disabled={submitting}
+              />
+            </div>
+
+            <div className="login-field">
+              <label htmlFor="password">Contraseña</label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.currentTarget.value)}
+                placeholder="••••••••"
+                required
+                autoComplete="current-password"
+                disabled={submitting}
+              />
+            </div>
+
+            {error && <p className="login-error">{error}</p>}
+
+            <button type="submit" className="login-btn" disabled={submitting}>
+              {submitting ? 'Entrando…' : 'Entrar'}
+            </button>
+
+            <button
+              type="button"
+              className="login-link"
+              onClick={() => switchMode('recover')}
               disabled={submitting}
-            />
-          </div>
+            >
+              ¿Has olvidado tu contraseña?
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={handleRecover} className="login-form">
+            <p className="login-help">
+              Introduce tu correo y te enviaremos un enlace para crear una contraseña nueva.
+            </p>
 
-          <div className="login-field">
-            <label htmlFor="password">Contraseña</label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={e => setPassword(e.currentTarget.value)}
-              placeholder="••••••••"
-              required
-              autoComplete="current-password"
+            <div className="login-field">
+              <label htmlFor="recover-email">Correo electrónico</label>
+              <input
+                id="recover-email"
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.currentTarget.value)}
+                placeholder="admin@amivera.es"
+                required
+                autoComplete="email"
+                disabled={submitting}
+              />
+            </div>
+
+            {error && <p className="login-error">{error}</p>}
+            {info && <p className="login-success">{info}</p>}
+
+            <button type="submit" className="login-btn" disabled={submitting}>
+              {submitting ? 'Enviando…' : 'Enviar enlace de recuperación'}
+            </button>
+
+            <button
+              type="button"
+              className="login-link"
+              onClick={() => switchMode('login')}
               disabled={submitting}
-            />
-          </div>
-
-          {error && <p className="login-error">{error}</p>}
-
-          <button type="submit" className="login-btn" disabled={submitting}>
-            {submitting ? 'Entrando…' : 'Entrar'}
-          </button>
-        </form>
+            >
+              ← Volver a iniciar sesión
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );

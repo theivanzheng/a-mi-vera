@@ -1,11 +1,10 @@
 import { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Plus, Pencil, Trash2, Package, Search, Eye, EyeOff, X, Info, Star, Sparkles, PackageX, ArrowUpDown, Tag } from 'lucide-react';
+import { Plus, Pencil, Trash2, Package, Search, Eye, EyeOff, X, Star, Sparkles, ArrowUpDown, Tag } from 'lucide-react';
 import { useAdminProducts } from '../../hooks/useAdminProducts';
 import { useAdminCategories } from '../../hooks/useAdminCategories';
 
 type VisibilityFilter = 'all' | 'visible' | 'hidden';
-type StockFilter     = 'all' | 'in-stock' | 'no-stock';
 type SortBy          = 'newest' | 'oldest' | 'price-asc' | 'price-desc' | 'alpha';
 
 export default function ProductList() {
@@ -19,7 +18,6 @@ export default function ProductList() {
   const [filterVisible, setFilterVisible]   = useState<VisibilityFilter>('all');
   const [filterDestacado, setFilterDestacado] = useState(false);
   const [filterNuevo, setFilterNuevo]       = useState(false);
-  const [filterStock, setFilterStock]       = useState<StockFilter>('all');
   const [sortBy, setSortBy]                 = useState<SortBy>('newest');
 
   // Confirmación de borrado
@@ -37,9 +35,6 @@ export default function ProductList() {
       if (filterVisible === 'hidden' && p.visible !== false) return false;
       if (filterDestacado && !p.destacado) return false;
       if (filterNuevo && !p.nuevo) return false;
-      const stock = p.stock ?? 0;
-      if (filterStock === 'in-stock' && stock <= 0) return false;
-      if (filterStock === 'no-stock' && stock > 0) return false;
       return true;
     });
     return [...list].sort((a, b) => {
@@ -51,11 +46,11 @@ export default function ProductList() {
         case 'alpha':      return a.title.localeCompare(b.title, 'es');
       }
     });
-  }, [products, search, filterCategory, filterVisible, filterDestacado, filterNuevo, filterStock, sortBy]);
+  }, [products, search, filterCategory, filterVisible, filterDestacado, filterNuevo, sortBy]);
 
   const hasActiveFilters =
     search !== '' || filterCategory !== '' || filterVisible !== 'all' ||
-    filterDestacado || filterNuevo || filterStock !== 'all';
+    filterDestacado || filterNuevo;
 
   function clearFilters() {
     setSearch('');
@@ -63,7 +58,6 @@ export default function ProductList() {
     setFilterVisible('all');
     setFilterDestacado(false);
     setFilterNuevo(false);
-    setFilterStock('all');
   }
 
   // ── Handlers ──────────────────────────────────────────────────────────────
@@ -206,14 +200,6 @@ export default function ProductList() {
             <Sparkles size={12} /> Nuevo
           </button>
 
-          {/* Stock */}
-          <button
-            className={`admin-chip${filterStock === 'no-stock' ? ' admin-chip--active' : ''}`}
-            onClick={() => setFilterStock(v => v === 'no-stock' ? 'all' : 'no-stock')}
-          >
-            <PackageX size={12} /> Sin stock
-          </button>
-
           {/* Limpiar */}
           {hasActiveFilters && (
             <button className="admin-chip admin-chip--clear" onClick={clearFilters} aria-label="Limpiar filtros">
@@ -278,7 +264,7 @@ export default function ProductList() {
                 <div className="admin-product-meta">{product.category}</div>
 
                 {/* Badges de estado */}
-                {(product.visible === false || product.destacado || product.nuevo || (product.stock ?? 0) === 0) && (
+                {(product.visible === false || product.destacado || product.nuevo) && (
                   <div className="admin-product-badges">
                     {product.visible === false && (
                       <span className="admin-badge admin-badge--hidden">Oculto</span>
@@ -288,12 +274,6 @@ export default function ProductList() {
                     )}
                     {product.nuevo && (
                       <span className="admin-badge admin-badge--nuevo">Nuevo</span>
-                    )}
-                    {(product.stock ?? 0) === 0 && (
-                      <span className="admin-badge admin-badge--no-stock">
-                        <Info size={8} />
-                        Sin stock
-                      </span>
                     )}
                   </div>
                 )}

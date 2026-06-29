@@ -1,14 +1,12 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Package, Tag, Archive, FileText, Home, LogOut } from 'lucide-react';
+import { LayoutDashboard, Package, Tag, FileText, LogOut } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 const NAV_ITEMS = [
   { to: '/admin/dashboard',  icon: LayoutDashboard, label: 'Panel de control' },
   { to: '/admin/productos',  icon: Package,         label: 'Productos'        },
   { to: '/admin/categorias', icon: Tag,             label: 'Categorías'       },
-  { to: '/admin/stock',      icon: Archive,         label: 'Stock'            },
   { to: '/admin/paginas',    icon: FileText,        label: 'Páginas'          },
-  { to: '/admin/portada',    icon: Home,            label: 'Portada'          },
 ] as const;
 
 export default function AdminSidebar() {

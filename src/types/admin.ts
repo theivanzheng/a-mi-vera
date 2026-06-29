@@ -8,12 +8,6 @@ export interface Category {
   sort_order: number;
 }
 
-export interface StockRecord {
-  product_id: string;
-  quantity: number;
-  updated_at: string;
-}
-
 export interface HomeSection {
   id: string;
   type: 'hero' | 'banner' | 'featured';

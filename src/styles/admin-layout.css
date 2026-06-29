@@ -135,6 +135,47 @@
   margin-bottom: 1rem;
 }
 
+/* Mensaje de éxito (correo enviado / contraseña actualizada) */
+.login-success {
+  color: #1e7e34;
+  background: #eafaf0;
+  border: 1px solid #b7e4c7;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Texto de ayuda dentro del formulario */
+.login-help {
+  font-size: 0.88rem;
+  color: var(--text-light);
+  line-height: 1.5;
+  margin: 0 0 0.25rem;
+}
+
+/* Enlace de texto (¿Has olvidado tu contraseña? / Volver) */
+.login-link {
+  background: none;
+  border: none;
+  color: var(--color-dark-mid);
+  font-size: 0.85rem;
+  text-align: center;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+.login-link:hover:not(:disabled) { color: var(--color-dark-deep); }
+.login-link:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Botón con aspecto de botón pero que es un <Link> (centrado, sin subrayado) */
+.login-btn--link {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+
 .admin-auth-loading {
   min-height: 100vh;
   display: flex;
@@ -1209,7 +1250,6 @@
 .admin-badge--hidden    { background: var(--color-surface); color: var(--color-text-muted); }
 .admin-badge--destacado { background: #f59e0b; color: #fff; }
 .admin-badge--nuevo     { background: var(--accent); color: #fff; }
-.admin-badge--no-stock  { background: var(--color-surface); color: var(--color-text-muted); border: 1px solid var(--color-border); }
 
 /* Tarjeta de producto oculto — ligera opacidad */
 .admin-product-card--hidden {
@@ -1221,148 +1261,7 @@
   color: var(--color-text-muted) !important;
 }
 
-/* ── GESTIÓN DE STOCK ── */
-
-.admin-stock-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.admin-stock-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.65rem 0.75rem;
-  background: var(--color-white);
-  border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-md);
-}
-
-.admin-stock-thumb {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-sm);
-  object-fit: cover;
-  flex-shrink: 0;
-  background: var(--color-surface);
-}
-
-.admin-stock-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.admin-stock-name {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-main);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.admin-stock-cat {
-  font-size: 0.72rem;
-  color: var(--color-text-muted);
-}
-
-.admin-stock-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  flex-shrink: 0;
-}
-
-.admin-stock-btn {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  background: var(--color-white);
-  color: var(--text-main);
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1;
-  cursor: pointer;
-  transition: border-color 0.12s, color 0.12s;
-}
-
-.admin-stock-btn:hover:not(:disabled) {
-  border-color: var(--primary);
-  color: var(--primary);
-}
-
-.admin-stock-btn:disabled {
-  opacity: 0.35;
-  cursor: default;
-}
-
-.admin-stock-input {
-  width: 54px;
-  text-align: center;
-  padding: 0.3rem 0.25rem;
-  border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--text-main);
-  background: var(--color-white);
-  -moz-appearance: textfield;
-}
-
-.admin-stock-input::-webkit-outer-spin-button,
-.admin-stock-input::-webkit-inner-spin-button { -webkit-appearance: none; }
-
-.admin-stock-input:focus {
-  outline: none;
-  border-color: var(--primary);
-}
-
-.admin-stock-input--dirty {
-  border-color: var(--accent);
-  color: var(--text-main);
-}
-
-.admin-stock-status {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.admin-stock-saved {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #16a34a;
-}
-
-.admin-stock-saving {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-text-muted);
-}
-
-@keyframes adminSpin {
-  to { transform: rotate(360deg); }
-}
-
-.admin-stock-saving svg {
-  animation: adminSpin 0.75s linear infinite;
-}
-
-/* ── EDITOR DE PORTADA ── */
+/* ── EDITOR / REORDEN DE CATEGORÍAS ── */
 
 .admin-home-migration-notice {
   display: flex;

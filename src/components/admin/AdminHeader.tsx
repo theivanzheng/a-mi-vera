@@ -7,8 +7,6 @@ const ROUTE_TITLES: Record<string, string> = {
   '/admin/productos':  'Productos',
   '/admin/productos/nuevo': 'Nuevo producto',
   '/admin/categorias': 'Categorías',
-  '/admin/stock':      'Stock',
-  '/admin/portada':    'Portada',
 };
 
 function getTitle(pathname: string): string {

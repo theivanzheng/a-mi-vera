@@ -1,12 +1,11 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Package, Tag, FileText, Home } from 'lucide-react';
+import { LayoutDashboard, Package, Tag, FileText } from 'lucide-react';
 
 const NAV_ITEMS = [
   { to: '/admin/dashboard',  icon: LayoutDashboard, label: 'Inicio'     },
   { to: '/admin/productos',  icon: Package,         label: 'Productos'  },
   { to: '/admin/categorias', icon: Tag,             label: 'Categorías' },
   { to: '/admin/paginas',    icon: FileText,        label: 'Páginas'    },
-  { to: '/admin/portada',    icon: Home,            label: 'Portada'    },
 ] as const;
 
 export default function AdminBottomNav() {

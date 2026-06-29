@@ -13,6 +13,7 @@ import Nosotros from './pages/Nosotros';
 
 // Auth
 import Login from './pages/admin/Login';
+import ResetPassword from './pages/admin/ResetPassword';
 
 // Panel privado — guard y layout
 import PrivateRoute from './router/PrivateRoute';
@@ -23,8 +24,6 @@ import Dashboard from './pages/admin/Dashboard';
 import ProductList from './pages/admin/ProductList';
 import ProductForm from './pages/admin/ProductForm';
 import CategoryList from './pages/admin/CategoryList';
-import StockManager from './pages/admin/StockManager';
-import HomeEditor from './pages/admin/HomeEditor';
 import PaginasList from './pages/admin/PaginasList';
 import PageEditor from './pages/admin/PageEditor';
 
@@ -47,8 +46,9 @@ function App() {
             <Route path="/bodas/wedding-planners" element={<WeddingPlanners />} />
           </Route>
 
-          {/* Login */}
+          {/* Login y recuperación de contraseña */}
           <Route path="/login" element={<Login />} />
+          <Route path="/restablecer" element={<ResetPassword />} />
 
           {/* Panel privado (protegido) */}
           <Route element={<PrivateRoute />}>
@@ -59,8 +59,6 @@ function App() {
               <Route path="/admin/productos/nuevo" element={<ProductForm />} />
               <Route path="/admin/productos/:id/editar" element={<ProductForm />} />
               <Route path="/admin/categorias" element={<CategoryList />} />
-              <Route path="/admin/stock" element={<StockManager />} />
-              <Route path="/admin/portada" element={<HomeEditor />} />
               <Route path="/admin/paginas" element={<PaginasList />} />
             </Route>
             {/* Editor de páginas a pantalla completa (fuera del AdminLayout) */}
