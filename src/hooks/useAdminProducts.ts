@@ -9,14 +9,16 @@ import {
   deleteProduct as apiDelete,
   patchProductFields,
   setProductCategoria,
+  bulkCreateHiddenProducts,
   type ImageEntry,
   type ProductTextFields,
   type ProductPatch,
   type ProgressFn,
+  type CreatedDraft,
 } from '../lib/productsApi';
 
-// Re-exportar para que ProductForm pueda importarlos desde el hook
-export type { ImageEntry, ProductTextFields, ProductPatch, ProgressFn };
+// Re-exportar para que ProductForm / importador puedan importarlos desde el hook
+export type { ImageEntry, ProductTextFields, ProductPatch, ProgressFn, CreatedDraft };
 
 const MAESTRAS_CATEGORIAS: string[] = [
   'Todos',
@@ -74,6 +76,8 @@ export interface UseAdminProductsResult {
   bulkDelete: (ids: string[]) => Promise<string | null>;
   // Importación masiva (Excel): crea varios productos y refresca una vez al final.
   importProducts: (items: { fields: ProductTextFields; images: ImageEntry[] }[]) => Promise<{ ok: number; errors: string[] }>;
+  // Crea de golpe productos OCULTOS (solo texto) para la rejilla de fotos.
+  bulkCreateHidden: (items: ProductTextFields[]) => Promise<{ created: CreatedDraft[]; error: string | null }>;
 }
 
 export function useAdminProducts(): UseAdminProductsResult {
@@ -249,6 +253,17 @@ export function useAdminProducts(): UseAdminProductsResult {
     return { ok, errors };
   }
 
+  async function bulkCreateHidden(items: ProductTextFields[]): Promise<{ created: CreatedDraft[]; error: string | null }> {
+    if (!isSupabaseConfigured) return { created: [], error: 'Conecta Supabase para importar.' };
+    setSaving(true);
+    setError(null);
+    const res = await bulkCreateHiddenProducts(items);
+    if (res.error) setError(res.error);
+    await refresh();
+    setSaving(false);
+    return res;
+  }
+
   return {
     products: isSupabaseConfigured ? sbProducts : ctx.products,
     categories: isSupabaseConfigured ? buildCategories(sbProducts) : ctx.categories,
@@ -264,5 +279,6 @@ export function useAdminProducts(): UseAdminProductsResult {
     bulkSetCategory,
     bulkDelete,
     importProducts,
+    bulkCreateHidden,
   };
 }

@@ -63,7 +63,14 @@ permitiría cambiarlo (y otros datos globales) sin tocar código.
 
 ---
 
+## ✅ Hecho recientemente (extra)
+
+- **Importación masiva con fotos** (Admin → Productos → Importar): el Excel crea los
+  productos OCULTOS (solo texto); una rejilla muestra una fila por producto donde se
+  arrastran las fotos (convierte HEIC del iPhone) y se publica cada uno al tener ≥1 foto.
+  Pantalla: `src/pages/admin/ProductImport.tsx`.
+
 ## 🟢 Backlog
 
-- **Fase 7B** — importación masiva de productos con imágenes (subida a Storage desde CSV).
-  Ver [`importacion-productos.md`](importacion-productos.md).
+- Galería/fotos editables de Bodas y fotos del hero de Inicio (necesitan un componente
+  de imagen editable; hoy `EditableMedia` solo soporta vídeo).

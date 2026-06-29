@@ -71,6 +71,40 @@ export function validateImageFile(file: File): string | null {
   return null;
 }
 
+// Convierte HEIC/HEIF (fotos típicas de iPhone) a JPEG. heic2any es pesado, así
+// que se carga de forma diferida y solo cuando el archivo es realmente HEIC.
+export async function convertHeicIfNeeded(file: File): Promise<File> {
+  const isHeic = /image\/hei[cf]/i.test(file.type) || /\.(heic|heif)$/i.test(file.name);
+  if (!isHeic) return file;
+  const heic2any = (await import('heic2any')).default as
+    (opts: { blob: Blob; toType?: string; quality?: number }) => Promise<Blob | Blob[]>;
+  const out = await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.9 });
+  const blob = Array.isArray(out) ? out[0] : out;
+  const name = file.name.replace(/\.(heic|heif)$/i, '.jpg');
+  return new File([blob], name, { type: 'image/jpeg' });
+}
+
+// Prepara una foto para la importación masiva: convierte HEIC si hace falta,
+// comprueba el formato y la optimiza. Devuelve el File listo o un mensaje.
+export async function prepareImportImage(raw: File): Promise<{ file: File | null; error: string | null }> {
+  let f: File;
+  try {
+    f = await convertHeicIfNeeded(raw);
+  } catch {
+    return { file: null, error: `No se pudo convertir "${raw.name}" (HEIC).` };
+  }
+  const typeOk = ALLOWED_TYPES.has(f.type) || /\.(jpe?g|png|webp)$/i.test(f.name);
+  if (!typeOk) {
+    return { file: null, error: `"${raw.name}": formato no admitido (usa JPG, PNG, WEBP o HEIC).` };
+  }
+  try {
+    const optimized = await resizeImage(f);
+    return { file: optimized, error: null };
+  } catch {
+    return { file: null, error: `No se pudo procesar "${raw.name}".` };
+  }
+}
+
 function safeName(filename: string): string {
   const noExt = filename.replace(/\.[^.]+$/, '');
   return noExt

@@ -462,3 +462,95 @@ export async function setProductCategoria(
   const relErr = await replaceProductoCategorias(id, ids);
   return { error: relErr ? translateDbError(relErr) : null };
 }
+
+// Producto recién creado por la importación masiva (borrador oculto).
+export interface CreatedDraft {
+  id: string;
+  title: string;
+  price: number;
+  categories: string[];        // nombres de categoría válidos
+  description: string;
+  novedadFija: boolean;
+  novedadHasta: string | null;
+}
+
+// Crea de golpe varios productos OCULTOS (visible:false), sin imágenes, desde el
+// texto del Excel. Resuelve slugs únicos (vs BD y dentro del lote) y enlaza
+// categorías. Devuelve los productos creados (con id) para la rejilla de fotos.
+export async function bulkCreateHiddenProducts(
+  items: ProductTextFields[],
+): Promise<{ created: CreatedDraft[]; error: string | null }> {
+  if (items.length === 0) return { created: [], error: null };
+
+  // Slugs únicos frente a la BD y dentro del propio lote.
+  const { data: existing } = await supabase!.from('productos').select('slug');
+  const used = new Set(((existing as { slug: string }[] | null) ?? []).map(r => r.slug));
+  const uniqueSlug = (base: string): string => {
+    const root = base || 'producto';
+    let s = root;
+    let n = 2;
+    while (used.has(s)) s = `${root}-${n++}`;
+    used.add(s);
+    return s;
+  };
+
+  // Mapa nombre→id de categorías en una sola consulta.
+  const allNames = [...new Set(items.flatMap(i => i.categories))];
+  const catIdByName = new Map<string, string>();
+  if (allNames.length > 0) {
+    const { data } = await supabase!.from('categorias').select('id, nombre').in('nombre', allNames);
+    ((data as { id: string; nombre: string }[] | null) ?? []).forEach(r => catIdByName.set(r.nombre, r.id));
+  }
+
+  const prepared = items.map(f => {
+    const validNames = f.categories.filter(n => catIdByName.has(n));
+    const catIds = validNames.map(n => catIdByName.get(n)!);
+    return {
+      id: crypto.randomUUID(),
+      slug: uniqueSlug(toSlug(f.title)),
+      titulo: f.title,
+      descripcion: f.description || null,
+      precio: parseFloat(f.price),
+      categoria_id: catIds[0] ?? null,
+      novedad_fija: f.novedadFija,
+      novedad_hasta: f.novedadHasta,
+      catIds,
+      validNames,
+    };
+  });
+
+  const rows = prepared.map(p => ({
+    id: p.id,
+    slug: p.slug,
+    titulo: p.titulo,
+    descripcion: p.descripcion,
+    precio: p.precio,
+    categoria_id: p.categoria_id,
+    novedad_fija: p.novedad_fija,
+    novedad_hasta: p.novedad_hasta,
+    visible: false,
+  }));
+
+  const { error: prodErr } = await supabase!.from('productos').insert(rows);
+  if (prodErr) return { created: [], error: translateDbError(prodErr.message) };
+
+  const joinRows = prepared.flatMap(p => p.catIds.map(cid => ({ producto_id: p.id, categoria_id: cid })));
+  if (joinRows.length > 0) {
+    // Si falla el enlace de categorías, los productos ya existen (sin categoría):
+    // no bloqueamos, se puede corregir luego.
+    await supabase!.from('producto_categorias').insert(joinRows);
+  }
+
+  return {
+    created: prepared.map(p => ({
+      id: p.id,
+      title: p.titulo,
+      price: p.precio,
+      categories: p.validNames,
+      description: p.descripcion ?? '',
+      novedadFija: p.novedad_fija,
+      novedadHasta: p.novedad_hasta,
+    })),
+    error: null,
+  };
+}

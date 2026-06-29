@@ -23,6 +23,7 @@ import AdminLayout from './components/admin/AdminLayout';
 import Dashboard from './pages/admin/Dashboard';
 import ProductList from './pages/admin/ProductList';
 import ProductForm from './pages/admin/ProductForm';
+import ProductImport from './pages/admin/ProductImport';
 import CategoryList from './pages/admin/CategoryList';
 import PaginasList from './pages/admin/PaginasList';
 import PageEditor from './pages/admin/PageEditor';
@@ -57,6 +58,7 @@ function App() {
               <Route path="/admin/dashboard" element={<Dashboard />} />
               <Route path="/admin/productos" element={<ProductList />} />
               <Route path="/admin/productos/nuevo" element={<ProductForm />} />
+              <Route path="/admin/productos/importar" element={<ProductImport />} />
               <Route path="/admin/productos/:id/editar" element={<ProductForm />} />
               <Route path="/admin/categorias" element={<CategoryList />} />
               <Route path="/admin/paginas" element={<PaginasList />} />

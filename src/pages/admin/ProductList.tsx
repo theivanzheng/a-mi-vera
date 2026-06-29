@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Plus, Pencil, Trash2, Package, Search, Eye, EyeOff, X, Star, Sparkles, ArrowUpDown, Tag, CheckSquare, Check } from 'lucide-react';
+import { Plus, Pencil, Trash2, Package, Search, Eye, EyeOff, X, Star, Sparkles, ArrowUpDown, Tag, CheckSquare, Check, Upload } from 'lucide-react';
 import { useAdminProducts } from '../../hooks/useAdminProducts';
 import { useAdminCategories } from '../../hooks/useAdminCategories';
 
@@ -207,6 +207,9 @@ export default function ProductList() {
               <button type="button" className="admin-add-btn admin-add-btn--ghost" onClick={enterSelectMode}>
                 <CheckSquare size={16} /> Seleccionar
               </button>
+              <Link to="/admin/productos/importar" className="admin-add-btn admin-add-btn--ghost">
+                <Upload size={16} /> Importar
+              </Link>
               <Link to="/admin/productos/nuevo" className="admin-add-btn">
                 <Plus size={16} /> Añadir
               </Link>

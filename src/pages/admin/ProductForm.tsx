@@ -1,12 +1,11 @@
 import { useState, useEffect, useRef, ChangeEvent, FormEvent } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Package, Upload, X, Download } from 'lucide-react';
+import { Package, Upload, X } from 'lucide-react';
 import { useAdminProducts } from '../../hooks/useAdminProducts';
 import type { ImageEntry, ProductTextFields, ProgressFn } from '../../hooks/useAdminProducts';
 import { useAdminCategories } from '../../hooks/useAdminCategories';
 import { isSupabaseConfigured } from '../../lib/supabase';
 import { validateImageFile, resizeImage } from '../../lib/storageApi';
-import { parseProductsExcel, downloadProductsTemplate } from '../../lib/productImport';
 
 // ── Tipos locales ──────────────────────────────────────────────────────────
 
@@ -54,7 +53,7 @@ export default function ProductForm() {
   const isEditing = id !== undefined;
   const navigate = useNavigate();
 
-  const { products, loading: prodLoading, saving, addProduct, updateProduct, importProducts } = useAdminProducts();
+  const { products, loading: prodLoading, saving, addProduct, updateProduct } = useAdminProducts();
   const { categoryNames, loading: catLoading } = useAdminCategories();
   const loading = prodLoading || catLoading;
 
@@ -70,11 +69,6 @@ export default function ProductForm() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [savePhase, setSavePhase] = useState<'uploading' | 'saving' | null>(null);
-  // Importación masiva desde Excel (solo modo "nuevo")
-  const [importBusy, setImportBusy] = useState(false);
-  const [importDragOver, setImportDragOver] = useState(false);
-  const [importNotes, setImportNotes] = useState<string[]>([]);
-  const [importDone, setImportDone] = useState<{ ok: number; total: number } | null>(null);
   const formLoaded = useRef(false);
   // Rutas de Storage que tenía el producto al entrar en edición (para cleanup posterior)
   const initialStoragePathsRef = useRef<string[]>([]);
@@ -272,33 +266,6 @@ export default function ProductForm() {
     setTimeout(() => navigate('/admin/productos'), 2000);
   }
 
-  // Importación masiva desde un Excel arrastrado/seleccionado.
-  async function handleImportFile(file: File) {
-    setImportBusy(true);
-    setImportNotes([]);
-    setImportDone(null);
-    setSubmitError(null);
-
-    const knownCats = categoryNames.filter(c => c !== 'Todos' && c !== 'Novedades');
-    const { items, notes, error } = await parseProductsExcel(file, knownCats);
-
-    if (error) {
-      setImportBusy(false);
-      setImportNotes([error]);
-      return;
-    }
-    if (items.length === 0) {
-      setImportBusy(false);
-      setImportNotes(['No se encontró ningún producto válido en el archivo.', ...notes]);
-      return;
-    }
-
-    const { ok, errors } = await importProducts(items);
-    setImportBusy(false);
-    setImportDone({ ok, total: items.length });
-    setImportNotes([...notes, ...errors]);
-  }
-
   // ── Estados de carga / error ───────────────────────────────────────────────
 
   if (loading) {
@@ -344,64 +311,6 @@ export default function ProductForm() {
 
       {submitError && (
         <p className="admin-form-error">{submitError}</p>
-      )}
-
-      {/* ── Importar varios desde Excel (solo al crear) ─── */}
-      {!isEditing && isSupabaseConfigured && (
-        <div className="admin-form-section admin-import-card">
-          <span className="admin-form-section-title">Importar varios desde Excel</span>
-          <p className="admin-field-hint" style={{ marginTop: 0 }}>
-            Sube un Excel (.xlsx) con una fila por producto y se crearán todos de una vez.
-          </p>
-
-          <div
-            className={`admin-import-drop${importDragOver ? ' is-over' : ''}${importBusy ? ' is-busy' : ''}`}
-            onDragOver={e => { e.preventDefault(); if (!importBusy) setImportDragOver(true); }}
-            onDragLeave={() => setImportDragOver(false)}
-            onDrop={e => {
-              e.preventDefault();
-              setImportDragOver(false);
-              const f = e.dataTransfer.files?.[0];
-              if (f && !importBusy) handleImportFile(f);
-            }}
-          >
-            <Upload size={22} />
-            {importBusy ? (
-              <span>Importando productos…</span>
-            ) : (
-              <span>Arrastra aquí tu Excel o <label htmlFor="import-file" className="admin-import-browse">selecciónalo</label></span>
-            )}
-            <input
-              id="import-file"
-              type="file"
-              accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-              hidden
-              disabled={importBusy}
-              onChange={e => { const f = e.target.files?.[0]; e.target.value = ''; if (f) handleImportFile(f); }}
-            />
-          </div>
-
-          <button type="button" className="admin-import-template-btn" onClick={() => downloadProductsTemplate()}>
-            <Download size={14} /> Descargar plantilla de ejemplo
-          </button>
-
-          {importDone && (
-            <p className="admin-import-result">
-              ✓ {importDone.ok} de {importDone.total} producto{importDone.total === 1 ? '' : 's'} importado{importDone.ok === 1 ? '' : 's'}.
-              {importDone.ok > 0 && (
-                <button type="button" className="admin-import-see" onClick={() => navigate('/admin/productos')}>
-                  Ver productos →
-                </button>
-              )}
-            </p>
-          )}
-
-          {importNotes.length > 0 && (
-            <ul className="admin-import-notes">
-              {importNotes.map((m, i) => <li key={i}>{m}</li>)}
-            </ul>
-          )}
-        </div>
       )}
 
       <form onSubmit={handleSubmit}>

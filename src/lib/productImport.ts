@@ -16,7 +16,7 @@ export interface ImportParseResult {
 }
 
 // Columnas de la plantilla (cabecera de la primera fila).
-export const TEMPLATE_HEADERS = ['titulo', 'precio', 'categorias', 'descripcion', 'novedad', 'imagen_url'] as const;
+export const TEMPLATE_HEADERS = ['titulo', 'precio', 'categorias', 'descripcion', 'novedad'] as const;
 
 function norm(v: unknown): string {
   return String(v ?? '').trim();
@@ -116,7 +116,6 @@ export async function downloadProductsTemplate(): Promise<void> {
       categorias: 'Pasión por el vino;Regalos únicos',
       descripcion: 'Copa personalizada con nombre y fecha.',
       novedad: 'no',
-      imagen_url: '',
     },
     {
       titulo: 'Tabla de quesos personalizada',
@@ -124,11 +123,10 @@ export async function downloadProductsTemplate(): Promise<void> {
       categorias: 'Pasión por la madera',
       descripcion: 'Tabla de madera grabada a medida.',
       novedad: 'si',
-      imagen_url: '',
     },
   ];
   const ws = XLSX.utils.json_to_sheet(ejemplos, { header: [...TEMPLATE_HEADERS] });
-  ws['!cols'] = [{ wch: 30 }, { wch: 10 }, { wch: 32 }, { wch: 40 }, { wch: 10 }, { wch: 30 }];
+  ws['!cols'] = [{ wch: 30 }, { wch: 10 }, { wch: 32 }, { wch: 40 }, { wch: 10 }];
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'Productos');
   XLSX.writeFile(wb, 'plantilla-productos.xlsx');
