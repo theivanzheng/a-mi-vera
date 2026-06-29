@@ -97,6 +97,7 @@ const Navbar = ({ isProductDetail = false }: NavbarProps) => {
           <Link to="/"         className="nav-drawer-link" onClick={closeMenu}>Inicio</Link>
           <Link to="/catalogo" className="nav-drawer-link" onClick={closeMenu}>Catálogo</Link>
           <Link to="/nosotros" className="nav-drawer-link" onClick={closeMenu}>Nosotros</Link>
+          <Link to="/bodas"    className="nav-drawer-link" onClick={closeMenu}>Bodas</Link>
         </nav>
 
         <div className="nav-drawer-divider" />

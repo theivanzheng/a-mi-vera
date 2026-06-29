@@ -5,6 +5,7 @@ import EditableText from './editable/EditableText';
 import type { BodasContent, Pack } from '../content/bodas';
 import LogotipoSvg from '../../IdentidadVisual/AmiVera_LogoEditable.svg';
 import { whatsappLink } from '../lib/whatsapp';
+import BodasHeroVideo from '../../IdentidadVisual/Videos/web/Video2.mp4';
 
 const rid = () => Math.random().toString(36).slice(2, 8);
 
@@ -55,8 +56,10 @@ export default function BodasView() {
 
   return (
     <>
-      {/* Hero */}
+      {/* Hero con vídeo de fondo */}
       <header className="page-hero bodas-hero">
+        <video className="bodas-hero-video" src={BodasHeroVideo} autoPlay muted loop playsInline preload="metadata" aria-hidden="true" />
+        <div className="bodas-hero-scrim" aria-hidden="true" />
         <div className="page-hero-inner">
           <EditableText as="span" className="page-eyebrow" path="hero.eyebrow" />
           <EditableText as="h1" className="page-hero-title" path="hero.titulo" multiline rich />

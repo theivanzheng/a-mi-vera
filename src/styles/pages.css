@@ -1655,3 +1655,36 @@
   margin: 0.1rem 0 0.3rem;
 }
 .pack-incluye-edit { margin: 0.3rem 0 0.6rem; }
+
+/* ── BODAS: hero con vídeo de fondo ── */
+.bodas-hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-dark-deep);
+  display: flex;
+  align-items: center;
+  min-height: 66vh;
+}
+.bodas-hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+.bodas-hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(40, 25, 30, 0.55), rgba(40, 25, 30, 0.45) 55%, rgba(40, 25, 30, 0.72));
+}
+.bodas-hero .page-hero-inner { position: relative; z-index: 2; }
+/* Texto blanco solo en la web (no en los campos editables del admin) */
+.bodas-hero .page-eyebrow:not(.av-editable) { color: #f0cdd9; }
+.bodas-hero .page-hero-title:not(.av-editable) { color: #fff; }
+.bodas-hero .page-hero-sub:not(.av-editable) { color: rgba(255, 255, 255, 0.92); }
+.bodas-hero .btn-whatsapp { background: #fff; color: var(--primary); }
+@media (hover: hover) and (pointer: fine) {
+  .bodas-hero .btn-whatsapp:hover { background: #f3ece4; }
+}
