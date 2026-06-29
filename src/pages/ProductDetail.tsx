@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useProducts } from '../hooks/useProducts';
 import { MessageCircle } from 'lucide-react';
-import { whatsappLink } from '../lib/whatsapp';
+import { whatsappLink, SITE_URL } from '../lib/whatsapp';
 import LogotipoSvg from '../../IdentidadVisual/AmiVera_LogoEditable.svg';
 
 const ProductDetail = () => {
@@ -45,7 +45,7 @@ const ProductDetail = () => {
     : products.filter(p => p.id !== product.id).slice(0, 4);
 
   const handleWhatsappClick = () => {
-    const url = `${window.location.origin}/producto/${product.slug}`;
+    const url = `${SITE_URL}/producto/${product.slug}`;
     const text = `Hola, me interesa este producto: ${product.title}\n${url}`;
     window.open(whatsappLink(text), '_blank');
   };
