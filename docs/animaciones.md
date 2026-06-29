@@ -79,6 +79,53 @@ function cerrar() {                              // cerrar → desmontar al acab
 
 ---
 
+## 1.b Reordenar listas — deslizamiento (FLIP)
+
+Para listas donde un elemento **cambia de posición** (subir/bajar), `reveal-rows`
+no sirve (eso es aparecer/desaparecer). Se usa **FLIP**: medir la posición de cada
+fila antes del cambio, y tras reordenar, deslizar cada una desde su sitio anterior
+al nuevo. Mismo easing/duración que el resto para que sea coherente.
+
+**Requisitos:** lista keyed por id (React reutiliza el mismo nodo al reordenar) y un
+ref por fila.
+
+```jsx
+const rowRefs = useRef(new Map());                 // id -> elemento
+const prevRects = useRef(null);                    // id -> DOMRect (antes de mover)
+
+function captureRects() {                          // llamar ANTES de reordenar
+  const m = new Map();
+  rowRefs.current.forEach((el, id) => el && m.set(id, el.getBoundingClientRect()));
+  prevRects.current = m;
+}
+
+useLayoutEffect(() => {                             // tras cambiar el array, desliza
+  const prev = prevRects.current; prevRects.current = null;
+  if (!prev) return;
+  if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+  rowRefs.current.forEach((el, id) => {
+    const oldRect = prev.get(id);
+    if (!el || !oldRect) return;
+    const dy = oldRect.top - el.getBoundingClientRect().top;
+    if (!dy) return;
+    el.style.transition = 'none';
+    el.style.transform = `translateY(${dy}px)`;     // Invert: lo dejo donde estaba
+    requestAnimationFrame(() => {                    // Play: lo suelto a su sitio
+      el.style.transition = 'transform 280ms cubic-bezier(0.22, 1, 0.36, 1)';
+      el.style.transform = '';
+    });
+  });
+}, [lista]);
+
+// en cada fila:  ref={el => { el ? rowRefs.current.set(id, el) : rowRefs.current.delete(id); }}
+// en subir/bajar: captureRects() antes de setLista(...)
+```
+
+**Ejemplo real:** reorden de categorías en `/admin/categorias`
+(`src/pages/admin/CategoryList.tsx`).
+
+---
+
 ## 2. `page-fade` — transición entre páginas (fade-up)
 
 En `src/App.css`, aplicada por `PublicLayout` a cada cambio de ruta pública. El

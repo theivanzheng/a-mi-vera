@@ -1,4 +1,4 @@
-import { useState, FormEvent, ChangeEvent, useEffect, useRef } from 'react';
+import { useState, FormEvent, ChangeEvent, useEffect, useLayoutEffect, useRef } from 'react';
 import { Tag, Pencil, Trash2, Plus, Check, X, Eye, EyeOff, ChevronUp, ChevronDown, AlertCircle } from 'lucide-react';
 import { useAdminCategories } from '../../hooks/useAdminCategories';
 import { useAdminProducts } from '../../hooks/useAdminProducts';
@@ -35,6 +35,10 @@ export default function CategoryList() {
   const [orderSaved, setOrderSaved] = useState(false);
   const [orderError, setOrderError] = useState<string | null>(null);
   const orderChangedRef = useRef(false);
+
+  // FLIP: refs de cada fila + sus posiciones previas, para animar el reordenado.
+  const rowRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+  const prevRects = useRef<Map<string, DOMRect> | null>(null);
 
   // Slugs de categoría usados en escaparates de la portada (para bloquear borrado).
   const [escaparateSlugs, setEscaparateSlugs] = useState<Set<string>>(new Set());
@@ -186,9 +190,38 @@ export default function CategoryList() {
     setCreateForm(prev => ({ ...prev, nombre: value }));
   }
 
-  // ── Reordenar ──────────────────────────────────────────────────────────────
+  // ── Reordenar (con animación de deslizamiento, técnica FLIP) ─────────────────
+  // Captura la posición de cada fila ANTES de reordenar.
+  function captureRects() {
+    const m = new Map<string, DOMRect>();
+    rowRefs.current.forEach((el, id) => { if (el) m.set(id, el.getBoundingClientRect()); });
+    prevRects.current = m;
+  }
+
+  // Tras reordenar (localCats cambia), desliza cada fila desde su posición
+  // anterior hasta la nueva. Misma curva/duración que el resto (ver animaciones.md).
+  useLayoutEffect(() => {
+    const prev = prevRects.current;
+    prevRects.current = null;
+    if (!prev) return;
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+    rowRefs.current.forEach((el, id) => {
+      const oldRect = prev.get(id);
+      if (!el || !oldRect) return;
+      const dy = oldRect.top - el.getBoundingClientRect().top;
+      if (!dy) return;
+      el.style.transition = 'none';
+      el.style.transform = `translateY(${dy}px)`;
+      requestAnimationFrame(() => {
+        el.style.transition = 'transform 280ms cubic-bezier(0.22, 1, 0.36, 1)';
+        el.style.transform = '';
+      });
+    });
+  }, [localCats]);
+
   function moveUp(index: number) {
     if (index === 0) return;
+    captureRects();
     orderChangedRef.current = true;
     setOrderChanged(true);
     setLocalCats(prev => {
@@ -200,6 +233,7 @@ export default function CategoryList() {
 
   function moveDown(index: number) {
     if (index === localCats.length - 1) return;
+    captureRects();
     orderChangedRef.current = true;
     setOrderChanged(true);
     setLocalCats(prev => {
@@ -449,7 +483,11 @@ export default function CategoryList() {
 
           // ── Vista normal ───────────────────────────────────────────────
           return (
-            <div key={cat.id} className="admin-product-card">
+            <div
+              key={cat.id}
+              className="admin-product-card"
+              ref={el => { const m = rowRefs.current; if (el) m.set(cat.id, el); else m.delete(cat.id); }}
+            >
               {canReorder && (
                 <div className="admin-cat-reorder-arrows">
                   <button
