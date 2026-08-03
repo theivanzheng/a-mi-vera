@@ -490,6 +490,36 @@
   mix-blend-mode: multiply;
 }
 
+.pdp-thumbs {
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.8rem 1.5rem 0;
+  overflow-x: auto;
+}
+
+.pdp-thumb {
+  flex: 0 0 auto;
+  width: 4.2rem;
+  height: 4.2rem;
+  padding: 0.3rem;
+  background-color: var(--color-surface);
+  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color var(--transition-quick);
+}
+
+.pdp-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.pdp-thumb--active {
+  border-color: var(--color-black);
+}
+
 .pdp-details {
   padding: 2rem 1.5rem;
 }
