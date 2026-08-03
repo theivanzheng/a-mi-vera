@@ -1,16 +1,20 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useProducts } from '../hooks/useProducts';
 import { MessageCircle } from 'lucide-react';
 import { whatsappLink, SITE_URL } from '../lib/whatsapp';
 import LogotipoSvg from '../../IdentidadVisual/AmiVera_LogoEditable.svg';
 
+const PLACEHOLDER_IMAGE = 'https://via.placeholder.com/600?text=Sin+Imagen';
+
 const ProductDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const { products, loading } = useProducts();
+  const [activeImage, setActiveImage] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setActiveImage(0);
   }, [slug]);
 
   if (loading) {
@@ -34,7 +38,8 @@ const ProductDetail = () => {
     );
   }
 
-  const mainImage = product.images[0] ?? 'https://via.placeholder.com/600?text=Sin+Imagen';
+  const images = product.images.length > 0 ? product.images : [PLACEHOLDER_IMAGE];
+  const mainImage = images[activeImage] ?? images[0];
 
   const relatedProducts = products
     .filter(p => p.category === product.category && p.id !== product.id)
@@ -56,6 +61,22 @@ const ProductDetail = () => {
         <div className="pdp-image-container">
           <img src={mainImage} alt={product.title} className="pdp-main-image" />
         </div>
+
+        {images.length > 1 && (
+          <div className="pdp-thumbs">
+            {images.map((img, idx) => (
+              <button
+                key={img + idx}
+                type="button"
+                className={`pdp-thumb${idx === activeImage ? ' pdp-thumb--active' : ''}`}
+                onClick={() => setActiveImage(idx)}
+                aria-label={`Ver foto ${idx + 1} de ${product.title}`}
+              >
+                <img src={img} alt="" />
+              </button>
+            ))}
+          </div>
+        )}
 
         <div className="pdp-details">
           <h1 className="pdp-title">{product.title}</h1>
