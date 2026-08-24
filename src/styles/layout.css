@@ -474,6 +474,7 @@
 }
 
 .pdp-image-container {
+  position: relative;
   width: 100%;
   background-color: var(--color-surface);
   aspect-ratio: 1/1;
@@ -481,6 +482,35 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.pdp-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.4rem;
+  height: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.45);
+  color: var(--color-black);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color var(--transition-quick);
+}
+
+.pdp-arrow:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.pdp-arrow--prev {
+  left: 0.8rem;
+}
+
+.pdp-arrow--next {
+  right: 0.8rem;
 }
 
 .pdp-main-image {
@@ -636,6 +666,17 @@
   height: 40px;
   margin: 0 auto 1rem;
   filter: brightness(0) invert(1);
+}
+
+.footer-credit {
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: rgba(156, 163, 175, 0.78);
+  text-decoration: none;
+}
+
+.footer-credit:hover {
+  color: rgba(156, 163, 175, 1);
 }
 
 

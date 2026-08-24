@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useProducts } from '../hooks/useProducts';
-import { MessageCircle } from 'lucide-react';
+import { MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 import { whatsappLink, SITE_URL } from '../lib/whatsapp';
 import LogotipoSvg from '../../IdentidadVisual/AmiVera_LogoEditable.svg';
 
@@ -40,6 +40,9 @@ const ProductDetail = () => {
 
   const images = product.images.length > 0 ? product.images : [PLACEHOLDER_IMAGE];
   const mainImage = images[activeImage] ?? images[0];
+  const showArrows = images.length > 1;
+  const goPrev = () => setActiveImage(i => (i - 1 + images.length) % images.length);
+  const goNext = () => setActiveImage(i => (i + 1) % images.length);
 
   const relatedProducts = products
     .filter(p => p.category === product.category && p.id !== product.id)
@@ -60,6 +63,26 @@ const ProductDetail = () => {
       <main className="pdp-main-content">
         <div className="pdp-image-container">
           <img src={mainImage} alt={product.title} className="pdp-main-image" />
+          {showArrows && (
+            <>
+              <button
+                type="button"
+                className="pdp-arrow pdp-arrow--prev"
+                onClick={goPrev}
+                aria-label="Foto anterior"
+              >
+                <ChevronLeft size={22} />
+              </button>
+              <button
+                type="button"
+                className="pdp-arrow pdp-arrow--next"
+                onClick={goNext}
+                aria-label="Foto siguiente"
+              >
+                <ChevronRight size={22} />
+              </button>
+            </>
+          )}
         </div>
 
         {images.length > 1 && (
@@ -128,6 +151,14 @@ const ProductDetail = () => {
           <Link to="/catalogo" className="av-footer-link">Catálogo</Link>
         </nav>
         <p className="av-footer-copy">© {new Date().getFullYear()} A Mi Vera · Todos los derechos reservados</p>
+        <a
+          href="https://theivanzheng.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="av-footer-credit"
+        >
+          Diseño y desarrollo: @theivanzheng
+        </a>
       </footer>
     </div>
   );

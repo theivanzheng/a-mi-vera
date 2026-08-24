@@ -40,13 +40,15 @@ La web está **online con el catálogo real**.
 
 ## 🟡 Siguientes pasos (trabajo de producto)
 
-### 1. Página **Bodas** — ✅ rehecha (editable, packs)
-`src/pages/Bodas.tsx` ahora vende **packs a wedding planners** y es **editable** desde
-Admin → Páginas → Bodas: hero, packs (cada uno con precio, líneas de "incluye" y
-"recomendado"), ventajas y CTA. Modelo en `src/content/bodas.ts`, vista compartida en
-`src/components/BodasView.tsx`.
-- Pendiente: **fotos reales / galería editable** (necesita un componente de imagen
-  editable; hoy `EditableMedia` solo soporta vídeo — ver punto 3).
+### 1. Página **Bodas** — ✅ rehecha (productos reales de catálogo)
+`src/pages/Bodas.tsx` muestra a los wedding planners los **productos reales** de la
+categoría de catálogo **"Vivan los novios"** (decisión de la clienta: nada de packs
+inventados) — se listan con `ProductCard`, igual que en el catálogo público. Hero
+(con vídeo de fondo), título de la sección, ventajas y CTA final siguen siendo
+**editables** desde Admin → Páginas → Bodas. Modelo en `src/content/bodas.ts`, vista
+compartida en `src/components/BodasView.tsx`.
+- Si la clienta añade más productos a "Vivan los novios" desde el admin, aparecen
+  aquí automáticamente — no hay nada que editar en la página para eso.
 
 ### 2. Página **Wedding Planners**
 `src/pages/WeddingPlanners.tsx`: igual que Bodas — copy de ejemplo y no editable. Finalizar
@@ -72,5 +74,5 @@ permitiría cambiarlo (y otros datos globales) sin tocar código.
 
 ## 🟢 Backlog
 
-- Galería/fotos editables de Bodas y fotos del hero de Inicio (necesitan un componente
-  de imagen editable; hoy `EditableMedia` solo soporta vídeo).
+- Fotos del hero de Inicio editables desde el admin (necesita un componente de imagen
+  editable; hoy `EditableMedia` solo soporta vídeo).

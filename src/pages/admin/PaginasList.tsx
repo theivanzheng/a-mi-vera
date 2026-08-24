@@ -13,7 +13,7 @@ interface PaginaItem {
 const PAGINAS: PaginaItem[] = [
   { slug: 'inicio', nombre: 'Inicio', desc: 'Portada de la tienda', editable: true, Icon: Home },
   { slug: 'nosotros', nombre: 'Nosotros', desc: 'Página "Detrás de cada regalo"', editable: true, Icon: Users },
-  { slug: 'bodas', nombre: 'Bodas', desc: 'Packs para wedding planners', editable: true, Icon: Heart },
+  { slug: 'bodas', nombre: 'Bodas', desc: 'Productos para wedding planners', editable: true, Icon: Heart },
 ];
 
 export default function PaginasList() {

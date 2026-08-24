@@ -284,6 +284,14 @@ export default function HomeView() {
           <Link to="/catalogo" className="av-footer-link">Catálogo</Link>
         </nav>
         <p className="av-footer-copy">© {new Date().getFullYear()} A Mi Vera · Todos los derechos reservados</p>
+        <a
+          href="https://theivanzheng.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="av-footer-credit"
+        >
+          Diseño y desarrollo: @theivanzheng
+        </a>
       </footer>
     </>
   );
