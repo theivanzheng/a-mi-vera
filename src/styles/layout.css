@@ -458,7 +458,8 @@
 }
 
 .pdp-back-bar {
-  border-bottom: 1px solid var(--color-border-subtle);
+  background-color: var(--bg-base);
+  border-bottom: 1px solid var(--color-dark-mid);
   padding: 0.85rem 1.5rem;
 }
 
