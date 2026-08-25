@@ -32,6 +32,13 @@
   cursor: pointer;
 }
 
+/* Izquierda: volver (PDP) + logo */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
 /* Logo — izquierda */
 .nav-logo-link {
   display: flex;

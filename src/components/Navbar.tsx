@@ -38,21 +38,22 @@ const Navbar = ({ isProductDetail = false }: NavbarProps) => {
   return (
     <>
       <nav className="navbar plattsupply-nav">
-        {/* Logo — izquierda */}
-        {isProductDetail ? (
-          <button
-            type="button"
-            className="nav-back-btn"
-            aria-label="Volver"
-            onClick={() => (window.history.length > 1 ? navigate(-1) : navigate('/'))}
-          >
-            <ArrowLeft size={22} className="nav-icon" />
-          </button>
-        ) : (
+        {/* Izquierda: volver (solo en ficha de producto) + logo, siempre visible */}
+        <div className="nav-left">
+          {isProductDetail && (
+            <button
+              type="button"
+              className="nav-back-btn"
+              aria-label="Volver"
+              onClick={() => (window.history.length > 1 ? navigate(-1) : navigate('/'))}
+            >
+              <ArrowLeft size={20} className="nav-icon" />
+            </button>
+          )}
           <Link to="/" className="nav-logo-link" onClick={closeMenu}>
             <img src={LogotipoTransp} alt="A Mi Vera" className="nav-logo" />
           </Link>
-        )}
+        </div>
 
         {/* Hamburguesa — derecha */}
         <button
