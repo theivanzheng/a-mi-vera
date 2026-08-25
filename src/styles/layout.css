@@ -32,13 +32,6 @@
   cursor: pointer;
 }
 
-/* Izquierda: volver (PDP) + logo */
-.nav-left {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-}
-
 /* Logo — izquierda */
 .nav-logo-link {
   display: flex;
@@ -49,16 +42,6 @@
 .nav-logo {
   height: 38px;
   object-fit: contain;
-}
-
-/* Botón volver (ProductDetail) */
-.nav-back-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
 }
 
 /* Hamburguesa — derecha */
@@ -472,6 +455,23 @@
   background-color: var(--color-white);
   min-height: 100vh;
   padding-top: var(--navbar-height);
+}
+
+.pdp-back-bar {
+  border-bottom: 1px solid var(--color-border-subtle);
+  padding: 0.85rem 1.5rem;
+}
+
+.pdp-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  text-decoration: none;
 }
 
 .pdp-main-content {

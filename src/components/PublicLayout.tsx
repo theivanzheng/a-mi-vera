@@ -18,11 +18,10 @@ import Navbar from './Navbar';
  */
 const PublicLayout = () => {
   const { pathname } = useLocation();
-  const isProductDetail = pathname.startsWith('/producto/');
 
   return (
     <>
-      <Navbar isProductDetail={isProductDetail} />
+      <Navbar />
       <div key={pathname} className="page-fade">
         <Outlet />
       </div>

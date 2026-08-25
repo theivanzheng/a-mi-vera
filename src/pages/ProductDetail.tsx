@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useProducts } from '../hooks/useProducts';
-import { MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import { MessageCircle, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
 import { whatsappLink, SITE_URL } from '../lib/whatsapp';
+import { toSlug } from '../lib/slug';
 import LogotipoSvg from '../../IdentidadVisual/AmiVera_LogoEditable.svg';
 
 const PLACEHOLDER_IMAGE = 'https://via.placeholder.com/600?text=Sin+Imagen';
@@ -58,8 +59,17 @@ const ProductDetail = () => {
     window.open(whatsappLink(text), '_blank');
   };
 
+  const backTo = product.category ? `/catalogo#${toSlug(product.category)}` : '/catalogo';
+  const backLabel = product.category || 'Catálogo';
+
   return (
     <div className="store-container pdp-page">
+      <div className="pdp-back-bar">
+        <Link to={backTo} className="pdp-back-link">
+          <ArrowLeft size={16} /> {backLabel}
+        </Link>
+      </div>
+
       <main className="pdp-main-content">
         <div className="pdp-image-container">
           <img src={mainImage} alt={product.title} className="pdp-main-image" />

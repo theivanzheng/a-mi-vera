@@ -1,15 +1,11 @@
 import { useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, ArrowLeft } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useProductContext } from '../context/ProductContext';
 import { toSlug } from '../lib/slug';
 import LogotipoTransp from '../../IdentidadVisual/AmiVera Logo Transparent.png';
 
-interface NavbarProps {
-  isProductDetail?: boolean;
-}
-
-const Navbar = ({ isProductDetail = false }: NavbarProps) => {
+const Navbar = () => {
   const { products } = useProductContext();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -38,22 +34,10 @@ const Navbar = ({ isProductDetail = false }: NavbarProps) => {
   return (
     <>
       <nav className="navbar plattsupply-nav">
-        {/* Izquierda: volver (solo en ficha de producto) + logo, siempre visible */}
-        <div className="nav-left">
-          {isProductDetail && (
-            <button
-              type="button"
-              className="nav-back-btn"
-              aria-label="Volver"
-              onClick={() => (window.history.length > 1 ? navigate(-1) : navigate('/'))}
-            >
-              <ArrowLeft size={20} className="nav-icon" />
-            </button>
-          )}
-          <Link to="/" className="nav-logo-link" onClick={closeMenu}>
-            <img src={LogotipoTransp} alt="A Mi Vera" className="nav-logo" />
-          </Link>
-        </div>
+        {/* Logo — izquierda */}
+        <Link to="/" className="nav-logo-link" onClick={closeMenu}>
+          <img src={LogotipoTransp} alt="A Mi Vera" className="nav-logo" />
+        </Link>
 
         {/* Hamburguesa — derecha */}
         <button
