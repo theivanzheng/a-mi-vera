@@ -454,7 +454,11 @@
 .pdp-page {
   background-color: var(--color-white);
   min-height: 100vh;
-  padding-top: var(--navbar-height);
+  /* --navbar-height (60px) es algo menor que la altura real del navbar
+     (~65px); el ajuste extra evita que la línea de .pdp-back-bar quede
+     tapada bajo el navbar fijo. Corrección local, no toca la variable
+     global para no afectar a otras páginas. */
+  padding-top: calc(var(--navbar-height) + 6px);
 }
 
 .pdp-back-bar {
